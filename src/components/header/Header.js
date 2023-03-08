@@ -22,7 +22,7 @@ function Header() {
   return (
     <Container>
       <Anchor>
-        <ProjectTitle>Foody</ProjectTitle>
+        <ProjectTitle>Restoresa</ProjectTitle>
       </Anchor>
 
       <CombinedSection>
