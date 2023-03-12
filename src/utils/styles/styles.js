@@ -81,3 +81,9 @@ export const PickupText = styled.h1`
   width: 10ch;
   font-weight: 800;
 `;
+
+export const ErrorText = styled.p`
+  color: #ff0033;
+  font-size: 12px;
+  font-weigth: 400;
+`;
