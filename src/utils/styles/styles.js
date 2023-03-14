@@ -87,3 +87,10 @@ export const ErrorText = styled.p`
   font-size: 12px;
   font-weigth: 400;
 `;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 320px;
+`;
