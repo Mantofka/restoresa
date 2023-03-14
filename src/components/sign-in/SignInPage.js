@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
+import { useDispatch } from "react-redux";
+
 import {
   loginToFirebase,
   loginWithGoogleProvider,
@@ -35,10 +37,12 @@ function SignInPage() {
     handleSubmit,
     getValues,
   } = useForm();
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
     const formValues = getValues();
     loginToFirebase(formValues).then((user) => console.log(user));
+    dispatch(formValues);
   };
 
   return (
