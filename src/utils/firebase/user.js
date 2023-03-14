@@ -3,7 +3,24 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
+
+const googleProvider = new GoogleAuthProvider();
+
+export const loginWithGoogleProvider = async () => {
+  signInWithPopup(auth, googleProvider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
+      console.log(token, user);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 export const loginToFirebase = async (userCredentials) => {
   const { email, password } = userCredentials;

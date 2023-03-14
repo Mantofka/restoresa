@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 
-import { loginToFirebase } from "../../utils/firebase/user";
+import {
+  loginToFirebase,
+  loginWithGoogleProvider,
+} from "../../utils/firebase/user";
 
 import {
   LayoutContainer,
@@ -12,6 +16,7 @@ import {
   DescriptionText,
   Bubble,
   ErrorText,
+  Form,
 } from "../../utils/styles/styles";
 
 import { ReactComponent as SittingWomen } from "../../svgs/sitting.svg";
@@ -21,47 +26,17 @@ import Input from "../input/Input";
 import Anchor from "../nav-achor/Anchor";
 
 function SignInPage() {
-  const [loginInformation, setLoginInformation] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({});
-
-  const onChange = (e, name) => {
-    const { value } = e.target;
-
-    setLoginInformation((prevState) => ({ ...prevState, [`${name}`]: value }));
-  };
-
-  const validateInputs = () => {
-    const { email, password } = loginInformation;
-    setErrors({});
-    let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (password.length === 0) {
-      setErrors((prevState) => ({
-        ...prevState,
-        password: "Password is required.",
-      }));
-    }
-    if (email.length === 0) {
-      setErrors((prevState) => ({
-        ...prevState,
-        email: "Email is required.",
-      }));
-    } else if (!email.match(mailformat)) {
-      setErrors((prevState) => ({
-        ...prevState,
-        email: "Email doesn't meet pattern.",
-      }));
-    }
-    if (Object.keys(errors).length > 0) return false;
-    return true;
-  };
+  const {
+    setValue,
+    register,
+    formState: { errors },
+    handleSubmit,
+    getValues,
+  } = useForm();
 
   const handleLogin = () => {
-    if (validateInputs()) {
-      loginToFirebase(loginInformation).then((user) => console.log(user));
-    }
+    const formValues = getValues();
+    loginToFirebase(formValues).then((user) => console.log(user));
   };
 
   return (
@@ -70,23 +45,34 @@ function SignInPage() {
         <InlineWrapper>
           <TextContainer placeGap={"10px"} justify='center'>
             <HeaderText>Welcome Back!</HeaderText>
-            <OutlinedButton>Sign in with Google</OutlinedButton>
+            <OutlinedButton onClick={loginWithGoogleProvider}>
+              Sign in with Google
+            </OutlinedButton>
             <DescriptionText style={{ margin: "0 auto" }}>or</DescriptionText>
-            <Input
-              type='text'
-              label='Email'
-              onChange={(e) => onChange(e, "email")}
-              placeholder='Enter your email'
-            />
-            <ErrorText>{errors.email}</ErrorText>
-            <Input
-              type='password'
-              label='Password'
-              onChange={(e) => onChange(e, "password")}
-              placeholder='Enter your password'
-            />
-            <ErrorText>{errors.password}</ErrorText>
-            <PrimaryButton onClick={handleLogin}>Login</PrimaryButton>
+            <ErrorText>Email or password is incorrect.</ErrorText>
+            <Form onSubmit={handleSubmit(handleLogin)}>
+              <Input
+                type='text'
+                label='Email'
+                placeholder='Enter your email'
+                onChange={(e) => setValue("email", e.target.value)}
+                {...register("email", {
+                  required: "Email is required",
+                })}
+              />
+              <ErrorText>{errors.email}</ErrorText>
+              <Input
+                type='password'
+                label='Password'
+                placeholder='Enter your password'
+                onChange={(e) => setValue("password", e.target.value)}
+                {...register("password", {
+                  required: "Password is required",
+                })}
+              />
+              <ErrorText>{errors.password}</ErrorText>
+              <PrimaryButton>Login</PrimaryButton>
+            </Form>
             <DescriptionText>
               Still not our member? <Anchor href='/register'>Sign up</Anchor>
             </DescriptionText>
