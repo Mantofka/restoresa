@@ -1,27 +1,55 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 
 import {
+  loginToFirebase,
+  registerToFirebase,
+  loginWithGoogleProvider,
+} from "../../../utils/firebase/user";
+
+import {
   USER_REGISTER,
-  USER_REGISTER_SUCCESS,
-  USER_REGISTER_FAIL,
   USER_LOGIN,
-  USER_LOGIN_FAIL,
-  USER_LOGIN_SUCCESS,
+  USER_LOGIN_WITH_GOOGLE,
 } from "./user.types";
 
-import { loginUser, loginUserFail, loginUserSuccess } from "./user.actions";
+import {
+  loginUserFail,
+  loginUserSuccess,
+  registerUserFail,
+  registerUserSuccess,
+} from "./user.actions";
 
-function* onUserLogin(credentials) {
+function* onUserLogin({ payload }) {
   try {
-    const response = yield put(loginUser(credentials));
+    const response = yield call(loginToFirebase, payload);
     yield put(loginUserSuccess(response));
-  } catch (error) {
-    yield put(loginUserFail(error));
+  } catch ({ message }) {
+    yield put(loginUserFail(message));
   }
 }
 
-function* UserSaga(){
-    yield takeLatest(USER_LOGIN, onUserLogin);
+function* onUserLoginWithGoogle() {
+  try {
+    const response = yield call(loginWithGoogleProvider);
+    yield put(loginUserSuccess(response));
+  } catch ({ message }) {
+    yield put(loginUserFail(message));
+  }
+}
+
+function* onUserRegister({ payload }) {
+  try {
+    const response = yield call(registerToFirebase, payload);
+    yield put(registerUserSuccess(response));
+  } catch ({ message }) {
+    yield put(registerUserFail(message));
+  }
+}
+
+function* UserSaga() {
+  yield takeLatest(USER_LOGIN, onUserLogin);
+  yield takeLatest(USER_REGISTER, onUserRegister);
+  yield takeLatest(USER_LOGIN_WITH_GOOGLE, onUserLoginWithGoogle);
 }
 
 export default UserSaga;

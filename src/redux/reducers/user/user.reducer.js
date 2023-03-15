@@ -5,6 +5,7 @@ import {
   USER_LOGIN,
   USER_LOGIN_FAIL,
   USER_LOGIN_SUCCESS,
+  USER_LOGIN_WITH_GOOGLE,
 } from "./user.types";
 
 const initialState = {
@@ -15,19 +16,21 @@ const initialState = {
   errorModal: null,
 };
 
-const UserReducer = (state = initialState, action) => {
+const User = (state = initialState, action) => {
   switch (action.type) {
+    case USER_LOGIN_WITH_GOOGLE:
+    case USER_REGISTER:
     case USER_LOGIN:
-      state = {
+      return {
         ...state,
         user: {
           pending: true,
           data: null,
         },
       };
-      break;
+    case USER_REGISTER_FAIL:
     case USER_LOGIN_FAIL:
-      state = {
+      return {
         ...state,
         user: {
           ...state.user,
@@ -35,9 +38,9 @@ const UserReducer = (state = initialState, action) => {
         },
         errorModal: action.payload,
       };
-      break;
+    case USER_REGISTER_SUCCESS:
     case USER_LOGIN_SUCCESS:
-      state = {
+      return {
         ...state,
         errorModal: null,
         user: {
@@ -45,11 +48,9 @@ const UserReducer = (state = initialState, action) => {
           data: action.payload,
         },
       };
-      break;
     default:
-      state = { ...state };
-      break;
+      return { ...state };
   }
 };
 
-export default UserReducer;
+export default User;
