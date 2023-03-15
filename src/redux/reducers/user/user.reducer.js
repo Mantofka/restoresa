@@ -12,6 +12,7 @@ const initialState = {
   user: {
     pending: false,
     data: null,
+    isAuthenticated: false,
   },
   errorModal: null,
 };
@@ -26,6 +27,7 @@ const User = (state = initialState, action) => {
         user: {
           pending: true,
           data: null,
+          isAuthenticated: false,
         },
       };
     case USER_REGISTER_FAIL:
@@ -35,6 +37,7 @@ const User = (state = initialState, action) => {
         user: {
           ...state.user,
           pending: false,
+          isAuthenticated: false,
         },
         errorModal: action.payload,
       };
@@ -46,6 +49,7 @@ const User = (state = initialState, action) => {
         user: {
           pending: false,
           data: action.payload,
+          isAuthenticated: true,
         },
       };
     default:

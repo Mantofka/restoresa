@@ -5,7 +5,7 @@ import {
   USER_LOGIN,
   USER_LOGIN_FAIL,
   USER_LOGIN_SUCCESS,
-  USER_LOGIN_WITH_GOOGLE
+  USER_LOGIN_WITH_GOOGLE,
 } from "./user.types";
 
 export const loginUserWithGoogle = () => {
@@ -29,6 +29,7 @@ export const loginUserFail = (error) => {
 };
 
 export const loginUserSuccess = (user) => {
+  console.log(user);
   return {
     type: USER_LOGIN_SUCCESS,
     payload: user,

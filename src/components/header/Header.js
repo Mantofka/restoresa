@@ -1,5 +1,11 @@
 import React from "react";
 
+import { useSelector } from "react-redux";
+import {
+  selectUserAuthentication,
+  selectCurrentUser,
+} from "../../redux/reducers/user/user.selectors";
+
 import { useLocation } from "react-router-dom";
 
 import Anchor from "../nav-achor/Anchor";
@@ -12,10 +18,11 @@ import {
   ProfileIcon,
 } from "./Header.styles";
 
-let isAuthenticated = false;
-
 function Header() {
   const { pathname } = useLocation();
+  const isAuthenticated = useSelector(selectUserAuthentication);
+  const currentUser = useSelector(selectCurrentUser);
+  console.log(currentUser);
 
   const isAnchorActive = (text) => pathname === text;
 
@@ -42,7 +49,7 @@ function Header() {
             <Anchor href='/me'>
               <ProfileIcon></ProfileIcon>
             </Anchor>
-            <Text>Forzan</Text>{" "}
+            <Text>{currentUser?.displayName}</Text>{" "}
           </>
         ) : (
           <Anchor href='/sign-in'>

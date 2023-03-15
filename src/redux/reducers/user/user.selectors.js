@@ -11,3 +11,8 @@ export const selectUserError = createSelector(
   [selectUserState],
   (user) => user.errorModal
 );
+
+export const selectUserAuthentication = createSelector(
+  [selectUserState],
+  (user) => user.user.isAuthenticated
+);
