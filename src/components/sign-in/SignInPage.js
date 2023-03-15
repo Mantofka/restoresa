@@ -1,10 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
+import { useDispatch, useSelector } from "react-redux";
 import {
-  loginToFirebase,
-  loginWithGoogleProvider,
-} from "../../utils/firebase/user";
+  loginUser,
+  loginUserWithGoogle,
+} from "../../redux/reducers/user/user.actions";
+
+import { selectUserError } from "../../redux/reducers/user/user.selectors";
 
 import {
   LayoutContainer,
@@ -33,10 +36,12 @@ function SignInPage() {
     handleSubmit,
     getValues,
   } = useForm();
+  const dispatch = useDispatch();
+  const loginErrors = useSelector(selectUserError);
 
   const handleLogin = () => {
     const formValues = getValues();
-    loginToFirebase(formValues).then((user) => console.log(user));
+    dispatch(loginUser(formValues));
   };
 
   return (
@@ -45,11 +50,11 @@ function SignInPage() {
         <InlineWrapper>
           <TextContainer placeGap={"10px"} justify='center'>
             <HeaderText>Welcome Back!</HeaderText>
-            <OutlinedButton onClick={loginWithGoogleProvider}>
+            <OutlinedButton onClick={() => dispatch(loginUserWithGoogle())}>
               Sign in with Google
             </OutlinedButton>
             <DescriptionText style={{ margin: "0 auto" }}>or</DescriptionText>
-            <ErrorText>Email or password is incorrect.</ErrorText>
+            <ErrorText>{loginErrors}</ErrorText>
             <Form onSubmit={handleSubmit(handleLogin)}>
               <Input
                 type='text'

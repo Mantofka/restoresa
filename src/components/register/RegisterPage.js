@@ -1,10 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
-import {
-  registerToFirebase,
-  loginWithGoogleProvider,
-} from "../../utils/firebase/user";
+import { useDispatch } from "react-redux";
 
 import {
   LayoutContainer,
@@ -18,6 +14,11 @@ import {
   ErrorText,
   Form,
 } from "../../utils/styles/styles";
+
+import {
+  registerUser,
+  loginUserWithGoogle,
+} from "../../redux/reducers/user/user.actions";
 
 import { Container } from "./RegisterPage.styles";
 
@@ -35,10 +36,11 @@ function Register() {
     getValues,
     watch,
   } = useForm();
+  const dispatch = useDispatch();
 
   const handleRegister = (e) => {
     const formValues = getValues();
-    registerToFirebase(formValues);
+    dispatch(registerUser(formValues));
   };
 
   return (
@@ -47,7 +49,7 @@ function Register() {
         <InlineWrapper>
           <TextContainer placeGap={"10px"} justify='center'>
             <HeaderText>Welcome Back!</HeaderText>
-            <OutlinedButton onClick={loginWithGoogleProvider}>
+            <OutlinedButton onClick={() => dispatch(loginUserWithGoogle())}>
               Sign up with Google
             </OutlinedButton>
             <DescriptionText style={{ margin: "0 auto" }}>or</DescriptionText>
