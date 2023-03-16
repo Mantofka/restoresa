@@ -2,7 +2,7 @@ import React from "react";
 
 import { Container } from "./RestaurantList.styles";
 
-import IndividualRestaurant from "../../restaurant/IndividualRestaurant";
+import IndividualRestaurant from "../../restaurant/Restaurant";
 
 const restaurants = [
   {

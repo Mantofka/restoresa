@@ -6,7 +6,7 @@ import {
   Container,
   Image,
   FooterContainer,
-} from "./IndividualRestaurant.styles";
+} from "./Restaurant.styles";
 import { FoodTitle, DescriptionText } from "../../utils/styles/styles";
 
 const IndividualRestaurant = ({ restaurant }) => {
