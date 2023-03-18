@@ -6,6 +6,16 @@ import {
   TimeContent,
 } from "./RestaurantPrompts.styles";
 
+import { useSelector, useDispatch } from "react-redux";
+
+import {
+  setReservationDate,
+  setReservationHour,
+  setReservationSeats,
+} from "../../redux/reducers/reservation/reservation.actions";
+
+import { useLocation } from "react-router-dom";
+
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -19,6 +29,8 @@ import Select from "../select/Select";
 
 const RestaurantPrompts = () => {
   const [currentPromptWindow, setCurrentPromptWindow] = useState(1);
+  const location = useLocation();
+  console.log(location);
 
   const setNewState = (direction) => {
     setCurrentPromptWindow((prevState) => prevState + direction);
@@ -33,20 +45,33 @@ const RestaurantPrompts = () => {
 };
 
 const SeatsPrompt = ({ setState }) => {
+  const dispatch = useDispatch();
+  const [option, setOption] = useState(1);
+
+  const handleButton = () => {
+    dispatch(setReservationSeats(Number(option)));
+    setState(1);
+  };
+
   return (
     <Container>
       <PickupText style={{ width: "20ch" }}>
         How many of you are willing to be served?
       </PickupText>
       <InlineWrapper>
-        <Select options={[1, 2, 3, 4, 5, 6]} />
-        <ContinueButton onClick={() => setState(1)}>Continue</ContinueButton>
+        <Select
+          value={option}
+          onChange={(e) => setOption(e.target.value)}
+          options={[1, 2, 3, 4, 5, 6]}
+        />
+        <ContinueButton onClick={handleButton}>Continue</ContinueButton>
       </InlineWrapper>
     </Container>
   );
 };
 
 const TimePrompt = (onSet) => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState(new Date());
   const [time, setTime] = useState(null);
 
