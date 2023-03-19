@@ -1,12 +1,25 @@
 import styled, { css } from "styled-components";
-import { darkColor, highlightColor } from "../../utils/styles/styles";
+import {
+  darkColor,
+  highlightColor,
+  InlineWrapper as Wrapper,
+} from "../../utils/styles/styles";
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
+  ${({ screen }) =>
+    screen === "sm" &&
+    css`
+    ${SmallerText}{
+
+    }
+    ${InlineWrapper}{
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+`}
 `;
-
-
 
 export const Highlight = styled.span`
   color: ${highlightColor};
@@ -15,8 +28,8 @@ export const Highlight = styled.span`
 export const SmallerText = styled.p`
   color: ${({ color }) => color || darkColor};
   font-size: 18px;
-  font-weight: ${({fontWeight}) => fontWeight || '400'};
-  width: ${({width}) => width || 'inherit'};
+  font-weight: ${({ fontWeight }) => fontWeight || "400"};
+  width: ${({ width }) => width || "inherit"};
    {
     ${({ additionalText }) =>
       additionalText &&
@@ -29,4 +42,6 @@ export const SmallerText = styled.p`
   }
 `;
 
-
+export const InlineWrapper = styled(Wrapper)`
+  gap: 15px;
+`;

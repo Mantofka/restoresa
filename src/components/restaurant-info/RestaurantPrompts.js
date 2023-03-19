@@ -1,29 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   ContinueButton,
   TimeContainer,
   TimeContent,
+  InlineWrapper,
+  PromptText,
 } from "./RestaurantPrompts.styles";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
+
+import moment from "moment";
 
 import {
   setReservationDate,
   setReservationHour,
   setReservationSeats,
+  clearReservationHour,
+  clearReservationDate,
 } from "../../redux/reducers/reservation/reservation.actions";
+
+import {
+  selectDate,
+  selectHour,
+} from "../../redux/reducers/reservation/reservation.selectors";
 
 import { useLocation } from "react-router-dom";
 
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-import {
-  PickupText,
-  LayoutContainer,
-  InlineWrapper,
-} from "../../utils/styles/styles";
+import { PickupText, LayoutContainer } from "../../utils/styles/styles";
 
 import Select from "../select/Select";
 
@@ -39,7 +48,7 @@ const RestaurantPrompts = () => {
   return (
     <LayoutContainer>
       {currentPromptWindow === 1 && <SeatsPrompt setState={setNewState} />}
-      {currentPromptWindow === 2 && <TimePrompt />}
+      {currentPromptWindow === 2 && <TimePrompt setState={setNewState} />}
     </LayoutContainer>
   );
 };
@@ -47,6 +56,7 @@ const RestaurantPrompts = () => {
 const SeatsPrompt = ({ setState }) => {
   const dispatch = useDispatch();
   const [option, setOption] = useState(1);
+  const screen = useSelector(selectScreen);
 
   const handleButton = () => {
     dispatch(setReservationSeats(Number(option)));
@@ -54,10 +64,8 @@ const SeatsPrompt = ({ setState }) => {
   };
 
   return (
-    <Container>
-      <PickupText style={{ width: "20ch" }}>
-        How many of you are willing to be served?
-      </PickupText>
+    <Container screen={screen}>
+      <PromptText>How many of you are willing to be served?</PromptText>
       <InlineWrapper>
         <Select
           value={option}
@@ -70,41 +78,93 @@ const SeatsPrompt = ({ setState }) => {
   );
 };
 
-const TimePrompt = (onSet) => {
+const hours = [
+  {
+    hour: 12,
+    minute: 30,
+    isAvailable: false,
+  },
+  {
+    hour: 13,
+    minute: 30,
+    isAvailable: true,
+  },
+  {
+    hour: 14,
+    minute: 30,
+    isAvailable: true,
+  },
+  {
+    hour: 15,
+    minute: 30,
+    isAvailable: false,
+  },
+];
+
+const TimePrompt = ({ setState }) => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState(new Date());
-  const [time, setTime] = useState(null);
+  const selectedDate = useSelector(selectDate);
+  const selectedHour = useSelector(selectHour);
+  const screen = useSelector(selectScreen);
+  const [value, setValue] = useState(moment().format("YYYY-MM-DD"));
+  const [time, setTime] = useState(selectedHour);
+
+  useEffect(() => {
+    dispatch(setReservationDate(value));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleHour = (pickedTime) => {
+    const { hour, minute } = pickedTime;
+    if (JSON.stringify(pickedTime) !== JSON.stringify(time)) {
+      dispatch(setReservationHour(pickedTime));
+      setTime({ hour, minute });
+    }
+  };
+
+  const handleButtonBack = () => {
+    dispatch(clearReservationHour());
+    dispatch(clearReservationDate());
+    setState(-1);
+  };
 
   return (
-    <Container>
-      <PickupText style={{ width: "20ch" }}>
-        Which day and hour is suitable?
-      </PickupText>
-      <InlineWrapper>
-        <Calendar minDate={new Date()} value={value} onChange={setValue} />
+    <Container screen={screen}>
+      <PromptText>Which day and hour is suitable?</PromptText>
+      <InlineWrapper direction={"column"}>
+        <Calendar
+          minDate={new Date()}
+          value={new Date(value)}
+          onChange={(e) => setValue(moment(e).format("YYYY-MM-DD"))}
+        />
 
         <TimeContainer>
-          <TimeContent disabled onClick={() => setTime("12:30")}>
-            12:30
-          </TimeContent>
-          <TimeContent
-            selected={time === "13:30"}
-            onClick={() => setTime("13:30")}
-          >
-            13:30
-          </TimeContent>
-          <TimeContent
-            selected={time === "14:30"}
-            onClick={() => setTime("14:30")}
-          >
-            14:30
-          </TimeContent>
-          <TimeContent disabled onClick={() => setTime("15:30")}>
-            15:30
-          </TimeContent>
+          {hours.map(({ hour, minute, isAvailable }) => {
+            let formattedTime = `${hour}:${minute}`;
+            return (
+              <TimeContent
+                selected={`${time?.hour}:${time?.minute}` === formattedTime}
+                disabled={!isAvailable}
+                onClick={() => handleHour({ hour, minute })}
+              >
+                {formattedTime}
+              </TimeContent>
+            );
+          })}
         </TimeContainer>
       </InlineWrapper>
-      <ContinueButton>Continue</ContinueButton>
+      <InlineWrapper>
+        <ContinueButton onClick={handleButtonBack}>Back</ContinueButton>
+        <ContinueButton
+          onClick={() => console.log("Sdkasd")}
+          disabled={
+            selectedDate === null || selectedHour === null ? true : false
+          }
+        >
+          Continue
+        </ContinueButton>
+      </InlineWrapper>
     </Container>
   );
 };

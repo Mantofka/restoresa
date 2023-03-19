@@ -7,8 +7,43 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: calc(100vh - 70px);
   gap: 20px;
+  ${({ screen }) =>
+    screen === "md" &&
+    css`
+      ${PromptText} {
+        font-size: 44px;
+      }
+    `}
+  ${({ screen }) =>
+    screen === "sm" &&
+    css`
+      ${PromptText} {
+        font-size: 34px;
+      }
+    `}
+`;
+
+export const InlineWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  ${({ direction }) =>
+    direction &&
+    css`
+      flex-direction: ${direction};
+      align-items: flex-start;
+      justify-content: space-between;
+    `}
+`;
+
+export const PromptText = styled.h1`
+  color: ${darkColor};
+  font-size: 54px;
+  max-width: 20ch;
 `;
 
 export const ContinueButton = styled.button`
@@ -26,10 +61,21 @@ export const ContinueButton = styled.button`
     background-color: ${darkColor};
     color: #fff;
   }
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: unset;
+      opacity: 0.75;
+      &:hover {
+        color: ${darkColor};
+        background: #fff;
+      }
+    `}
 `;
 
 export const TimeContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 10px;
 `;
 

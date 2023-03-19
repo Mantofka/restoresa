@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const darkColor = "#23212b";
 export const highlightColor = "#fa5729";
@@ -8,6 +8,14 @@ export const yellowColor = "#FECE52";
 export const LayoutContainer = styled.div`
   width: min(80vw, 1200px);
   margin: 0 auto;
+  min-height: calc(100vh);
+  padding-bottom: 20px;
+  ${({ screen }) =>
+    screen === "md" &&
+    css`
+    width: 92vw;
+  }
+`}
 `;
 
 export const HeaderText = styled.h1`
@@ -61,6 +69,7 @@ export const PrimaryButton = styled.button`
   height: 45px;
   background-color: ${yellowColor};
   font-size: 14px;
+  color: ${darkColor};
   font-weight: 600;
   cursor: pointer;
 `;
@@ -68,18 +77,56 @@ export const PrimaryButton = styled.button`
 export const Bubble = styled.div`
   background-color: #fece52;
   border-radius: 50%;
-  width: 470px;
-  height: 470px;
+  width: 400px;
+  height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
+  ${({ screen }) =>
+    screen === "md" &&
+    css`
+width: 450px;
+height: 450px;
+}
+`}
+  ${({ screen }) =>
+    screen === "sm" &&
+    css`
+  width: 300px;
+  height: 300px;
+  }
+`}
+@media screen and (max-width: 850px) {
+    width: 350px;
+    height: 350px;
+  }
+  @media screen and (max-width: 770px) {
+    width: 280px;
+    height: 280px;
+  }
+  @media screen and (max-width: 670px) {
+    width: 250px;
+    height: 250px;
+  }
 `;
 
 export const PickupText = styled.h1`
   color: ${darkColor};
   font-size: 56px;
-  width: 10ch;
+  width: ${({ width }) => width || "10ch"};
   font-weight: 800;
+  ${({ screen }) =>
+    screen === "md" &&
+    css`
+      font-size: 44px;
+    }
+  `}
+  ${({ screen }) =>
+    screen === "sm" &&
+    css`
+    font-size: 38px;
+  }
+`}
 `;
 
 export const ErrorText = styled.p`
@@ -93,4 +140,10 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 5px;
   width: 320px;
+  ${({ screen }) =>
+    screen === "sm" &&
+    css`
+    width: 270px;
+  }
+`}
 `;
