@@ -11,10 +11,24 @@ export const setReservationHour = (time) => {
   };
 };
 
+export const clearReservationHour = () => {
+  return {
+    type: SET_RESERVATION_HOUR,
+    payload: null,
+  };
+};
+
 export const setReservationDate = (date) => {
   return {
     type: SET_RESERVATION_DATE,
     payload: date,
+  };
+};
+
+export const clearReservationDate = () => {
+  return {
+    type: SET_RESERVATION_DATE,
+    payload: null,
   };
 };
 

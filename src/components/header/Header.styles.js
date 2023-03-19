@@ -16,6 +16,9 @@ export const Container = styled.div`
     css`
       width: 100vw;
       border-radius: 0px;
+      ${CombinedSection} {
+        gap: 15px;
+      }
     `}
   ${({ screen }) =>
     screen === "sm" &&

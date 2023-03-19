@@ -6,6 +6,15 @@ import { getAnalytics } from "firebase/analytics";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
+import {
+  writeBatch,
+  doc,
+  getFirestore,
+  collection,
+  setDoc,
+  addDoc,
+} from "firebase/firestore";
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -20,6 +29,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
 const analytics = getAnalytics(app);
 
 export const auth = getAuth(app);
@@ -27,3 +37,63 @@ export const auth = getAuth(app);
 export const onAuthState = () => {
   return onAuthStateChanged(auth, (user) => user);
 };
+
+export const handleBatchPush = async (foods) => {
+  let batch = writeBatch(db);
+  let modifiedFoods = [...foods];
+  for (let index = 0; index < foods.length; index++) {
+    // console.log(modifiedFoods.length);
+    const { type, restaurant } = foods[index];
+    let filteredFoods = modifiedFoods.filter(
+      (food) =>
+        food.type === foods[index].type &&
+        food.restaurant === foods[index].restaurant
+    );
+    console.log(filteredFoods);
+    let array = [];
+    filteredFoods.forEach((food) => {
+      const { title, description, price } = food;
+      array.push({
+        title,
+        description,
+        price,
+      });
+    });
+
+    if (filteredFoods.length !== 0) {
+      let foodRef = doc(collection(db, "foods"));
+      batch.set(foodRef, {
+        type,
+        restaurant,
+        foods: array,
+      });
+
+      modifiedFoods = modifiedFoods.filter(
+        (food) =>
+          food.type !== foods[index].type ||
+          food.restaurant !== foods[index].restaurant
+      );
+      await batch.commit();
+      batch = writeBatch(db);
+    }
+  }
+};
+
+// export const pushTable = async () => {
+//   await addDoc(collection(db, "tables"), {
+//     restaurant: doc(db, "restaurants/3Bh14ojrNMtbrbCaR8ne"),
+//     size: 4,
+//     busyness: [
+//       {
+//         date: "2023-03-19",
+//         hour: 13,
+//         minute: 30,
+//       },
+//       {
+//         date: "2023-03-19",
+//         hour: 17,
+//         minute: 30,
+//       },
+//     ],
+//   });
+// };

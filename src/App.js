@@ -6,6 +6,8 @@ import SignInPage from "./components/sign-in/SignInPage";
 import RegisterPage from "./components/register/RegisterPage";
 import RestaurantPrompts from "./components/restaurant-info/RestaurantPrompts";
 
+import Footer from "./components/footer/Footer";
+
 import { Routes, Route } from "react-router-dom";
 
 import { auth } from "./firebase";
@@ -41,7 +43,7 @@ function App() {
         dispatch(loginUserSuccess({ displayName, uid, email }));
       }
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -51,13 +53,14 @@ function App() {
         <Route path='/' element={<Homepage />}></Route>
         <Route path='/restaurants' element={<RestaurantsPage />} />
         <Route path='/restaurants/:id' element={<RestaurantPrompts />} />
-        {!isAuthenticated && (
+        {isAuthenticated && (
           <Route path='/sign-in' element={<SignInPage />}></Route>
         )}
-        {!isAuthenticated && (
+        {isAuthenticated && (
           <Route path='/register' element={<RegisterPage />}></Route>
         )}
       </Routes>
+      <Footer />
     </>
   );
 }
