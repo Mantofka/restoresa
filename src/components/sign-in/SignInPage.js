@@ -9,9 +9,10 @@ import {
 
 import { selectUserError } from "../../redux/reducers/user/user.selectors";
 
+import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
+
 import {
   LayoutContainer,
-  InlineWrapper,
   HeaderText,
   TextContainer,
   PrimaryButton,
@@ -22,11 +23,12 @@ import {
   Form,
 } from "../../utils/styles/styles";
 
-import { ReactComponent as SittingWomen } from "../../svgs/sitting.svg";
-import { Container } from "./SignInPage.styles";
+import Waiting from "../../images/waiting.png";
+import { Container, InlineWrapper } from "./SignInPage.styles";
 
 import Input from "../input/Input";
 import Anchor from "../nav-achor/Anchor";
+import { isMobileSize } from "../../utils/ui";
 
 function SignInPage() {
   const {
@@ -37,15 +39,17 @@ function SignInPage() {
     getValues,
   } = useForm();
   const dispatch = useDispatch();
+  const screen = useSelector(selectScreen);
   const loginErrors = useSelector(selectUserError);
 
   const handleLogin = () => {
+    console.log("lab");
     const formValues = getValues();
     dispatch(loginUser(formValues));
   };
 
   return (
-    <LayoutContainer>
+    <LayoutContainer screen={screen}>
       <Container>
         <InlineWrapper>
           <TextContainer placeGap={"10px"} justify='center'>
@@ -55,17 +59,18 @@ function SignInPage() {
             </OutlinedButton>
             <DescriptionText style={{ margin: "0 auto" }}>or</DescriptionText>
             <ErrorText>{loginErrors}</ErrorText>
-            <Form onSubmit={handleSubmit(handleLogin)}>
+            <Form screen={screen} onSubmit={handleSubmit(handleLogin)}>
               <Input
                 type='text'
                 label='Email'
+                name='email'
                 placeholder='Enter your email'
                 onChange={(e) => setValue("email", e.target.value)}
                 {...register("email", {
                   required: "Email is required",
                 })}
               />
-              <ErrorText>{errors.email}</ErrorText>
+              <ErrorText>{errors.email?.message}</ErrorText>
               <Input
                 type='password'
                 label='Password'
@@ -75,16 +80,22 @@ function SignInPage() {
                   required: "Password is required",
                 })}
               />
-              <ErrorText>{errors.password}</ErrorText>
-              <PrimaryButton>Login</PrimaryButton>
+              <ErrorText>{errors.password?.message}</ErrorText>
+              <PrimaryButton type='submit'>Login</PrimaryButton>
             </Form>
             <DescriptionText>
               Still not our member? <Anchor href='/register'>Sign up</Anchor>
             </DescriptionText>
           </TextContainer>
-          <Bubble>
-            <SittingWomen />
-          </Bubble>
+          {!isMobileSize(screen, "lg") ? (
+            <Bubble screen={screen}>
+              <img
+                src={Waiting}
+                alt='Waiting women'
+                style={{ height: "80%" }}
+              />
+            </Bubble>
+          ) : null}
         </InlineWrapper>
       </Container>
     </LayoutContainer>

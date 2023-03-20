@@ -11,6 +11,30 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  ${({ screen }) =>
+    screen === "md" &&
+    css`
+      width: 100vw;
+      border-radius: 0px;
+      ${CombinedSection} {
+        gap: 15px;
+      }
+    `}
+  ${({ screen }) =>
+    screen === "sm" &&
+    css`
+      width: 100vw;
+      border-radius: 0px;
+      ${ProjectTitle} {
+        font-size: 24px;
+      }
+      ${Text} {
+        font-size: 14px;
+      }
+      ${CombinedSection} {
+        gap: 10px;
+      }
+    `}
 `;
 
 export const ProjectTitle = styled.h1`

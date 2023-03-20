@@ -53,7 +53,7 @@ function RestaurantList() {
   return (
     <Container>
       {restaurants.map((restaurant) => (
-        <IndividualRestaurant restaurant={restaurant} />
+        <IndividualRestaurant key={restaurant.id} restaurant={restaurant} />
       ))}
     </Container>
   );

@@ -1,10 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   LayoutContainer,
-  InlineWrapper,
   TextContainer,
   HeaderText,
   OutlinedButton,
@@ -15,6 +14,10 @@ import {
   Form,
 } from "../../utils/styles/styles";
 
+import { InlineWrapper } from "../sign-in/SignInPage.styles";
+
+import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
+
 import {
   registerUser,
   loginUserWithGoogle,
@@ -22,12 +25,14 @@ import {
 
 import { Container } from "./RegisterPage.styles";
 
-import { ReactComponent as SittingWomen } from "../../svgs/sitting.svg";
+import Waiting from "../../images/waiting.png";
 
 import Anchor from "../nav-achor/Anchor";
 import Input from "../input/Input";
+import { isMobileSize } from "../../utils/ui";
 
 function Register() {
+  const screen = useSelector(selectScreen);
   const {
     setValue,
     register,
@@ -54,7 +59,7 @@ function Register() {
             </OutlinedButton>
             <DescriptionText style={{ margin: "0 auto" }}>or</DescriptionText>
             <ErrorText>This email address already in use.</ErrorText>
-            <Form onSubmit={handleSubmit(handleRegister)}>
+            <Form screen={screen} onSubmit={handleSubmit(handleRegister)}>
               <Input
                 type='text'
                 label='Full name'
@@ -121,9 +126,15 @@ function Register() {
               Not the first time? <Anchor href='/sign-in'>Sign in</Anchor>
             </DescriptionText>
           </TextContainer>
-          <Bubble>
-            <SittingWomen />
-          </Bubble>
+          {!isMobileSize(screen, "lg") ? (
+            <Bubble screen={screen}>
+              <img
+                src={Waiting}
+                alt='Waiting women'
+                style={{ height: "80%" }}
+              />
+            </Bubble>
+          ) : null}
         </InlineWrapper>
       </Container>
     </LayoutContainer>

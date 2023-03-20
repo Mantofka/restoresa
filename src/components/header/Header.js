@@ -6,6 +6,8 @@ import {
   selectCurrentUser,
 } from "../../redux/reducers/user/user.selectors";
 
+import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
+import { isMobileSize } from "../../utils/ui";
 import { useLocation } from "react-router-dom";
 
 import Anchor from "../nav-achor/Anchor";
@@ -22,34 +24,38 @@ function Header() {
   const { pathname } = useLocation();
   const isAuthenticated = useSelector(selectUserAuthentication);
   const currentUser = useSelector(selectCurrentUser);
-  console.log(currentUser);
+  const screen = useSelector(selectScreen);
 
   const isAnchorActive = (text) => pathname === text;
 
   return (
-    <Container>
+    <Container screen={screen}>
       <Anchor>
         <ProjectTitle>Restoresa</ProjectTitle>
       </Anchor>
 
-      <CombinedSection>
-        <Anchor href={"/foods"}>
-          <Text active={isAnchorActive("/foods")}>Foods</Text>
-        </Anchor>
-        <Anchor href={"/offers"}>
-          <Text active={isAnchorActive("/offers")}>Offers</Text>
-        </Anchor>
-        <Anchor href={"/restaurants"}>
-          <Text active={isAnchorActive("/restaurants")}>Restaurants</Text>
-        </Anchor>
-      </CombinedSection>
+      {!isMobileSize(screen, "md") && (
+        <CombinedSection>
+          <Anchor href={"/foods"}>
+            <Text active={isAnchorActive("/foods")}>Foods</Text>
+          </Anchor>
+          <Anchor href={"/offers"}>
+            <Text active={isAnchorActive("/offers")}>Offers</Text>
+          </Anchor>
+          <Anchor href={"/restaurants"}>
+            <Text active={isAnchorActive("/restaurants")}>Restaurants</Text>
+          </Anchor>
+        </CombinedSection>
+      )}
       <CombinedSection>
         {isAuthenticated ? (
           <>
             <Anchor href='/me'>
               <ProfileIcon></ProfileIcon>
             </Anchor>
-            <Text>{currentUser?.displayName}</Text>{" "}
+            {!isMobileSize(screen, "lg") && (
+              <Text>{currentUser?.displayName}</Text>
+            )}
           </>
         ) : (
           <Anchor href='/sign-in'>
