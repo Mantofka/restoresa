@@ -5,7 +5,6 @@ import RestaurantsPage from "./components/restaurants/RestaurantsPage";
 import SignInPage from "./components/sign-in/SignInPage";
 import RegisterPage from "./components/register/RegisterPage";
 import RestaurantPrompts from "./components/restaurant-info/RestaurantPrompts";
-
 import Footer from "./components/footer/Footer";
 
 import { Routes, Route } from "react-router-dom";
@@ -17,6 +16,9 @@ import { loginUserSuccess } from "./redux/reducers/user/user.actions";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserAuthentication } from "./redux/reducers/user/user.selectors";
+
+import IndividualRestaurant from "./components/restaurant/Restaurant";
+import SpecificRestaurant from "./components/restaurant/individual/IndividualRestaurantMenu" // rename 
 import { resizeScreen } from "./redux/reducers/ui/ui.actions";
 
 function App() {
@@ -53,6 +55,7 @@ function App() {
         <Route path='/' element={<Homepage />}></Route>
         <Route path='/restaurants' element={<RestaurantsPage />} />
         <Route path='/restaurants/:id' element={<RestaurantPrompts />} />
+        <Route path='/individual/' element={<SpecificRestaurant/>}></Route>
         {isAuthenticated && (
           <Route path='/sign-in' element={<SignInPage />}></Route>
         )}
