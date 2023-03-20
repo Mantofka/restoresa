@@ -1,58 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Container } from "./RestaurantList.styles";
 
-import IndividualRestaurant from "../../restaurant/Restaurant";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import { useRestaurants } from "./RestaurantList.utils";
 
-const restaurants = [
-  {
-    id: 11210,
-    title: "Baking Mad Hidden Lab",
-    description: "Turbūt įspūdingiausi burgeriai mieste",
-    imageUrl:
-      "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  },
-  {
-    id: 41515,
-    title: "Baking Mad Hidden Lab",
-    description: "Turbūt įspūdingiausi burgeriai mieste",
-    imageUrl:
-      "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  },
-  {
-    id: 48151,
-    title: "Baking Mad Hidden Lab",
-    description: "Turbūt įspūdingiausi burgeriai mieste",
-    imageUrl:
-      "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  },
-  {
-    id: 51533,
-    title: "Baking Mad Hidden Lab",
-    description: "Turbūt įspūdingiausi burgeriai mieste",
-    imageUrl:
-      "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  },
-  {
-    id: 32454,
-    title: "Baking Mad Hidden Lab",
-    description: "Turbūt įspūdingiausi burgeriai mieste",
-    imageUrl:
-      "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  },
-  {
-    id: 85742,
-    title: "Baking Mad Hidden Lab",
-    description: "Turbūt įspūdingiausi burgeriai mieste",
-    imageUrl:
-      "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  },
-];
+import {
+  selectRestaurantsError,
+  selectIsLoading,
+  selectRestaurantsProperty,
+} from "../../../redux/reducers/restaurants/restaurants.selectors";
+import { selectScreen } from "../../../redux/reducers/ui/ui.selectors";
+
+import IndividualRestaurant from "../../restaurant/Restaurant";
+import Loader from "../../loader/Loader";
 
 function RestaurantList() {
+  const [restaurants, fetchRestaurants] = useRestaurants();
+  // const restaurants = useSelector(selectRestaurantsInRestaurants);
+  const isLoading = useSelector(selectIsLoading);
+  const errors = useSelector(selectRestaurantsError);
+  const screen = useSelector(selectScreen);
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
+
+  if (isLoading) return <Loader />;
+
   return (
-    <Container>
-      {restaurants.map((restaurant) => (
+    <Container screen={screen}>
+      {restaurants?.data?.map((restaurant) => (
         <IndividualRestaurant key={restaurant.id} restaurant={restaurant} />
       ))}
     </Container>

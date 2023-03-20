@@ -76,7 +76,10 @@ function Homepage() {
           ) : null}
         </InlineWrapper>
         {!isMobileSize(screen, "md") ? (
-          <PrimaryButton style={{ width: "210px" }}>
+          <PrimaryButton
+            onClick={() => navigate("restaurants")}
+            style={{ width: "210px" }}
+          >
             Browse Restaurants
           </PrimaryButton>
         ) : null}
