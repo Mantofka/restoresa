@@ -6,20 +6,23 @@ import {
   Container,
   Image,
   FooterContainer,
+  ImageContainer,
 } from "./Restaurant.styles";
 import { FoodTitle, DescriptionText } from "../../utils/styles/styles";
 
 const IndividualRestaurant = ({ restaurant }) => {
-    const {id, title, description, imageUrl} = restaurant;
-    const navigate = useNavigate();
+  const { id, title, description, imageUrl } = restaurant;
+  const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate(`${id}`);
-    }
+  const handleClick = () => {
+    navigate(`${id}`);
+  };
 
   return (
     <Container onClick={handleClick}>
-      <Image alt='asdmasd' src={imageUrl} />
+      <ImageContainer>
+        <Image alt='asdmasd' src={imageUrl} />
+      </ImageContainer>
       <FooterContainer>
         <FoodTitle>{title}</FoodTitle>
         <DescriptionText>{description}</DescriptionText>

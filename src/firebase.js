@@ -38,46 +38,47 @@ export const onAuthState = () => {
   return onAuthStateChanged(auth, (user) => user);
 };
 
-export const handleBatchPush = async (foods) => {
-  let batch = writeBatch(db);
-  let modifiedFoods = [...foods];
-  for (let index = 0; index < foods.length; index++) {
-    // console.log(modifiedFoods.length);
-    const { type, restaurant } = foods[index];
-    let filteredFoods = modifiedFoods.filter(
-      (food) =>
-        food.type === foods[index].type &&
-        food.restaurant === foods[index].restaurant
-    );
-    console.log(filteredFoods);
-    let array = [];
-    filteredFoods.forEach((food) => {
-      const { title, description, price } = food;
-      array.push({
-        title,
-        description,
-        price,
-      });
-    });
+// export const handleBatchPush = async (foods) => {
+//   let batch = writeBatch(db);
+//   let modifiedFoods = [...foods];
+//   for (let index = 0; index < foods.length; index++) {
+//     // console.log(modifiedFoods.length);
+//     const { type, restaurant } = foods[index];
+//     let filteredFoods = modifiedFoods.filter(
+//       (food) =>
+//         food.type === foods[index].type &&
+//         food.restaurant === foods[index].restaurant
+//     );
+//     console.log(filteredFoods);
+//     let array = [];
+//     filteredFoods.forEach((food) => {
+//       const { title, description, price, imageUrl } = food;
+//       array.push({
+//         title,
+//         description,
+//         price,
+//         imageUrl,
+//       });
+//     });
 
-    if (filteredFoods.length !== 0) {
-      let foodRef = doc(collection(db, "foods"));
-      batch.set(foodRef, {
-        type,
-        restaurant,
-        foods: array,
-      });
+//     if (filteredFoods.length !== 0) {
+//       let foodRef = doc(collection(db, "foods"));
+//       batch.set(foodRef, {
+//         type,
+//         restaurant,
+//         foods: array,
+//       });
 
-      modifiedFoods = modifiedFoods.filter(
-        (food) =>
-          food.type !== foods[index].type ||
-          food.restaurant !== foods[index].restaurant
-      );
-      await batch.commit();
-      batch = writeBatch(db);
-    }
-  }
-};
+//       modifiedFoods = modifiedFoods.filter(
+//         (food) =>
+//           food.type !== foods[index].type ||
+//           food.restaurant !== foods[index].restaurant
+//       );
+//       await batch.commit();
+//       batch = writeBatch(db);
+//     }
+//   }
+// };
 
 // export const pushTable = async () => {
 //   await addDoc(collection(db, "tables"), {
