@@ -17,8 +17,7 @@ import { loginUserSuccess } from "./redux/reducers/user/user.actions";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserAuthentication } from "./redux/reducers/user/user.selectors";
 
-import IndividualRestaurant from "./components/restaurant/Restaurant";
-import SpecificRestaurant from "./components/restaurant/individual/IndividualRestaurantMenu" // rename 
+import SpecificRestaurant from "./components/restaurant/individual/IndividualRestaurantMenu"; // rename
 import { resizeScreen } from "./redux/reducers/ui/ui.actions";
 
 function App() {
@@ -55,7 +54,7 @@ function App() {
         <Route path='/' element={<Homepage />}></Route>
         <Route path='/restaurants' element={<RestaurantsPage />} />
         <Route path='/restaurants/:id' element={<RestaurantPrompts />} />
-        <Route path='/individual/' element={<SpecificRestaurant/>}></Route>
+        <Route path='/restaurants/:id/food' element={<SpecificRestaurant />} />
         {isAuthenticated && (
           <Route path='/sign-in' element={<SignInPage />}></Route>
         )}

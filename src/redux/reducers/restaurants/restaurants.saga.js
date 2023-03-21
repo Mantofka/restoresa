@@ -1,15 +1,10 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 
-import {
-  ON_RESTAURANTS_FETCH,
-  ON_RESTAURANTS_FETCH_FAIL,
-  ON_RESTAURANTS_FETCH_SUCCESS,
-} from "./restaurants.types";
+import { ON_RESTAURANTS_FETCH } from "./restaurants.types";
 
 import { fetchRestaurants } from "../../../utils/firebase/restaurants";
 
 import {
-  onRestaurantsFetch,
   onRestaurantsFetchFail,
   onRestaurantsFetchSuccess,
 } from "./restaurants.actions";

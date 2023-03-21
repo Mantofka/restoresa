@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const darkColor = "#23212b";
+import { darkColor } from "../../../utils/styles/styles";
 
 export const Container = styled.div`
     display: flex;

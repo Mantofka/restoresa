@@ -7,6 +7,13 @@ import {
   InlineWrapper,
 } from "./Homepage.styles";
 
+import { useSelector } from "react-redux";
+import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
+
+import Waiting from "../../images/waiting.png";
+import { isMobileSize } from "../../utils/ui";
+import { pushTable } from "../../firebase";
+
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -17,21 +24,100 @@ import {
   PrimaryButton,
 } from "../../utils/styles/styles";
 
-import { handleRestaurantFood } from "../../utils/firebase/documents";
-
-import { handleBatchPush } from "../../firebase";
-
-import { foodsData } from "../../output";
-
-import { useSelector } from "react-redux";
-import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
-
-import Waiting from "../../images/waiting.png";
-import { isMobileSize } from "../../utils/ui";
+let tableMock = [
+  {
+    busyness: [
+      {
+        date: "2023-03-22",
+        hour: 12,
+        minute: 0,
+      },
+      {
+        date: "2023-03-22",
+        hour: 20,
+        minute: 0,
+      },
+    ],
+    size: 2,
+    times: [
+      {
+        date: "2023-03-22",
+        hour: 10,
+        minute: 0,
+      },
+      {
+        date: "2023-03-22",
+        hour: 12,
+        minute: 0,
+      },
+      {
+        date: "2023-03-22",
+        hour: 14,
+        minute: 0,
+      },
+      {
+        date: "2023-03-22",
+        hour: 20,
+        minute: 0,
+      },
+    ],
+  },
+];
 
 function Homepage() {
   const screen = useSelector(selectScreen);
   const navigate = useNavigate();
+
+  const labas = () => {
+    let counter = 0;
+    let tableToOffer = null;
+    tableMock.forEach((doc) => {
+      if (counter === 0) {
+        const table = doc;
+        const { times, busyness } = table;
+        const modifiedTable = {
+          id: table.id,
+          timeSlots: [],
+        };
+
+        times.forEach(({ hour, minute, date }) => {
+          if (
+            busyness.find((busy) => {
+              return (
+                busy.hour === hour &&
+                busy.minute === minute &&
+                busy.date === date
+              );
+            })
+          ) {
+            modifiedTable.timeSlots = [
+              ...modifiedTable.timeSlots,
+              {
+                hour,
+                minute,
+                date,
+                isAllocated: true,
+              },
+            ];
+          } else {
+            counter++;
+            modifiedTable.timeSlots = [
+              ...modifiedTable.timeSlots,
+              {
+                hour,
+                minute,
+                date,
+                isAllocated: false,
+              },
+            ];
+          }
+        });
+        if (counter > 0) tableToOffer = modifiedTable;
+      }
+    });
+    console.log(tableToOffer);
+  };
+
   return (
     <LayoutContainer screen={screen}>
       <Container screen={screen}>

@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable indent */
 const functions = require("firebase-functions");
@@ -12,8 +13,6 @@ exports.getTablesByPrompts = functions.https.onRequest(async (req, res) => {
   //   const minute = req.query.minute;
 
   //   const db = admin.firestore();
-
-  const tables = [];
 
   //   admin
   //     .firestore()
@@ -40,35 +39,64 @@ exports.getTablesByPrompts = functions.https.onRequest(async (req, res) => {
 
   const query = admin.firestore().collection("tables");
 
-  query
-    .where("restaurant", "==", req.query.restaurant)
+  let tableToOffer;
+  let counter = 0;
+
+  // console.log(req.query.restaurant);
+  // console.log(req.query.seats);
+
+  await query
+    .where("restaurant", "==", `${req.query.restaurant}`)
+    .where("size", ">=", Number(req.query.seats))
+    .orderBy("size", "asc")
     .get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
-        tables.push(doc.data());
+        if (counter === 0) {
+          const table = { id: doc.id, ...doc.data() };
+          const { times, busyness } = table;
+          const modifiedTable = {
+            id: table.id,
+            timeSlots: [],
+          };
+
+          times.forEach(({ hour, minute }) => {
+            if (
+              busyness.find(
+                (busySlot) =>
+                  busySlot.hour === hour &&
+                  busySlot.minute === minute &&
+                  busySlot.date === req.query.date
+              )
+            ) {
+              modifiedTable.timeSlots = [
+                ...modifiedTable.timeSlots,
+                {
+                  hour,
+                  minute,
+                  isAllocated: true,
+                },
+              ];
+            } else {
+              counter++;
+              modifiedTable.timeSlots = [
+                ...modifiedTable.timeSlots,
+                {
+                  hour,
+                  minute,
+                  isAllocated: false,
+                },
+              ];
+            }
+          });
+          if (counter > 0) {
+            res.json({ data: modifiedTable });
+          }
+        }
       });
-      res.send(tables);
+    })
+    .catch((err) => {
+      res.send(err.message);
     });
+  console.log(tableToOffer);
 });
-
-//   .then((docRef) => {
-//     return admin.firestore().getAll(...docRef);
-//   }),
-//   .then((docSnapshots) => {
-//     for (const docSnapshot of docSnapshots) {
-//       if (docSnapshot.exists) {
-//         tables.push(docSnapshot.data());
-//       }
-//     }
-//   })
-//   .then(() => {
-//     return tables;
-//   }),
-
-// // Create and deploy your first functions
-// // https://firebase.google.com/docs/functions/get-started
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });

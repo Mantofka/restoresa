@@ -23,7 +23,6 @@ export const getFoodByRestaurantID = async (restaurantID) => {
       id: doc.id,
       ...doc.data(),
     });
-    // foods.push(doc.data().restaurant.id);
   });
   return foodArray;
 };

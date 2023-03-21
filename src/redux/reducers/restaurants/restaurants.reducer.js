@@ -2,8 +2,11 @@ import {
   ON_RESTAURANTS_FETCH,
   ON_RESTAURANTS_FETCH_FAIL,
   ON_RESTAURANTS_FETCH_SUCCESS,
+  ADD_RESTAURANT,
 } from "./restaurants.types";
 import moment from "moment";
+
+import { handleRestaurantAdd } from "./restaurants.actions";
 
 const initialState = {
   restaurants: {
@@ -45,6 +48,18 @@ const RestaurantsReducer = (state = initialState, action) => {
           data: action.payload,
           fetchedOn: moment().valueOf(),
           nextFetch: moment().valueOf() + 60 * 1000,
+        },
+      };
+    case ADD_RESTAURANT:
+      return {
+        ...state,
+        restaurants: {
+          ...state.restaurants,
+          pending: false,
+          error: undefined,
+          data: handleRestaurantAdd(state.restaurants.data, action.payload),
+          fetchedOn: moment().valueOf(),
+          nextFetch: undefined,
         },
       };
 

@@ -11,7 +11,7 @@ export const LayoutContainer = styled.div`
   min-height: calc(100vh);
   padding-bottom: 20px;
   ${({ screen }) =>
-    screen === "md" &&
+    (screen === "md" || screen === "sm") &&
     css`
     width: 92vw;
   }

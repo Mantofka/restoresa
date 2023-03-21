@@ -1,4 +1,4 @@
-import { collection, query, getDocs } from "firebase/firestore";
+import { collection, query, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 const getRestauransFromFirebase = new Promise(async (resolve, reject) => {
@@ -19,6 +19,20 @@ const getRestauransFromFirebase = new Promise(async (resolve, reject) => {
     reject(error.message);
   }
 });
+
+export const getRestaurantFromFirebase = async (restaurantId) => {
+  try {
+    const restaurantRef = doc(db, "restaurants", restaurantId);
+
+    const docSnap = await getDoc(restaurantRef);
+    if (docSnap.exists) {
+      return docSnap.data();
+    }
+    throw new Error("There is no restaurant with the given id.");
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
 export const fetchRestaurants = async () => {
   return await Promise.all([getRestauransFromFirebase]).then((res) => res[0]);

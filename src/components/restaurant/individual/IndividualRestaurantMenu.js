@@ -1,34 +1,50 @@
-import React from "react"
+import React, { useEffect, useState } from "react";
+
+import { getFoodByRestaurantID } from "../../../utils/firebase/documents";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { HeaderText } from "../../../utils/styles/styles";
+
+import { selectScreen } from "../../../redux/reducers/ui/ui.selectors";
+
+import { useRestaurant } from "../../restaurants/list/RestaurantList.utils";
 
 import {
-    HeaderText,
-  } from "../../../utils/styles/styles";
-
-import { Container, LayoutContainer, CategoryHeaderText } from "./IndividualRestaurantMenu.styles";
-import { DescriptionText } from "../../../utils/styles/styles";
+  Container,
+  CategoryHeaderText,
+} from "./IndividualRestaurantMenu.styles";
+import { LayoutContainer, DescriptionText } from "../../../utils/styles/styles";
 
 import RestaurantItemList from "./list/RestaurantItemList";
 
 function IndividualRestaurantMenu() {
-    return (
-        <LayoutContainer>
-            <Container>
-                <HeaderText>Baking Mad Hidden Lab</HeaderText>
-                <DescriptionText>Turbūt įspūdingiausi burgeriai mieste</DescriptionText>                
-            </Container>
+  const { id } = useParams();
+  const [restaurant] = useRestaurant(id);
+  const [restaurantFoods, setRestaurantFoods] = useState([]);
+  const screen = useSelector(selectScreen);
 
-            <Container>
-                <CategoryHeaderText>Burgeriai</CategoryHeaderText>
-                <RestaurantItemList />              
-            </Container>
+  useEffect(() => {
+    getFoodByRestaurantID(id).then((res) => setRestaurantFoods(res));
+    window.scrollTo(0, 0);
+  }, []);
 
-            <Container>
-                <CategoryHeaderText>Sharing is Caring</CategoryHeaderText>
-                <RestaurantItemList />
-            </Container>
-        </LayoutContainer>
+  console.log(restaurant);
 
-    );
+  return (
+    <LayoutContainer screen={screen}>
+      <Container>
+        <HeaderText>{restaurant.title}</HeaderText>
+        <DescriptionText>{restaurant.description}</DescriptionText>
+      </Container>
+
+      {restaurantFoods.map(({ type, ...restProps }) => (
+        <Container>
+          <CategoryHeaderText>{type}</CategoryHeaderText>
+          <RestaurantItemList foods={restProps} />
+        </Container>
+      ))}
+    </LayoutContainer>
+  );
 }
 
-export default IndividualRestaurantMenu
+export default IndividualRestaurantMenu;

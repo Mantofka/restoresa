@@ -8,6 +8,10 @@ import {
   PromptText,
 } from "./RestaurantPrompts.styles";
 
+import axios from "axios";
+
+import { useNavigate, useParams } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
@@ -57,6 +61,7 @@ const SeatsPrompt = ({ setState }) => {
   const dispatch = useDispatch();
   const [option, setOption] = useState(1);
   const screen = useSelector(selectScreen);
+  const { id } = useParams();
 
   const handleButton = () => {
     dispatch(setReservationSeats(Number(option)));
@@ -106,13 +111,26 @@ const TimePrompt = ({ setState }) => {
   const selectedDate = useSelector(selectDate);
   const selectedHour = useSelector(selectHour);
   const screen = useSelector(selectScreen);
+  const [timeSlots, setTimeSlots] = useState([]);
   const [value, setValue] = useState(moment().format("YYYY-MM-DD"));
   const [time, setTime] = useState(selectedHour);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(setReservationDate(value));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://us-central1-restoresa-65368.cloudfunctions.net/getTablesByPrompts?restaurant=3Bh14ojrNMtbrbCaR8ne&seats=2&date=${selectDate}`
+      )
+      .then((res) => {
+        setTimeSlots(res?.data?.data.timeSlots);
+        console.log(res.data);
+      });
+  }, [selectedDate]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleHour = (pickedTime) => {
@@ -140,12 +158,23 @@ const TimePrompt = ({ setState }) => {
         />
 
         <TimeContainer>
-          {hours.map(({ hour, minute, isAvailable }) => {
-            let formattedTime = `${hour}:${minute}`;
+          {timeSlots.map(({ hour, minute, isAllocated }) => {
+            let formattedTime;
+            if (hour < 10 && minute < 10) {
+              formattedTime = `0${hour}:${minute}0`;
+            } else if (hour < 10) {
+              formattedTime = `0${hour}:${minute}`;
+            } else if (minute < 10) {
+              formattedTime = `${hour}:${minute}0`;
+            } else {
+              formattedTime = `${hour}:${minute}`;
+            }
             return (
               <TimeContent
-                selected={`${time?.hour}:${time?.minute}` === formattedTime}
-                disabled={!isAvailable}
+                selected={
+                  `${time?.hour}:${time?.minute}` === `${hour}:${minute}`
+                }
+                disabled={isAllocated}
                 onClick={() => handleHour({ hour, minute })}
               >
                 {formattedTime}
@@ -157,7 +186,7 @@ const TimePrompt = ({ setState }) => {
       <InlineWrapper>
         <ContinueButton onClick={handleButtonBack}>Back</ContinueButton>
         <ContinueButton
-          onClick={() => console.log("Sdkasd")}
+          onClick={() => navigate("./food")}
           disabled={
             selectedDate === null || selectedHour === null ? true : false
           }
