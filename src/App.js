@@ -55,10 +55,10 @@ function App() {
         <Route path='/restaurants' element={<RestaurantsPage />} />
         <Route path='/restaurants/:id' element={<RestaurantPrompts />} />
         <Route path='/restaurants/:id/food' element={<SpecificRestaurant />} />
-        {isAuthenticated && (
+        {!isAuthenticated && (
           <Route path='/sign-in' element={<SignInPage />}></Route>
         )}
-        {isAuthenticated && (
+        {!isAuthenticated && (
           <Route path='/register' element={<RegisterPage />}></Route>
         )}
       </Routes>

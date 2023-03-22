@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 
-import { Container } from "./RestaurantList.styles";
+import { Container } from "./RestaurantsList.styles";
 
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { useRestaurants } from "./RestaurantList.utils";
+import { useRestaurants } from "./RestaurantsList.utils";
 
 import {
   selectRestaurantsError,

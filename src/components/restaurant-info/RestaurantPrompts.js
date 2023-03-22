@@ -83,38 +83,18 @@ const SeatsPrompt = ({ setState }) => {
   );
 };
 
-const hours = [
-  {
-    hour: 12,
-    minute: 30,
-    isAvailable: false,
-  },
-  {
-    hour: 13,
-    minute: 30,
-    isAvailable: true,
-  },
-  {
-    hour: 14,
-    minute: 30,
-    isAvailable: true,
-  },
-  {
-    hour: 15,
-    minute: 30,
-    isAvailable: false,
-  },
-];
-
 const TimePrompt = ({ setState }) => {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const selectedDate = useSelector(selectDate);
   const selectedHour = useSelector(selectHour);
+  const [isFetching, setIsFetching] = useState(false);
   const screen = useSelector(selectScreen);
   const [timeSlots, setTimeSlots] = useState([]);
   const [value, setValue] = useState(moment().format("YYYY-MM-DD"));
   const [time, setTime] = useState(selectedHour);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     dispatch(setReservationDate(value));
@@ -122,14 +102,24 @@ const TimePrompt = ({ setState }) => {
   }, [value]);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://us-central1-restoresa-65368.cloudfunctions.net/getTablesByPrompts?restaurant=3Bh14ojrNMtbrbCaR8ne&seats=2&date=${selectDate}`
-      )
-      .then((res) => {
-        setTimeSlots(res?.data?.data.timeSlots);
-        console.log(res.data);
-      });
+    if (!isFetching) {
+      setIsFetching(true);
+      axios({
+        method: "get",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        },
+        withCredentials: false,
+        url: `https://us-central1-restoresa-65368.cloudfunctions.net/getTablesByPrompts?restaurant=${id}&seats=2&date=${selectedDate}`,
+      })
+        .then((res) => {
+          setTimeSlots(res?.data?.data.timeSlots);
+          setIsFetching(false);
+        })
+        .catch((err) => {
+          setError(JSON.stringify(err));
+        });
+    }
   }, [selectedDate]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -150,6 +140,7 @@ const TimePrompt = ({ setState }) => {
   return (
     <Container screen={screen}>
       <PromptText>Which day and hour is suitable?</PromptText>
+      {/* <p>{error}</p> */}
       <InlineWrapper direction={"column"}>
         <Calendar
           minDate={new Date()}

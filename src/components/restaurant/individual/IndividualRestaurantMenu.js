@@ -7,7 +7,11 @@ import { HeaderText } from "../../../utils/styles/styles";
 
 import { selectScreen } from "../../../redux/reducers/ui/ui.selectors";
 
-import { useRestaurant } from "../../restaurants/list/RestaurantList.utils";
+import Loader from "../../loader/Loader";
+
+import { useRestaurant } from "../../restaurants/list/RestaurantsList.utils";
+
+import { isMobileSize } from "../../../utils/ui";
 
 import {
   Container,
@@ -28,16 +32,18 @@ function IndividualRestaurantMenu() {
     window.scrollTo(0, 0);
   }, []);
 
-  console.log(restaurant);
+  if (!restaurant) return <Loader />;
+
+  console.log(screen);
 
   return (
     <LayoutContainer screen={screen}>
       <Container>
-        <HeaderText>{restaurant.title}</HeaderText>
-        <DescriptionText>{restaurant.description}</DescriptionText>
+        <HeaderText>{restaurant?.title}</HeaderText>
+        <DescriptionText>{restaurant?.description}</DescriptionText>
       </Container>
 
-      {restaurantFoods.map(({ type, ...restProps }) => (
+      {restaurantFoods?.map(({ type, ...restProps }) => (
         <Container>
           <CategoryHeaderText>{type}</CategoryHeaderText>
           <RestaurantItemList foods={restProps} />

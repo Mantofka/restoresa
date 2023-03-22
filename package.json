@@ -1,6 +1,6 @@
 {
   "name": "foody-app",
-  "version": "0.2.2",
+  "version": "0.2.6",
   "private": true,
   "dependencies": {
     "@react-query-firebase/firestore": "^1.0.0-dev.7",

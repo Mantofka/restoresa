@@ -29,8 +29,11 @@ export const useRestaurants = () => {
 export const useRestaurant = (restaurantID) => {
   const dispatch = useDispatch();
   const restaurants = useSelector(selectRestaurantsInRestaurants);
-  const [restaurant, setRestaurant] = useState(restaurants.filter(({ id }) => id === restaurantID)[0]);
+  const [restaurant, setRestaurant] = useState(
+    restaurants.filter(({ id }) => id === restaurantID)
+  );
 
+  console.log(restaurant);
   useEffect(() => {
     const getRestaurant = async () => {
       let fetchedRestaurant = await getRestaurantFromFirebase(
@@ -38,15 +41,21 @@ export const useRestaurant = (restaurantID) => {
       ).then((res) => res);
       return fetchedRestaurant;
     };
-    if (restaurant.length === 0) {
+    if (!restaurant) setRestaurant({});
+    else if (restaurant.length === 0) {
       getRestaurant().then((res) => {
         dispatch(addRestaurant(res));
-        setRestaurant(res)
+        console.log(res);
+        setRestaurant(res);
       });
     }
   }, []);
 
-  console.log(restaurant)
+  useEffect(() => {
+    if (Array.isArray(restaurant)) {
+      setRestaurant(restaurant[0]);
+    }
+  }, [restaurant]);
 
   // const fetchRestaurants = () => {
   //   const { nextFetch } = restaurantsState;

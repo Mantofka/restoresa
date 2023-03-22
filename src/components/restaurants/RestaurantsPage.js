@@ -5,9 +5,9 @@ import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
 
 import { useSelector } from "react-redux";
 
-import { Container } from "./RestaurantPage.styles";
+import { Container } from "./RestaurantsPage.styles";
 
-import RestaurantList from "./list/RestaurantList";
+import RestaurantList from "./list/RestaurantsList";
 
 function RestaurantsPage() {
   const screen = useSelector(selectScreen);
