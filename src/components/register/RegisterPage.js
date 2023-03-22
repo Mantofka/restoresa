@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import {
   LayoutContainer,
@@ -32,6 +33,7 @@ import Input from "../input/Input";
 import { isMobileSize } from "../../utils/ui";
 
 function Register() {
+  const navigate = useNavigate();
   const screen = useSelector(selectScreen);
   const {
     setValue,
@@ -46,6 +48,9 @@ function Register() {
   const handleRegister = (e) => {
     const formValues = getValues();
     dispatch(registerUser(formValues));
+    setTimeout(() => {
+      navigate("/");
+    }, 500);
   };
 
   return (
