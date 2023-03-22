@@ -102,7 +102,7 @@ const TimePrompt = ({ setState }) => {
   }, [value]);
 
   useEffect(() => {
-    if (!isFetching) {
+    if (!isFetching && selectedDate) {
       setIsFetching(true);
       axios({
         method: "get",
