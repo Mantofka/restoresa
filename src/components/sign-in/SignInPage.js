@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -43,9 +44,7 @@ function SignInPage() {
   const screen = useSelector(selectScreen);
   const loginErrors = useSelector(selectUserError);
   const navigate = useNavigate();
-
   const handleLogin = () => {
-    console.log("lab");
     const formValues = getValues();
     dispatch(loginUser(formValues));
     setTimeout(() => {

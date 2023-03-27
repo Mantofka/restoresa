@@ -137,10 +137,12 @@ const TimePrompt = ({ setState }) => {
     setState(-1);
   };
 
+  console.log(timeSlots);
+
   return (
     <Container screen={screen}>
       <PromptText>Which day and hour is suitable?</PromptText>
-      {/* <p>{error}</p> */}
+      <p>{error}</p>
       <InlineWrapper direction={"column"}>
         <Calendar
           minDate={new Date()}
