@@ -27,6 +27,7 @@ export const Image = styled.img`
 
 export const Container = styled.div`
   display: flex;
+  cursor: pointer;
   flex-direction: row;
   align-items: space-between;
   justify-content: space-between;

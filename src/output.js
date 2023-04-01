@@ -416,7 +416,7 @@ export const foodsData = [
   },
   {
     type: "Drinks",
-    title: "Fanta 0,3 l\\r\\n",
+    title: "Fanta 0,3 l",
     description: null,
     price: 1.8,
     restaurant: "A5FH9H6brYKbFQnWOx2u",
@@ -425,7 +425,7 @@ export const foodsData = [
   },
   {
     type: "Sriubos",
-    title: "Burokėlių sriuba\\r\\n\\r\\n",
+    title: "Burokėlių sriuba",
     description: null,
     price: 2.3,
     restaurant: "3Bh14ojrNMtbrbCaR8ne",

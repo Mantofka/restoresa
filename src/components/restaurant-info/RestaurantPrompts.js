@@ -10,6 +10,8 @@ import {
 
 import axios from "axios";
 
+import Loader from "../loader/Loader";
+
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -150,7 +152,7 @@ const TimePrompt = ({ setState }) => {
           onChange={(e) => setValue(moment(e).format("YYYY-MM-DD"))}
         />
 
-        <TimeContainer>
+        {timeSlots.length > 0 ? <TimeContainer>
           {timeSlots.map(({ hour, minute, isAllocated }) => {
             let formattedTime;
             if (hour < 10 && minute < 10) {
@@ -174,7 +176,7 @@ const TimePrompt = ({ setState }) => {
               </TimeContent>
             );
           })}
-        </TimeContainer>
+        </TimeContainer> : <Loader />}
       </InlineWrapper>
       <InlineWrapper>
         <ContinueButton onClick={handleButtonBack}>Back</ContinueButton>

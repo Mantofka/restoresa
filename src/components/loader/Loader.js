@@ -1,6 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+import { yellowColor } from "../../utils/styles/styles";
+
 const loadingContainer = {
   width: "4rem",
   height: "4rem",
@@ -11,7 +13,7 @@ const loadingCircle = {
   display: "block",
   width: "1rem",
   height: "1rem",
-  backgroundColor: "#3A36DB",
+  backgroundColor: yellowColor,
   borderRadius: "0.5rem",
 };
 

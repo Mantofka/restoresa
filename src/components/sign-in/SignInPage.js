@@ -11,7 +11,6 @@ import {
 import { selectUserError } from "../../redux/reducers/user/user.selectors";
 
 import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
-import { useNavigate } from "react-router-dom";
 
 import {
   LayoutContainer,

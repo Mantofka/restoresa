@@ -1,8 +1,11 @@
-import { WINDOW_RESIZED } from "./ui.types";
+import { WINDOW_RESIZED, OPEN_ORDER_MODAL } from "./ui.types";
 import { defineScreen } from "./ui.actions";
 
 const initialState = {
   screen: defineScreen(window.innerWidth),
+  modals: {
+    isOrderModalOpen: false,
+  },
 };
 
 export const UIReducer = (state = initialState, action) => {
@@ -11,6 +14,14 @@ export const UIReducer = (state = initialState, action) => {
       return {
         ...state,
         screen: action.payload,
+      };
+    case OPEN_ORDER_MODAL:
+      return {
+        ...state,
+        modals: {
+          ...state.modals,
+          isOrderModalOpen: action.payload,
+        },
       };
     default:
       return {

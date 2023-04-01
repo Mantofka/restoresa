@@ -15,6 +15,7 @@ import { selectScreen } from "../../../redux/reducers/ui/ui.selectors";
 
 import IndividualRestaurant from "../../restaurant/Restaurant";
 import Loader from "../../loader/Loader";
+import { LayoutContainer } from "../../../utils/styles/styles";
 
 function RestaurantList() {
   const [restaurants, fetchRestaurants] = useRestaurants();
@@ -27,7 +28,12 @@ function RestaurantList() {
     fetchRestaurants();
   }, []);
 
-  if (isLoading) return <Loader />;
+  if (isLoading)
+    return (
+      <LayoutContainer style={{height: '800px'}}>
+          <Loader />
+      </LayoutContainer>
+    );
 
   return (
     <Container screen={screen}>

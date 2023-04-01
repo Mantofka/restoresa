@@ -33,7 +33,6 @@ export const useRestaurant = (restaurantID) => {
     restaurants.filter(({ id }) => id === restaurantID)
   );
 
-  console.log(restaurant);
   useEffect(() => {
     const getRestaurant = async () => {
       let fetchedRestaurant = await getRestaurantFromFirebase(

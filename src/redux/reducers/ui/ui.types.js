@@ -1,1 +1,2 @@
 export const WINDOW_RESIZED = "WINDOW_RESIZED";
+export const OPEN_ORDER_MODAL = "OPEN_ORDER_MODAL";
