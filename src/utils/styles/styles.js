@@ -6,6 +6,7 @@ export const greyColor = "#4E4A5A";
 export const yellowColor = "#FECE52";
 
 export const LayoutContainer = styled.div`
+  overflow: hidden;
   width: min(80vw, 1200px);
   margin: 0 auto;
   min-height: calc(100vh);
@@ -44,10 +45,9 @@ export const DescriptionText = styled.h1`
 export const InlineWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  gap: ${({ gap }) => gap | "40px"};
+  gap: ${({ gap }) => gap || "40px"};
   align-items: center;
-  justify-content: space-between;
-  padding-top: 80px;
+  justify-content: ${({ justify }) => justify || "space-between"};
 `;
 
 export const TextContainer = styled.div`
@@ -118,7 +118,7 @@ height: 450px;
 export const PickupText = styled.h1`
   color: ${darkColor};
   font-size: 56px;
-  width: ${({ width }) => width || "10ch"};
+  width: ${({ width }) => width || "15ch"};
   font-weight: 800;
   ${({ screen }) =>
     screen === "md" &&
@@ -146,11 +146,16 @@ export const Form = styled.form`
   gap: 5px;
   width: 320px;
   ${({ screen }) =>
-    (screen === "sm" || screen === "sm") &&
+    (screen === "sm" || screen === "xs") &&
     css`
     width: 270px;
   }
 `}
+  ${({ inheritWidth }) =>
+    inheritWidth &&
+    css`
+      width: 100% !important;
+    `}
 `;
 
 export const MiddleScreen = styled.div`

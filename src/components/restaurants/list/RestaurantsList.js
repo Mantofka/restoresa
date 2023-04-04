@@ -30,8 +30,17 @@ function RestaurantList() {
 
   if (isLoading)
     return (
-      <LayoutContainer style={{height: '800px'}}>
+      <LayoutContainer>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "50vh",
+          }}
+        >
           <Loader />
+        </div>
       </LayoutContainer>
     );
 

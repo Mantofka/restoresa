@@ -38,7 +38,7 @@ function Header() {
   const isOrderModalOpen = useSelector(selectIsOrderModalOpen);
   const foods = useSelector(selectSelectedFoods);
 
-  const isAnchorActive = (text) => pathname === text;
+  const isAnchorActive = (text) => pathname.includes(text);
 
   return (
     <>

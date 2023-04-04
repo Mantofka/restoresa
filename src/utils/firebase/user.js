@@ -5,6 +5,8 @@ import {
   updateProfile,
   GoogleAuthProvider,
   signInWithPopup,
+  reauthenticateWithCredential,
+  updatePhoneNumber,
 } from "firebase/auth";
 
 const googleProvider = new GoogleAuthProvider();
@@ -49,10 +51,40 @@ export const registerToFirebase = async (userCredentials) => {
       displayName: fullName,
     });
     const {
-      user: { displayName, uid },
+      user: { uid },
     } = user;
     return { fullName, email, uid };
   } catch (error) {
     throw Error("Something went wrong. Please try again in a moment.");
   }
+};
+
+export const changeUserPassword = async (userCredentials) => {
+  const { email, currentPassword } = userCredentials;
+
+  // const credential = await EmailAuthCredential.credential(
+  //   email,
+  //   currentPassword
+  // );
+  // console.log(credential);
+
+  // const credential = EmailAuthCredential.credential(email, currentPassword);
+  // console.log(credential);
+  const user = auth.currentUser;
+  console.log(user);
+  await reauthenticateWithCredential(user, { email, password: currentPassword })
+    .then(() => {
+      console.log("wowww");
+    })
+    .catch((err) => console.log(err));
+};
+
+export const changeUserPhoneNumber = async (newNumber) => {
+  updatePhoneNumber(auth.currentUser, {
+    phoneNumber: newNumber,
+  })
+    .then(() => {
+      console.log("Updated successfully.");
+    })
+    .catch((err) => console.warn("Whoops, something went wrong"));
 };

@@ -63,7 +63,6 @@ function Register() {
               Sign up with Google
             </OutlinedButton>
             <DescriptionText style={{ margin: "0 auto" }}>or</DescriptionText>
-            <ErrorText>This email address already in use.</ErrorText>
             <Form screen={screen} onSubmit={handleSubmit(handleRegister)}>
               <Input
                 type='text'

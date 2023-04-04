@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 import { darkColor, greyColor } from "../../../utils/styles/styles";
 
@@ -14,6 +15,7 @@ export const DescriptionText = styled.h1`
   font-weight: 400;
   font-size: 12px;
   padding-bottom: 10px;
+  overflow: hidden;
 `;
 
 export const Image = styled.img`
@@ -25,7 +27,7 @@ export const Image = styled.img`
   }
 `;
 
-export const Container = styled.div`
+export const Container = styled(motion.div)`
   display: flex;
   cursor: pointer;
   flex-direction: row;
@@ -36,15 +38,15 @@ export const Container = styled.div`
   height: 135px;
   padding: 10px;
   gap: 15px;
+
+  -webkit-box-shadow: 1px 1px 4px 0px rgba(27, 27, 27, 0.2);
+  box-shadow: 1px 1px 4px 0px rgba(27, 27, 27, 0.2);
   @media screen and (max-width: 500px) {
     ${Image} {
       width: 35%;
     }
     ${FoodTitle} {
       font-size: 14px;
-    }
-    ${DescriptionText}{
-      font-size: 10px;
     }
   }
 `;
@@ -72,7 +74,7 @@ export const CostContainer = styled.div`
 
 export const CostText = styled.h1`
   color: ${greyColor};
-  font-weight: 400;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 14px;
   padding: 0;
 `;

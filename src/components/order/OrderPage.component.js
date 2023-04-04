@@ -26,8 +26,6 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { isMobileSize } from "../../utils/ui";
-
 import OutsideAlerter from "../outside-alerter/OutsideAlerter";
 
 import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
@@ -80,7 +78,7 @@ function OrderPage() {
               <Wrapper
                 style={{ justifyContent: "space-between", width: "100%" }}
               >
-                <Title>Order</Title>
+                <Title style={{ float: "left" }}>Order</Title>
                 <CloseIcon
                   sx={{ cursor: "pointer" }}
                   onClick={() => dispatch(openOrderModal(false))}

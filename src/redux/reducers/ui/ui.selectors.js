@@ -8,3 +8,13 @@ export const selectIsOrderModalOpen = createSelector(
   [selectUI],
   (ui) => ui.modals.isOrderModalOpen
 );
+
+export const selectIsResetPasswordModalOpen = createSelector(
+  [selectUI],
+  (ui) => ui.modals.isChangePasswordModalOpen
+);
+
+export const selectIsChangePhoneNumberModalOpen = createSelector(
+  [selectUI],
+  (ui) => ui.modals.isChangePhoneNumberModalOpen
+);

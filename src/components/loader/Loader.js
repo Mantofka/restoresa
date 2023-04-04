@@ -4,28 +4,29 @@ import { motion } from "framer-motion";
 import { yellowColor } from "../../utils/styles/styles";
 
 const loadingContainer = {
-  width: "4rem",
-  height: "4rem",
+  width: "4.5rem",
   display: "flex",
   justifyContent: "space-around",
 };
 const loadingCircle = {
   display: "block",
-  width: "1rem",
-  height: "1rem",
+  width: "1.2rem",
+  height: "1.2rem",
   backgroundColor: yellowColor,
-  borderRadius: "0.5rem",
+  borderRadius: "0.6rem",
 };
 
 const loadingContainerVariants = {
   start: {
     transition: {
       staggerChildren: 0.2,
+      repeat: Infinity,
     },
   },
   end: {
     transition: {
       staggerChildren: 0.2,
+      repeat: Infinity,
     },
   },
 };
@@ -35,12 +36,12 @@ const loadingCircleVariants = {
     y: "0%",
   },
   end: {
-    y: "60%",
+    y: ["0%", "20%", "0%"],
   },
 };
 const loadingCircleTransition = {
-  duration: 0.4,
-  yoyo: Infinity,
+  duration: 0.8,
+  repeat: Infinity,
   ease: "easeInOut",
 };
 
@@ -52,6 +53,7 @@ const Loader = () => {
         <motion.div
           style={loadingContainer}
           variants={loadingContainerVariants}
+          transition={loadingCircleTransition}
           initial='start'
           animate='end'
         >
