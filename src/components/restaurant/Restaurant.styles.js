@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: all 250ms ease-in-out;
 `;
 
 export const ImageContainer = styled.div`
@@ -14,7 +16,7 @@ export const ImageContainer = styled.div`
   overflow: hidden;
 `;
 
-export const Container = styled.div`
+export const Container = styled(motion.div)`
   display: flex;
   flex-direction: column;
   height: 250px;
@@ -22,10 +24,11 @@ export const Container = styled.div`
   border-radius: 10px;
   background-color: #faf6f6;
   cursor: pointer;
-  transition: all 250ms ease-in-out;
+  -webkit-box-shadow: 1px 1px 4px 0px rgba(27, 27, 27, 0.2);
+  box-shadow: 1px 1px 4px 0px rgba(27, 27, 27, 0.2);
   &:hover {
     ${Image} {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
   }
 `;

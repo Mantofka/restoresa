@@ -1,7 +1,11 @@
 import {
+  ADD_FOOD,
+  CLEAR_FOODS,
+  REMOVE_FOOD,
   SET_RESERVATION_DATE,
   SET_RESERVATION_HOUR,
   SET_RESERVATION_SEATS,
+  SET_RESTAURANT
 } from "./reservation.types";
 
 export const setReservationHour = (time) => {
@@ -38,3 +42,33 @@ export const setReservationSeats = (seats) => {
     payload: seats,
   };
 };
+
+export const addFood = (food) => {
+  return {
+    type: ADD_FOOD,
+    payload: food,
+  };
+};
+
+export const removeFood = (food) => {
+  return {
+    type: REMOVE_FOOD,
+    payload: food,
+  };
+};
+
+export const clearFood = (food) => {
+  return {
+    type: CLEAR_FOODS,
+    payload: food,
+  };
+};
+
+export const setRestaurant = (restaurant) => {
+  return {
+    type: SET_RESTAURANT,
+    payload: restaurant,
+  };
+};
+
+

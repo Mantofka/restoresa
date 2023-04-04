@@ -10,6 +10,8 @@ import {
 
 import axios from "axios";
 
+import Loader from "../loader/Loader";
+
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -36,7 +38,7 @@ import { useLocation } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-import { PickupText, LayoutContainer } from "../../utils/styles/styles";
+import { LayoutContainer } from "../../utils/styles/styles";
 
 import Select from "../select/Select";
 
@@ -137,10 +139,12 @@ const TimePrompt = ({ setState }) => {
     setState(-1);
   };
 
+  console.log(timeSlots);
+
   return (
     <Container screen={screen}>
       <PromptText>Which day and hour is suitable?</PromptText>
-      {/* <p>{error}</p> */}
+      <p>{error}</p>
       <InlineWrapper direction={"column"}>
         <Calendar
           minDate={new Date()}
@@ -148,31 +152,35 @@ const TimePrompt = ({ setState }) => {
           onChange={(e) => setValue(moment(e).format("YYYY-MM-DD"))}
         />
 
-        <TimeContainer>
-          {timeSlots.map(({ hour, minute, isAllocated }) => {
-            let formattedTime;
-            if (hour < 10 && minute < 10) {
-              formattedTime = `0${hour}:${minute}0`;
-            } else if (hour < 10) {
-              formattedTime = `0${hour}:${minute}`;
-            } else if (minute < 10) {
-              formattedTime = `${hour}:${minute}0`;
-            } else {
-              formattedTime = `${hour}:${minute}`;
-            }
-            return (
-              <TimeContent
-                selected={
-                  `${time?.hour}:${time?.minute}` === `${hour}:${minute}`
-                }
-                disabled={isAllocated}
-                onClick={() => handleHour({ hour, minute })}
-              >
-                {formattedTime}
-              </TimeContent>
-            );
-          })}
-        </TimeContainer>
+        {!isFetching ? (
+          <TimeContainer>
+            {timeSlots.map(({ hour, minute, isAllocated }) => {
+              let formattedTime;
+              if (hour < 10 && minute < 10) {
+                formattedTime = `0${hour}:${minute}0`;
+              } else if (hour < 10) {
+                formattedTime = `0${hour}:${minute}`;
+              } else if (minute < 10) {
+                formattedTime = `${hour}:${minute}0`;
+              } else {
+                formattedTime = `${hour}:${minute}`;
+              }
+              return (
+                <TimeContent
+                  selected={
+                    `${time?.hour}:${time?.minute}` === `${hour}:${minute}`
+                  }
+                  disabled={isAllocated}
+                  onClick={() => handleHour({ hour, minute })}
+                >
+                  {formattedTime}
+                </TimeContent>
+              );
+            })}
+          </TimeContainer>
+        ) : (
+          <Loader />
+        )}
       </InlineWrapper>
       <InlineWrapper>
         <ContinueButton onClick={handleButtonBack}>Back</ContinueButton>

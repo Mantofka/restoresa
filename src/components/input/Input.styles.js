@@ -24,3 +24,9 @@ export const InputField = styled.input`
   font-size: 12px;
   outline: none;
 `;
+
+export const ChangeText = styled.p`
+  font-size: 14px;
+  color: #334ccf;
+  cursor: pointer;
+`;

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { yellowColor, darkColor } from "../../utils/styles/styles";
 
 export const Container = styled.div`
   height: 70px;
@@ -11,8 +12,10 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  position: relative;
+
   ${({ screen }) =>
-    screen === "md" &&
+    (screen === "sm" || screen === "md") &&
     css`
       width: 100vw;
       border-radius: 0px;
@@ -21,7 +24,7 @@ export const Container = styled.div`
       }
     `}
   ${({ screen }) =>
-    screen === "sm" &&
+    screen === "xs" &&
     css`
       width: 100vw;
       border-radius: 0px;
@@ -66,5 +69,17 @@ export const ProfileIcon = styled.div`
   width: 32px;
   height: 32px;
   background-color: #fff;
+  cursor: pointer;
+`;
+
+export const OrderContainerButton = styled.button`
+  background-color: ${yellowColor};
+  color: ${darkColor};
+  font-size: 16px;
+  border-radius: 15px;
+  min-width: 50px;
+  border: none;
+  line-height: 20px;
+  padding: 6px 12px;
   cursor: pointer;
 `;

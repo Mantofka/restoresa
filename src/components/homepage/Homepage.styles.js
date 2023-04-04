@@ -7,8 +7,9 @@ import {
 
 export const Container = styled.div`
   width: 100%;
+  margin-top: 80px;
   ${({ screen }) =>
-    screen === "sm" &&
+    (screen === "sm" || screen === "xs") &&
     css`
     ${SmallerText}{
 

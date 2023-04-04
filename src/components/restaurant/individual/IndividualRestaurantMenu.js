@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import { getFoodByRestaurantID } from "../../../utils/firebase/documents";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { HeaderText } from "../../../utils/styles/styles";
+
+import { useNavigate } from "react-router-dom";
 
 import { selectScreen } from "../../../redux/reducers/ui/ui.selectors";
 
@@ -11,30 +13,63 @@ import Loader from "../../loader/Loader";
 
 import { useRestaurant } from "../../restaurants/list/RestaurantsList.utils";
 
-import { isMobileSize } from "../../../utils/ui";
+import {
+  selectDate,
+  selectHour,
+  selectSeats,
+  selectReservationRestaurant,
+} from "../../../redux/reducers/reservation/reservation.selectors";
+
+import { setRestaurant } from "../../../redux/reducers/reservation/reservation.actions";
 
 import {
   Container,
   CategoryHeaderText,
 } from "./IndividualRestaurantMenu.styles";
-import { LayoutContainer, DescriptionText } from "../../../utils/styles/styles";
+import {
+  LayoutContainer,
+  DescriptionText,
+  MiddleScreen,
+} from "../../../utils/styles/styles";
 
 import RestaurantItemList from "./list/RestaurantItemList";
 
 function IndividualRestaurantMenu() {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [restaurant] = useRestaurant(id);
   const [restaurantFoods, setRestaurantFoods] = useState([]);
   const screen = useSelector(selectScreen);
+  const seats = useSelector(selectSeats);
+  const hour = useSelector(selectHour);
+  const date = useSelector(selectDate);
+  const reservationRestaurant = useSelector(selectReservationRestaurant);
 
   useEffect(() => {
     getFoodByRestaurantID(id).then((res) => setRestaurantFoods(res));
+
     window.scrollTo(0, 0);
   }, []);
 
-  if (!restaurant) return <Loader />;
+  useEffect(() => {
+    if (
+      reservationRestaurant === null &&
+      typeof restaurant === "object" &&
+      Object.keys(restaurant).length > 0
+    ) {
+      dispatch(setRestaurant(restaurant));
+    }
+  }, [restaurant]);
 
-  console.log(screen);
+  if (!seats || !hour || !date) navigate(`/restaurants/${id}`);
+
+  if (!restaurant)
+    return (
+      <MiddleScreen>
+        <Loader />
+      </MiddleScreen>
+    );
 
   return (
     <LayoutContainer screen={screen}>

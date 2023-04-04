@@ -6,6 +6,7 @@ import SignInPage from "./components/sign-in/SignInPage";
 import RegisterPage from "./components/register/RegisterPage";
 import RestaurantPrompts from "./components/restaurant-info/RestaurantPrompts";
 import Footer from "./components/footer/Footer";
+import ProfilePage from "./components/profile/ProfilePage";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -55,6 +56,7 @@ function App() {
         <Route path='/restaurants' element={<RestaurantsPage />} />
         <Route path='/restaurants/:id' element={<RestaurantPrompts />} />
         <Route path='/restaurants/:id/food' element={<SpecificRestaurant />} />
+        <Route path='/me' element={<ProfilePage />} />
         {!isAuthenticated && (
           <Route path='/sign-in' element={<SignInPage />}></Route>
         )}
