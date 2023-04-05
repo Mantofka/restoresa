@@ -119,14 +119,14 @@ function OrderPage() {
                     food;
                   return (
                     <ElementContainer key={id} padding={"15px"}>
-                      <Wrapper gap={"15px"}>
+                      <Wrapper gap={"15px"} style={{ width: "100%" }}>
                         <Image src={imageUrl} alt={"aksdoaskdo"} />
                         <TextContainer placeGap={"10px"}>
                           <FoodTitle orderPage>{title}</FoodTitle>
                           <DescriptionText>{description}</DescriptionText>
                           <PriceContainer>{price} €</PriceContainer>
                         </TextContainer>
-                        <Wrapper gap={"5px"}>
+                        <Wrapper gap={"5px"} style={{ marginLeft: "auto" }}>
                           <AddIcon
                             onClick={() => dispatch(addFood(food))}
                             sx={{ fontSize: 18, cursor: "pointer" }}
