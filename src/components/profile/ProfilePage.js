@@ -41,7 +41,9 @@ function ProfilePage() {
   return (
     <LayoutContainer screen={screen}>
       <Container>
-        <HeaderText style={{ marginBottom: "35px" }}>Hello, Virgis</HeaderText>
+        <HeaderText style={{ marginBottom: "35px" }}>
+          Hello, {user?.displayName.split(" ")[0]}
+        </HeaderText>
         <Wrapper
           screen={screen}
           justify={"center"}
