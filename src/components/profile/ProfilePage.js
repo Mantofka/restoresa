@@ -42,7 +42,7 @@ function ProfilePage() {
     <LayoutContainer screen={screen}>
       <Container>
         <HeaderText style={{ marginBottom: "35px" }}>
-          Hello, {user?.displayName.split(" ")[0]}
+          Hello, {user?.displayName?.split(" ")[0]}
         </HeaderText>
         <Wrapper
           screen={screen}
