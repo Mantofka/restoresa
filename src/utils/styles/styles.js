@@ -77,6 +77,13 @@ export const PrimaryButton = styled.button`
   color: ${darkColor};
   font-weight: 600;
   cursor: pointer;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: #feebb9;
+      opacity: 0.75;
+      cursor: unset;
+    `}
 `;
 
 export const Bubble = styled.div`

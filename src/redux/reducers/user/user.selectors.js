@@ -16,3 +16,8 @@ export const selectUserAuthentication = createSelector(
   [selectUserState],
   (user) => user.user.isAuthenticated
 );
+
+export const selectChangePassword = createSelector(
+  [selectUserState],
+  (user) => user.changePassword
+);

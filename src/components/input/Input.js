@@ -3,11 +3,11 @@ import React, { forwardRef } from "react";
 import { Container, InputField, Label, ChangeText } from "./Input.styles";
 
 const Input = forwardRef(
-  ({ label, changeField, onChangeFieldClick, ...restProps }, ref) => {
+  ({ label, changeField, onChangeFieldClick, wrong, ...restProps }, ref) => {
     return (
       <Container>
         {label ? <Label>{label}</Label> : null}
-        <InputField ref={ref} {...restProps} />
+        <InputField wrong={wrong} ref={ref} {...restProps} />
         {changeField ? (
           <ChangeText onClick={onChangeFieldClick}>{changeField}</ChangeText>
         ) : null}

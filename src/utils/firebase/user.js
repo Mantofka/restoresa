@@ -7,7 +7,9 @@ import {
   signInWithPopup,
   reauthenticateWithCredential,
   updatePhoneNumber,
+  EmailAuthProvider,
 } from "firebase/auth";
+import axios from "axios";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -60,23 +62,38 @@ export const registerToFirebase = async (userCredentials) => {
 };
 
 export const changeUserPassword = async (userCredentials) => {
-  const { email, currentPassword } = userCredentials;
-
-  // const credential = await EmailAuthCredential.credential(
-  //   email,
-  //   currentPassword
-  // );
-  // console.log(credential);
-
-  // const credential = EmailAuthCredential.credential(email, currentPassword);
-  // console.log(credential);
+  const { currentPassword, newPassword } = userCredentials;
+  console.log(userCredentials);
   const user = auth.currentUser;
+  const authCredentials = EmailAuthProvider.credential(
+    user.email,
+    currentPassword
+  );
   console.log(user);
-  await reauthenticateWithCredential(user, { email, password: currentPassword })
+  console.log(authCredentials);
+  await reauthenticateWithCredential(user, authCredentials)
     .then(() => {
-      console.log("wowww");
+      axios
+        .post(
+          "https://us-central1-restoresa-65368.cloudfunctions.net/changePassword",
+          {
+            uid: user.uid,
+            password: newPassword,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => console.log(res))
+        .catch((err) => {
+          throw new Error("Cannot change password to the new one.");
+        });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      throw new Error("Incorrect old password");
+    });
 };
 
 export const changeUserPhoneNumber = async (newNumber) => {

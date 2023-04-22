@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { darkColor, yellowColor } from "../../utils/styles/styles";
 
@@ -23,6 +23,11 @@ export const InputField = styled.input`
   padding: 0 10px;
   font-size: 12px;
   outline: none;
+  ${({ wrong }) =>
+    wrong &&
+    css`
+      border: 1px solid #fa5729;
+    `}
 `;
 
 export const ChangeText = styled.p`

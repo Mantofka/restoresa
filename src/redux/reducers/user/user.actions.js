@@ -6,6 +6,9 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_WITH_GOOGLE,
+  SET_CHANGE_PASSWORD_FAIL,
+  SET_CHANGE_PASSWORD,
+  SET_CHANGE_PASSWORD_SUCCESS,
 } from "./user.types";
 
 export const loginUserWithGoogle = () => {
@@ -29,7 +32,6 @@ export const loginUserFail = (error) => {
 };
 
 export const loginUserSuccess = (user) => {
-  console.log(user);
   return {
     type: USER_LOGIN_SUCCESS,
     payload: user,
@@ -54,5 +56,26 @@ export const registerUserSuccess = (user) => {
   return {
     type: USER_REGISTER_SUCCESS,
     payload: user,
+  };
+};
+
+export const setChangePassword = (passwords) => {
+  return {
+    type: SET_CHANGE_PASSWORD,
+    payload: passwords,
+  };
+};
+
+export const setChangePasswordFail = (message) => {
+  return {
+    type: SET_CHANGE_PASSWORD_FAIL,
+    payload: message,
+  };
+};
+
+export const setChangePasswordSuccess = (message) => {
+  return {
+    type: SET_CHANGE_PASSWORD_SUCCESS,
+    payload: message,
   };
 };

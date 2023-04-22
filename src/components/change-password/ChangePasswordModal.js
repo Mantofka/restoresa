@@ -17,14 +17,17 @@ import {
 import OutsideAlerter from "../outside-alerter/OutsideAlerter";
 
 import { openResetPasswordModal } from "../../redux/reducers/ui/ui.actions";
-import { selectCurrentUser } from "../../redux/reducers/user/user.selectors";
+import {
+  selectCurrentUser,
+  selectChangePassword,
+} from "../../redux/reducers/user/user.selectors";
 
 import {
   selectScreen,
   selectIsResetPasswordModalOpen,
 } from "../../redux/reducers/ui/ui.selectors";
 import { useSelector, useDispatch } from "react-redux";
-import { changeUserPassword } from "../../utils/firebase/user";
+import { setChangePassword } from "../../redux/reducers/user/user.actions";
 
 function ChangePasswordModal() {
   const {
@@ -39,11 +42,11 @@ function ChangePasswordModal() {
 
   const screen = useSelector(selectScreen);
   const isOpened = useSelector(selectIsResetPasswordModalOpen);
-  const user = useSelector(selectCurrentUser);
+  const passwordText = useSelector(selectChangePassword);
 
   const handleChangePassword = (e) => {
     const { currentPassword, newPassword } = getValues();
-    changeUserPassword({ email: user.email, currentPassword, newPassword });
+    dispatch(setChangePassword({ currentPassword, newPassword }));
   };
 
   return (
@@ -62,6 +65,7 @@ function ChangePasswordModal() {
               >
                 <TextContainer placeGap='10px' style={{ marginBottom: "25px" }}>
                   <Input
+                    wrong={!passwordText.isSuccess}
                     type='password'
                     label='Current Password'
                     name='currentPassword'
@@ -101,7 +105,9 @@ function ChangePasswordModal() {
                   />
                   <ErrorText>{errors.repeatNewPassword?.message}</ErrorText>
                 </TextContainer>
-                <PrimaryButton type='submit'>Change Password</PrimaryButton>
+                <PrimaryButton disabled={passwordText.isPending} type='submit'>
+                  {passwordText.message || "Change Password"}
+                </PrimaryButton>
               </Form>
             </ModalContainer>
           </OutsideAlerter>

@@ -10,6 +10,8 @@
     "@mui/styled-engine-sc": "^5.11.11",
     "@react-query-firebase/firestore": "^1.0.0-dev.7",
     "@reduxjs/toolkit": "^1.9.3",
+    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/stripe-js": "^1.52.1",
     "@tanstack/react-query": "^4.28.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

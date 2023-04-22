@@ -7,6 +7,24 @@ const cors = require("cors")({ origin: true });
 const admin = require("firebase-admin");
 admin.initializeApp();
 
+exports.changePassword = functions.https.onRequest(async (req, res) => {
+  cors(req, res, async () => {
+    const { uid, password } = req.body;
+    console.log(uid, password);
+    admin
+      .auth()
+      .updateUser(uid, {
+        password: password,
+      })
+      .then(() => {
+        res.json({ state: "success", text: "Updated Successfully!" });
+      })
+      .catch((err) => {
+        res.json({ state: "error", text: err.message });
+      });
+  });
+});
+
 exports.getTablesByPrompts = functions.https.onRequest(async (req, res) => {
   cors(req, res, async () => {
     const query = admin.firestore().collection("tables");
@@ -72,33 +90,4 @@ exports.getTablesByPrompts = functions.https.onRequest(async (req, res) => {
       });
     console.log(tableToOffer);
   });
-  //   const seats = req.query.seats;
-  //   const date = req.query.date;
-  //   const hour = req.query.hour;
-  //   const minute = req.query.minute;
-
-  //   const db = admin.firestore();
-
-  //   admin
-  //     .firestore()
-  //     .collection("tables")
-  //     .listDocuments()
-  //     .then((docRef) => {
-  //       return admin.firestore().getAll(...docRef);
-  //     })
-  //     .then((docSnapshots) => {
-  //       for (const docSnapshot of docSnapshots) {
-  //         if (docSnapshot.exists) {
-  //           tables.push(docSnapshot.data());
-  //         }
-  //       }
-  //     })
-  //     .then(() => {
-  //       return tables;
-  //     });
-
-  //   query(
-  //     collection(db, "foods"),
-  //     where("restaurant", "==", restaurantID)
-  //   );
 });
