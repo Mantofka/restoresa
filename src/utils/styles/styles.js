@@ -40,6 +40,9 @@ export const DescriptionText = styled.h1`
   color: ${greyColor};
   font-weight: 400;
   font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 export const InlineWrapper = styled.div`
