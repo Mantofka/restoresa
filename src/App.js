@@ -5,6 +5,7 @@ import RestaurantsPage from "./components/restaurants/RestaurantsPage";
 import SignInPage from "./components/sign-in/SignInPage";
 import RegisterPage from "./components/register/RegisterPage";
 import RestaurantPrompts from "./components/restaurant-info/RestaurantPrompts";
+import IndividualOrder from "./components/individual-order/IndividualOrder";
 import Footer from "./components/footer/Footer";
 import ProfilePage from "./components/profile/ProfilePage";
 import Stripe from "./components/stripe/Stripe.component";
@@ -73,6 +74,10 @@ function App() {
             <Route path='/register' element={<RegisterPage />}></Route>
           )}
           {isAuthenticated && <Route path='/me' element={<ProfilePage />} />}
+
+
+          <Route path='/individual' element={<IndividualOrder/>} />
+
         </Routes>
         <Footer />
       </QueryClientProvider>
