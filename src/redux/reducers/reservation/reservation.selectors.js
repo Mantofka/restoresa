@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-const selectReservation = (state) => state.reservation;
+export const selectReservation = (state) => state.reservation;
 
 export const selectSeats = createSelector(
   [selectReservation],

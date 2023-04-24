@@ -186,3 +186,15 @@ export const SectionTitle = styled.h3`
   font-weight: 500;
   font-size: 16px;
 `;
+
+export const ElementContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: #fbf6f6;
+  padding: ${({ padding }) => padding || "10px"};
+  width: 100%;
+  border-radius: 10px;
+  gap: 15px;
+`;

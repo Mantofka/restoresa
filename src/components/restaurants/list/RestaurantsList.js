@@ -30,7 +30,7 @@ function RestaurantList() {
 
   if (isLoading)
     return (
-      <LayoutContainer>
+      <LayoutContainer screen={screen}>
         <div
           style={{
             display: "flex",

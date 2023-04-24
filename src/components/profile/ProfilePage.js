@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import moment from "moment";
 
 import {
   LayoutContainer,
@@ -18,6 +19,8 @@ import {
 
 import { selectCurrentUser } from "../../redux/reducers/user/user.selectors";
 
+import { useOrders } from "../../utils/orders";
+
 import {
   Container,
   OrderElement,
@@ -36,7 +39,15 @@ import ChangePhoneNumberModal from "../change-phone-number/ChangePhoneNumberModa
 function ProfilePage() {
   const screen = useSelector(selectScreen);
   const user = useSelector(selectCurrentUser);
+  const orders = useOrders(user.uid);
+  const [fetchedOrders, setFetchedOrders] = useState([]);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    orders.then((res) => setFetchedOrders(res));
+  }, [orders]);
+
+  console.log(fetchedOrders);
 
   return (
     <LayoutContainer screen={screen}>
@@ -92,18 +103,22 @@ function ProfilePage() {
             <TextContainer>
               <Label>Orders history</Label>
             </TextContainer>
-            {[1, 2, 3].map((element) => (
+            {fetchedOrders.map(({ date, hour, id }) => (
               <OrderElement>
-                <InlineWrapper>
-                  <TextContainer placeGap={"5px"}>
+                <InlineWrapper justify={"flex-start"} gap={"20px"}>
+                  <TextContainer placeGap={"5px"} justify={"flex-start"}>
                     <BlandText style={{ fontSize: "12px" }}>
                       ORDER NUMBER
                     </BlandText>
-                    <DescriptionText>#26262624</DescriptionText>
+                    <DescriptionText>{id}</DescriptionText>
                   </TextContainer>
                   <TextContainer placeGap={"5px"}>
-                    <DescriptionText>29. Mar. 2023</DescriptionText>
-                    <BlandText>15:31</BlandText>
+                    <DescriptionText>
+                      {moment(date).format("Do MMM YYYY")}
+                    </DescriptionText>
+                    <BlandText>
+                      {hour.hour}:{hour.minute}0
+                    </BlandText>
                   </TextContainer>
                 </InlineWrapper>
               </OrderElement>

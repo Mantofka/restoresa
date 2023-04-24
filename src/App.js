@@ -8,7 +8,8 @@ import RestaurantPrompts from "./components/restaurant-info/RestaurantPrompts";
 import IndividualOrder from "./components/individual-order/IndividualOrder";
 import Footer from "./components/footer/Footer";
 import ProfilePage from "./components/profile/ProfilePage";
-import Stripe from "./components/stripe/Stripe.component";
+import PaymentPage from "./components/payment/PaymentPage";
+import Progress from "./components/payment-progress/Progress";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -44,15 +45,16 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const { displayName, email, uid } = user;
-        dispatch(loginUserSuccess({ displayName, uid, email }));
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     console.log(user);
+  //     if (user) {
+  //       const { displayName, email, uid } = user;
+  //       dispatch(loginUserSuccess({ displayName, uid, email }));
+  //     }
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <>
@@ -66,7 +68,8 @@ function App() {
             path='/restaurants/:id/food'
             element={<SpecificRestaurant />}
           />
-          <Route path='/payment' element={<Stripe />} />
+          <Route path='/payment' element={<PaymentPage />} />
+          <Route path='/payment-status' element={<Progress />} />
           {!isAuthenticated && (
             <Route path='/sign-in' element={<SignInPage />}></Route>
           )}
