@@ -22,6 +22,8 @@ import {
   NoItemText,
 } from "./OrderPage.styles";
 
+import { useNavigate } from "react-router-dom";
+
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
@@ -60,6 +62,7 @@ function OrderPage() {
   const totalPrice = useSelector(selectTotalPrice);
   const screen = useSelector(selectScreen);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isOpened) document.body.style.overflow = "hidden";
@@ -151,7 +154,10 @@ function OrderPage() {
                     {totalPrice} €
                   </TotalPriceText>
                 </TextContainer>
-                <PrimaryButton style={{ margin: "10px 0" }}>
+                <PrimaryButton
+                  style={{ margin: "10px 0" }}
+                  onClick={() => navigate("/payment")}
+                >
                   Go to payment
                 </PrimaryButton>
               </TotalPriceContainer>

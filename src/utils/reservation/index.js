@@ -1,6 +1,15 @@
-import { useDispatch } from "react-redux"
+import { useSelector } from "react-redux";
 
-export const getRestaurantById = () => {
-    const dispatch = useDispatch();
-    
-}
+import {
+  selectSeats,
+  selectDate,
+  selectHour,
+} from "../../redux/reducers/reservation/reservation.selectors";
+
+export const useReservation = () => {
+  const seats = useSelector(selectSeats);
+  const date = useSelector(selectDate);
+  const hour = useSelector(selectHour);
+
+  return { seats, date, hour };
+};
