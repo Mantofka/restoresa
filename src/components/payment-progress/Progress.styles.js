@@ -1,6 +1,10 @@
 import styled, { css } from "styled-components";
 import { DescriptionText, darkColor } from "../../utils/styles/styles";
 
+export const StatusContainer = styled.div`
+  margin-top: 100px;
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -9,7 +13,7 @@ export const Container = styled.div`
 
 export const ElementContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   flex-direction: row;
   align-items: space-between;
   justify-content: flex-start;

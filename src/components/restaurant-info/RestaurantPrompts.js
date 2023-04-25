@@ -139,8 +139,6 @@ const TimePrompt = ({ setState }) => {
     setState(-1);
   };
 
-  console.log(timeSlots);
-
   return (
     <Container screen={screen}>
       <PromptText>Which day and hour is suitable?</PromptText>

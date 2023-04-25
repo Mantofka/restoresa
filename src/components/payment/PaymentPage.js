@@ -13,21 +13,16 @@ import { useSelector } from "react-redux";
 import { selectReservationRestaurant } from "../../redux/reducers/reservation/reservation.selectors";
 import { selectTotalPrice } from "../../redux/reducers/reservation/reservation.selectors";
 
-
 import { useReservation } from "../../utils/reservation";
 import { useScreen } from "../../utils/ui/useScreen";
 import axios from "axios";
 
-import {
-  ElementContainer,
-  Column,
-  Title,
-  DarkenText,
-  SectionContainer,
-  Wrapper,
-} from "./PaymentPage.styles";
+import { SectionContainer, Wrapper } from "./PaymentPage.styles";
+import { selectPrice } from "../../redux/reducers/payment/payment.selectors";
 
 import Progress from "../payment-progress/Progress";
+
+import { MiddleScreen } from "../../utils/styles/styles";
 
 import Config from "../../config";
 import Loader from "../loader/Loader";
@@ -37,16 +32,24 @@ function PaymentPage() {
   const reservationData = useReservation();
   const restaurant = useSelector(selectReservationRestaurant);
   const totalPrice = useSelector(selectTotalPrice);
+  const price = useSelector(selectPrice);
+  const [finalPrice, setFinalPrice] = useState(0);
+  const [isFetched, setisFetched] = useState(false);
 
   const screen = useScreen();
   const [clientSecret, setClientSecret] = useState(undefined);
 
   useEffect(() => {
-    if (totalPrice !== 0) {
+    if (Number(totalPrice) > 0) setFinalPrice(Number(totalPrice));
+    else if (Number(price) > 0) setFinalPrice(Number(price));
+  }, [totalPrice, price]);
+  console.log(finalPrice);
+  useEffect(() => {
+    if (Number(finalPrice) > 0 && !isFetched) {
       axios
         .post(
           `${Config.BackendEndPoint}/get-payment-intent`,
-          { price: totalPrice },
+          { price: finalPrice },
           {
             headers: {
               "Content-Type": "application/json",
@@ -54,17 +57,28 @@ function PaymentPage() {
           }
         )
         .then(({ data }) => setClientSecret(data.client_secret));
+      setisFetched(true);
     }
-  }, [totalPrice]);
+  }, [finalPrice]);
 
-  if (!clientSecret) return <Loader />;
+  if (!clientSecret)
+    return (
+      <LayoutContainer>
+        <MiddleScreen>
+          <Loader />
+        </MiddleScreen>
+      </LayoutContainer>
+    );
 
+  console.log(reservationData);
   return (
     <LayoutContainer style={{ padding: "100px 0" }}>
       <SectionContainer>
         <Elements stripe={stripePromise} options={{ clientSecret }}>
           <Progress />
-          <Stripe price={totalPrice} />
+          {finalPrice ? (
+            <Stripe price={finalPrice} clientSecret={clientSecret} />
+          ) : null}
           <Wrapper gap={"20px"} screen={screen}>
             <Customer />
             <Restaurant

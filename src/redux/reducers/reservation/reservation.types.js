@@ -5,3 +5,4 @@ export const SET_RESTAURANT = "SET_RESTAURANT";
 export const ADD_FOOD = "ADD_FOOD";
 export const REMOVE_FOOD = "REMOVE_FOOD";
 export const CLEAR_FOODS = "CLEAR_FOODS";
+export const CLEAR_RESERVATION_DATA = "CLEAR_RESERVATION_DATA";

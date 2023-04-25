@@ -7,6 +7,7 @@ import {
   getDoc,
   doc,
   setDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 
@@ -28,10 +29,15 @@ export const sendPaymentToDatabase = async (userID, paymentDetails) => {
   }
 };
 
-export const sendOrderToDatabase = async (userID, order) => {
+export const sendOrderToDatabase = async (userID, order, intent) => {
   const usersRef = collection(db, "users");
   const userRef = doc(db, "users", userID);
   const userSnap = await getDoc(userRef);
+  order = {
+    ...order,
+    createdAt: Timestamp.fromDate(new Date()),
+    payment: intent,
+  };
   if (userSnap.exists()) {
     const { orders } = userSnap.data();
     await setDoc(doc(usersRef, userID), {
@@ -54,6 +60,24 @@ export const getAllUserOrders = (userID) => {
       if (userSnap.exists()) {
         const { orders } = userSnap.data();
         resolve(orders);
+      } else {
+        resolve([]);
+      }
+    } catch (error) {
+      reject(error.message);
+    }
+  });
+};
+
+export const getOrderByID = (userID, orderID) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const userRef = doc(db, "users", userID);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        const { orders } = userSnap.data();
+        const order = orders.find((order) => order.id === orderID);
+        resolve(order);
       } else {
         resolve([]);
       }

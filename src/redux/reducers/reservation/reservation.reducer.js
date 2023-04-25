@@ -6,6 +6,7 @@ import {
   REMOVE_FOOD,
   CLEAR_FOODS,
   SET_RESTAURANT,
+  CLEAR_RESERVATION_DATA,
 } from "./reservation.types";
 
 import { removeFoodById, addFood } from "./reservation.utils";
@@ -54,6 +55,15 @@ const ReservationReducer = (state = initialState, action) => {
       return {
         ...state,
         foods: removeFoodById(state.foods, action.payload),
+      };
+    case CLEAR_RESERVATION_DATA:
+      return {
+        ...state,
+        seats: null,
+        date: null,
+        hour: null,
+        foods: [],
+        restaurant: null,
       };
     default:
       return {

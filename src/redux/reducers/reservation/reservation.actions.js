@@ -5,7 +5,8 @@ import {
   SET_RESERVATION_DATE,
   SET_RESERVATION_HOUR,
   SET_RESERVATION_SEATS,
-  SET_RESTAURANT
+  SET_RESTAURANT,
+  CLEAR_RESERVATION_DATA,
 } from "./reservation.types";
 
 export const setReservationHour = (time) => {
@@ -71,4 +72,8 @@ export const setRestaurant = (restaurant) => {
   };
 };
 
-
+export const clearReservationData = () => {
+  return {
+    type: CLEAR_RESERVATION_DATA,
+  };
+};

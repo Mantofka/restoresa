@@ -6,7 +6,6 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
   padding-top: 80px;
 `;
 
@@ -16,10 +15,15 @@ export const ChangeText = styled.p`
   cursor: pointer;
 `;
 
+export const StatusLabel = styled.span`
+  color: green;
+`;
+
 export const OrderElement = styled.div`
   background-color: #fbf6f6;
   border-radius: 10px;
   padding: 10px;
+  cursor: pointer;
 `;
 
 export const ColumnContainer = styled.div`

@@ -10,6 +10,7 @@ import Footer from "./components/footer/Footer";
 import ProfilePage from "./components/profile/ProfilePage";
 import PaymentPage from "./components/payment/PaymentPage";
 import Progress from "./components/payment-progress/Progress";
+import NoPage from "./components/no-page/no-page";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -45,16 +46,16 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     console.log(user);
-  //     if (user) {
-  //       const { displayName, email, uid } = user;
-  //       dispatch(loginUserSuccess({ displayName, uid, email }));
-  //     }
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      if (user) {
+        const { displayName, email, uid } = user;
+        dispatch(loginUserSuccess({ displayName, uid, email }));
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -78,9 +79,10 @@ function App() {
           )}
           {isAuthenticated && <Route path='/me' element={<ProfilePage />} />}
 
-
-          <Route path='/individual' element={<IndividualOrder/>} />
-
+          {isAuthenticated && (
+            <Route path='/order/:id' element={<IndividualOrder />} />
+          )}
+          <Route path='*' element={<NoPage />}></Route>
         </Routes>
         <Footer />
       </QueryClientProvider>

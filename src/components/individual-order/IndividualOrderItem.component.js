@@ -1,31 +1,45 @@
 import React from "react";
 
-import {Wrapper, ImageContainer, ItemContainer, AmountContainer, PriceContainer, ItemTitle, ItemDescription, Price, Amount, Image} from "./IndividualOrderItem.styles"
+import {
+  Wrapper,
+  ImageContainer,
+  AmountContainer,
+  PriceContainer,
+  ItemTitle,
+  ItemDescription,
+  Price,
+  Amount,
+  Column,
+  Image,
+  GridWrapper,
+} from "./IndividualOrderItem.styles";
 
-const IndividualOrderItem = (item) => {
+import { InlineWrapper } from "../../utils/styles/styles";
 
-    return (
-        <Wrapper>
-            <ImageContainer>
-                <Image src="https://images.pexels.com/photos/1556698/pexels-photo-1556698.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
-            </ImageContainer>
-            <ItemContainer>
-                <ItemTitle>
-                    HeisenBerg's Double Decker
-                </ItemTitle>
-                <ItemDescription>
-                    21 dieną brandinta black Angus jautiena, 400g cola zero gėrimo
-                </ItemDescription>
-            </ItemContainer>
-            <AmountContainer>
-                <Price> 16,45 € </Price> x <Amount> 2 </Amount>
-            </AmountContainer>
-            <PriceContainer>
-                32,90 €
-            </PriceContainer>
-        </Wrapper>
-    );
+import { useScreen } from "../../utils/ui/useScreen";
+
+import { TextContainer, FoodTitle } from "../../utils/styles/styles";
+
+const IndividualOrderItem = ({ item }) => {
+  const { title, quantity, price, imageUrl, description } = item;
+  const screen = useScreen();
+
+  return (
+    <Wrapper screen={screen}>
+      <Image src={imageUrl} />
+
+      <TextContainer>
+        <Column>
+          <ItemTitle>{title}</ItemTitle>
+          <ItemDescription>{description}...</ItemDescription>
+        </Column>
+      </TextContainer>
+    <GridWrapper>
+    <Price> {price} €  x {quantity} </Price>
+    <PriceContainer>{price * quantity} €</PriceContainer>
+    </GridWrapper>
+    </Wrapper>
+  );
 };
-
 
 export default IndividualOrderItem;

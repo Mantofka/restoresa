@@ -72,6 +72,11 @@ function OrderPage() {
     };
   }, [isOpened]);
 
+  const handleRedirection = () => {
+    navigate("/payment");
+    dispatch(openOrderModal(false));
+  };
+
   return (
     <>
       {isOpened ? (
@@ -156,7 +161,7 @@ function OrderPage() {
                 </TextContainer>
                 <PrimaryButton
                   style={{ margin: "10px 0" }}
-                  onClick={() => navigate("/payment")}
+                  onClick={handleRedirection}
                 >
                   Go to payment
                 </PrimaryButton>

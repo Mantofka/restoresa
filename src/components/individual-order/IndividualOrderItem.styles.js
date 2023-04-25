@@ -1,72 +1,96 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const darkColor = "#23212b";
-export const greyColor = "#4E4A5A";
+import {
+  FoodTitle,
+  DescriptionText,
+  greyColor,
+} from "../../utils/styles/styles";
 
 export const Wrapper = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr 1fr;
-    align-items: center;
-    padding: 0 20px 0 20px;
-    margin-top: 15px; 
-    height: 100%;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 3fr 2fr;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  ${({ screen }) =>
+    (screen === "sm" || screen === "xs") &&
+    css`
+      ${ItemTitle} {
+        font-size: 14px;
+      }
+      ${ItemDescription} {
+        font-size: 12px;
+      }
+      ${Price} {
+        font-size: 12px;
+      }
+    `}
+  ${({ screen }) =>
+    (screen === "lg" || screen === "md") &&
+    css`
+      ${Image} {
+        width: 100%;
+      }
+    `}
+    ${({ screen }) =>
+    screen === "xs" &&
+    css`
+      grid-template-columns: 1fr 3fr;
+      grid-template-rows: 1fr;
+      ${GridWrapper} {
+        grid-column: 3 / 4;
+        grid-template-columns: 1fr;
+        justify-self: flex-start;
+      }
+      ${ItemDescription}{
+        width: 20ch;
+      }
+      ${ItemTitle}{
+        width: 15ch;
+      }
+    `}
 `;
 
-export const ImageContainer = styled.div`
-    width: 100%;
-    grid-column: 1 / 2;
+export const GridWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  align-items: center;
+`;
+
+export const Column = styled.div`
+    width: 100px:
 `;
 
 export const Image = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 15px;
-  
-`;
-
-export const ItemContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin: 10px 0 0 20px;
-    height: 100%;
-    align-items: flex-start;
+  height: 80px;
+  width: 100px;
+  object-fit: cover;
+  border-radius: 10px;
 `;
 
 export const AmountContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5px;
+  justify-self: flex-end;
 `;
 
-export const PriceContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    font-weight: 700;
+export const ItemTitle = styled(FoodTitle)``;
+
+export const PriceContainer = styled(ItemTitle)`
+  font-weight: 700;
+  justify-self: flex-end;
 `;
 
-export const ItemTitle = styled.div`
-    color: ${darkColor};
-    font-weight: 600;
-    font-size: 17px;
-    padding-bottom: 5px;
+export const ItemDescription = styled(DescriptionText)`
+  width: 25ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
+export const Amount = styled.p``;
 
-export const ItemDescription = styled.div`
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 80%;
-    color: ${greyColor};
-`;
-
-export const Amount = styled.div`
-
-`;
-
-export const Price = styled.div`
-`;
-
+export const Price = styled.p``;

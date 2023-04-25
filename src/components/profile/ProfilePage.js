@@ -27,9 +27,12 @@ import {
   ColumnContainer,
   BlandText,
   Wrapper,
+  StatusLabel,
 } from "./ProfilePage.styles";
 
 import { isMobileSize } from "../../utils/ui";
+
+import { useNavigate } from "react-router-dom";
 
 import { Label } from "../input/Input.styles";
 
@@ -42,6 +45,7 @@ function ProfilePage() {
   const orders = useOrders(user.uid);
   const [fetchedOrders, setFetchedOrders] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     orders.then((res) => setFetchedOrders(res));
@@ -103,12 +107,12 @@ function ProfilePage() {
             <TextContainer>
               <Label>Orders history</Label>
             </TextContainer>
-            {fetchedOrders.map(({ date, hour, id }) => (
-              <OrderElement>
+            {fetchedOrders.map(({ date, hour, id, payment: { status } }) => (
+              <OrderElement onClick={() => navigate(`/order/${id}`)}>
                 <InlineWrapper justify={"flex-start"} gap={"20px"}>
                   <TextContainer placeGap={"5px"} justify={"flex-start"}>
                     <BlandText style={{ fontSize: "12px" }}>
-                      ORDER NUMBER
+                      ORDER NUMBER <StatusLabel>{status}</StatusLabel>
                     </BlandText>
                     <DescriptionText>{id}</DescriptionText>
                   </TextContainer>

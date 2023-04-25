@@ -9,6 +9,8 @@ import React, { useState, useEffect } from "react";
 import Config from "../../config";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../loader/Loader";
+import moment from "moment";
+import JSAlert from "js-alert";
 import {
   SectionTitle,
   PrimaryButton,
@@ -21,66 +23,14 @@ import {
   Price,
   PriceContainer,
 } from "./Stripe.styles";
-import axios from "axios";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { selectCurrentUser } from "../../redux/reducers/user/user.selectors";
 
 import { selectReservation } from "../../redux/reducers/reservation/reservation.selectors";
 
-import {
-  sendOrderToDatabase,
-  sendPaymentToDatabase,
-} from "../../utils/firebase/resevation";
-
-const stripePromise = loadStripe(Config.StripePublishableKey);
-
-const Stripe = ({ price }) => {
-  const [clientSecret, setClientSecret] = useState(undefined);
-
-  useEffect(() => {
-    if (price !== 0) {
-      axios
-        .post(
-          `${Config.BackendEndPoint}/get-payment-intent`,
-          { price: price },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then(({ data }) => setClientSecret(data.client_secret));
-    }
-  }, [price]);
-
-  console.log(clientSecret);
-
-  // const { isLoading, error, data } = useQuery({
-  //   queryKey: ["payment-intent"],
-  //   queryFn: () =>
-  //     axios
-  //       .post(
-  //         `${Config.BackendEndPoint}/get-payment-intent`,
-  //         {
-  //           price: totalPrice,
-  //         },
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       )
-  //       .then((res) => res.json()),
-  // });
-  // useEffect(() => {
-  //   if (data) {
-  //     setClientSecret(data.client_secret);
-  //   }
-  // }, [data]);
-  // if (isLoading) return <Loader />;
-  // if (error) return "An error has occurred: " + error.message;
+const Stripe = ({ price, clientSecret }) => {
 
   return (
     <>
@@ -102,23 +52,25 @@ const CheckoutForm = ({ price }) => {
   const elements = useElements();
   const user = useSelector(selectCurrentUser);
   const reservation = useSelector(selectReservation);
+  const dispatch = useDispatch();
   console.log(reservation);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!stripe || !elements) return;
+    try {
+      if (!stripe || !elements) return;
 
-    sendOrderToDatabase(user.uid, { ...reservation, id: uuidv4() });
-
-    // const { error } = await stripe.confirmPayment({
-    //   elements,
-    //   confirmParams: {
-    //     return_url: "http://localhost:3001/payment-status",
-    //   },
-    // });
-
-    // if (error) {
-    // }
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: "http://localhost:3001/payment-status",
+        },
+      });
+      if (error) {
+        JSAlert.alert(error.message);
+      }
+      console.log(error);
+    } catch (error) {}
   };
   return (
     <div style={{ width: "100%" }}>
@@ -137,22 +89,6 @@ const CheckoutForm = ({ price }) => {
         </>
       </form>
     </div>
-  );
-};
-
-const TotalAmount = ({ price, handlePurchase }) => {
-  return (
-    <>
-      <Line></Line>
-      <PriceContainer>
-        <InlineWrapper>
-          <PriceText>Total</PriceText>
-          <Price>{price}€</Price>
-        </InlineWrapper>
-
-        <PrimaryButton onClick={handlePurchase}>Pay</PrimaryButton>
-      </PriceContainer>
-    </>
   );
 };
 
