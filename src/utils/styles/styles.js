@@ -39,9 +39,6 @@ export const DescriptionText = styled.h1`
   color: ${greyColor};
   font-weight: 400;
   font-size: 14px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 `;
 
 export const InlineWrapper = styled.div`
@@ -189,6 +186,7 @@ export const SectionTitle = styled.h3`
 export const ElementContainer = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: 160px;
   align-items: flex-start;
   justify-content: space-between;
   background-color: #fbf6f6;

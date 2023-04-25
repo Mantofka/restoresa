@@ -64,7 +64,6 @@ function IndividualOrderMenu() {
 
   useEffect(() => {
     if (fetchedOrder?.payment?.status === "unsuccessful")
-      console.log("Wow")
       dispatch(setPayment(calculateTotalSum()));
   }, [fetchedOrder]);
 
@@ -72,8 +71,8 @@ function IndividualOrderMenu() {
 
   const getStatusLabel = () => {
     switch (fetchedOrder?.payment?.status) {
-      case "success":
-        return "Paid";
+      case "succeeded":
+        return "Succeeded";
       case "unsuccessful":
         return "Unsuccessful";
       case "processing":
