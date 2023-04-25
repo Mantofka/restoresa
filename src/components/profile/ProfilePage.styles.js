@@ -24,12 +24,13 @@ export const OrderElement = styled.div`
   border-radius: 10px;
   padding: 10px;
   cursor: pointer;
+  width: 100%;
 `;
 
 export const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 5px;
   min-width: 250px;
 `;
 
@@ -38,9 +39,15 @@ export const BlandText = styled(InformingText)`
 `;
 
 export const Wrapper = styled(InlineWrapper)`
+  align-items: flex-start;
   ${({ screen }) =>
     (screen === "sm" || screen === "xs") &&
     css`
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      ${ColumnContainer}{
+        min-width: 300px;
+      }
     `}
 `;

@@ -14,6 +14,7 @@ export const Container = styled.div`
 export const ElementContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  min-height: 160px;
   flex-direction: row;
   align-items: space-between;
   justify-content: flex-start;

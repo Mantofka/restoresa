@@ -62,7 +62,6 @@ function ProfilePage() {
         <Wrapper
           screen={screen}
           justify={"center"}
-          style={{ alignItems: "flex-start" }}
           gap={isMobileSize(screen, "lg") ? "40px" : "100px"}
         >
           <ColumnContainer>
