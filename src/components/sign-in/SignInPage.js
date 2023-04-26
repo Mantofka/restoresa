@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +8,10 @@ import {
   loginUserWithGoogle,
 } from "../../redux/reducers/user/user.actions";
 
-import { selectUserError } from "../../redux/reducers/user/user.selectors";
+import {
+  selectUserError,
+  selectUserAuthentication,
+} from "../../redux/reducers/user/user.selectors";
 
 import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
 
@@ -42,14 +45,21 @@ function SignInPage() {
   const dispatch = useDispatch();
   const screen = useSelector(selectScreen);
   const loginErrors = useSelector(selectUserError);
+  const authentication = useSelector(selectUserAuthentication);
   const navigate = useNavigate();
   const handleLogin = () => {
     const formValues = getValues();
     dispatch(loginUser(formValues));
-    setTimeout(() => {
-      navigate("/");
-    }, 500);
   };
+
+  useEffect(() => {
+    if (authentication) {
+      setTimeout(() => {
+        navigate("/");
+      }, 500);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authentication]);
 
   return (
     <LayoutContainer screen={screen}>

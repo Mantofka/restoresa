@@ -21,7 +21,7 @@ export const Column = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 70%;
+  width: 50%;
 `;
 
 export const Title = styled.h1`

@@ -36,17 +36,16 @@ export const Wrapper = styled.div`
     ${({ screen }) =>
     screen === "xs" &&
     css`
-      grid-template-columns: 1fr 3fr;
-      grid-template-rows: 1fr;
+      grid-template-columns: 1fr 3fr 2fr;
       ${GridWrapper} {
         grid-column: 3 / 4;
         grid-template-columns: 1fr;
-        justify-self: flex-start;
+        justify-self: flex-end;
       }
-      ${ItemDescription}{
+      ${ItemDescription} {
         width: 20ch;
       }
-      ${ItemTitle}{
+      ${ItemTitle} {
         width: 15ch;
       }
     `}
@@ -57,6 +56,7 @@ export const GridWrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 5px;
   align-items: center;
+  justify-self: flex-end;
 `;
 
 export const Column = styled.div`
@@ -86,7 +86,6 @@ export const PriceContainer = styled(ItemTitle)`
 `;
 
 export const ItemDescription = styled(DescriptionText)`
-  width: 25ch;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
