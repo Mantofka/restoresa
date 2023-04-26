@@ -12,6 +12,8 @@ import PaymentPage from "./components/payment/PaymentPage";
 import Progress from "./components/payment-progress/Progress";
 import NoPage from "./components/no-page/no-page";
 
+import { useNavigate } from "react-router-dom";
+
 import { Routes, Route } from "react-router-dom";
 
 import { auth } from "./firebase";
@@ -32,6 +34,7 @@ const queryClient = new QueryClient();
 function App() {
   const isAuthenticated = useSelector(selectUserAuthentication);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleScreenResize = (e) => {
     dispatch(resizeScreen(window.innerWidth));
@@ -52,6 +55,7 @@ function App() {
       if (user) {
         const { displayName, email, uid } = user;
         dispatch(loginUserSuccess({ displayName, uid, email }));
+        // navigate("/");
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,12 +75,11 @@ function App() {
           />
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/payment-status' element={<Progress />} />
-          {!isAuthenticated && (
-            <Route path='/sign-in' element={<SignInPage />}></Route>
-          )}
-          {!isAuthenticated && (
-            <Route path='/register' element={<RegisterPage />}></Route>
-          )}
+
+          <Route path='/sign-in' element={<SignInPage />}></Route>
+
+          <Route path='/register' element={<RegisterPage />}></Route>
+
           {isAuthenticated && <Route path='/me' element={<ProfilePage />} />}
 
           {isAuthenticated && (

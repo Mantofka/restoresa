@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +24,8 @@ import {
   loginUserWithGoogle,
 } from "../../redux/reducers/user/user.actions";
 
+import { selectUserAuthentication } from "../../redux/reducers/user/user.selectors";
+
 import { Container } from "./RegisterPage.styles";
 
 import Waiting from "../../images/waiting.png";
@@ -35,6 +37,7 @@ import { isMobileSize } from "../../utils/ui";
 function Register() {
   const navigate = useNavigate();
   const screen = useSelector(selectScreen);
+  const authentication = useSelector(selectUserAuthentication);
   const {
     setValue,
     register,
@@ -48,10 +51,14 @@ function Register() {
   const handleRegister = (e) => {
     const formValues = getValues();
     dispatch(registerUser(formValues));
-    setTimeout(() => {
-      navigate("/");
-    }, 500);
   };
+
+  useEffect(() => {
+    if (authentication) {
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authentication]);
 
   return (
     <LayoutContainer>

@@ -31,13 +31,19 @@ const IndividualOrderItem = ({ item }) => {
       <TextContainer>
         <Column>
           <ItemTitle>{title}</ItemTitle>
-          <ItemDescription>{description}...</ItemDescription>
+          <ItemDescription>
+            {description.length > 50
+              ? `${description.slice(0, 50)}...`
+              : description}
+          </ItemDescription>
         </Column>
       </TextContainer>
-    <GridWrapper>
-    <Price> {price} €  x {quantity} </Price>
-    <PriceContainer>{price * quantity} €</PriceContainer>
-    </GridWrapper>
+      <GridWrapper>
+        <Price>
+          {price} € x {quantity}
+        </Price>
+        <PriceContainer>{price * quantity} €</PriceContainer>
+      </GridWrapper>
     </Wrapper>
   );
 };

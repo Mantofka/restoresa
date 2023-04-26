@@ -118,7 +118,7 @@ const ProgressContainer = ({ secret }) => {
   return (
     <>
       <SectionTitle>Progress Information</SectionTitle>
-      <ElementContainer screen={screen}>
+      <ElementContainer screen={screen} style={{minHeight: '120px'}}>
         <Column>
           <Title>Status</Title>
           <DarkenText>{paymentProgress.state}</DarkenText>
@@ -131,10 +131,11 @@ const ProgressContainer = ({ secret }) => {
           <Title>Payment issued</Title>
           <DarkenText> {moment().format("MMM Do YYYY, h:mm a")}</DarkenText>
         </Column>
-        <Column justify={"center"}>
-          <Loader />
-          <CheckCircleIcon />
-        </Column>
+        {paymentProgress.state !== "Success" && (
+          <Column justify={"center"}>
+            <Loader />
+          </Column>
+        )}
         <PrimaryButton onClick={() => navigate("/")}>
           Back to Homepage
         </PrimaryButton>
