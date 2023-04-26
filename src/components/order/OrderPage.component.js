@@ -135,13 +135,14 @@ function OrderPage() {
                           <PriceContainer>{price} €</PriceContainer>
                         </TextContainer>
                         <Wrapper gap={"5px"} style={{ marginLeft: "auto" }}>
-                          <AddIcon
-                            onClick={() => dispatch(addFood(food))}
-                            sx={{ fontSize: 18, cursor: "pointer" }}
-                          />
-                          <QuantityContainer>{quantity}</QuantityContainer>
                           <RemoveIcon
                             onClick={() => dispatch(removeFood(food))}
+                            sx={{ fontSize: 18, cursor: "pointer" }}
+                          />
+
+                          <QuantityContainer>{quantity}</QuantityContainer>
+                          <AddIcon
+                            onClick={() => dispatch(addFood(food))}
                             sx={{ fontSize: 18, cursor: "pointer" }}
                           />
                         </Wrapper>
