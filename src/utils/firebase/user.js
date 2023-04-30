@@ -61,6 +61,21 @@ export const registerToFirebase = async (userCredentials) => {
   }
 };
 
+export const changeUserPhoneNumber = async (phoneNumber) => {
+  const user = auth.currentUser;
+  try {
+    axios.post(
+      "https://us-central1-restoresa-65368.cloudfunctions.net/changePhoneNumber",
+      {
+        uid: user.uid,
+        phoneNumber,
+      }
+    );
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 export const changeUserPassword = async (userCredentials) => {
   const { currentPassword, newPassword } = userCredentials;
   console.log(userCredentials);
@@ -94,14 +109,4 @@ export const changeUserPassword = async (userCredentials) => {
     .catch((err) => {
       throw new Error("Incorrect old password");
     });
-};
-
-export const changeUserPhoneNumber = async (newNumber) => {
-  updatePhoneNumber(auth.currentUser, {
-    phoneNumber: newNumber,
-  })
-    .then(() => {
-      console.log("Updated successfully.");
-    })
-    .catch((err) => console.warn("Whoops, something went wrong"));
 };

@@ -21,3 +21,8 @@ export const selectChangePassword = createSelector(
   [selectUserState],
   (user) => user.changePassword
 );
+
+export const selectChangePhoneNumber = createSelector(
+  [selectUserState],
+  (user) => user.changePhoneNumber
+);

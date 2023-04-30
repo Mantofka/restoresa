@@ -7,6 +7,24 @@ const cors = require("cors")({ origin: true });
 const admin = require("firebase-admin");
 admin.initializeApp();
 
+exports.changePhoneNumber = functions.https.onRequest(async (req, res) => {
+  cors(req, res, async () => {
+    const { uid, phoneNumber } = req.body;
+    console.log(uid, phoneNumber);
+    admin
+      .auth()
+      .updateUser(uid, {
+        phoneNumber,
+      })
+      .then(() => {
+        res.json({ state: "success", text: "Updated Successfully!" });
+      })
+      .catch((err) => {
+        res.json({ state: "error", text: err.message });
+      });
+  });
+});
+
 exports.changePassword = functions.https.onRequest(async (req, res) => {
   cors(req, res, async () => {
     const { uid, password } = req.body;

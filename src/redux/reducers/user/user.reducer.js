@@ -9,6 +9,11 @@ import {
   SET_CHANGE_PASSWORD,
   SET_CHANGE_PASSWORD_SUCCESS,
   SET_CHANGE_PASSWORD_FAIL,
+  SET_CHANGE_PHONE_NUMBER,
+  SET_CHANGE_PHONE_NUMBER_SUCCESS,
+  SET_CHANGE_PHONE_NUMBER_FAIL,
+  CLEAR_PHONE_NUMBER,
+  CLEAR_PASSWORD,
 } from "./user.types";
 
 const initialState = {
@@ -19,7 +24,12 @@ const initialState = {
   },
   changePassword: {
     message: undefined,
-    isSuccess: true,
+    isSuccess: undefined,
+    isPending: false,
+  },
+  changePhoneNumber: {
+    message: undefined,
+    isSuccess: undefined,
     isPending: false,
   },
   errorModal: null,
@@ -84,6 +94,51 @@ const User = (state = initialState, action) => {
         changePassword: {
           message: action.payload,
           isSuccess: false,
+          isPending: false,
+        },
+      };
+    case SET_CHANGE_PHONE_NUMBER:
+      return {
+        ...state,
+        changePhoneNumber: {
+          message: undefined,
+          isSuccess: undefined,
+          isPending: true,
+        },
+      };
+    case CLEAR_PASSWORD:
+      return {
+        ...state,
+        changePassword: {
+          message: undefined,
+          isSuccess: undefined,
+          isPending: false,
+        },
+      };
+    case SET_CHANGE_PHONE_NUMBER_SUCCESS:
+      return {
+        ...state,
+        changePhoneNumber: {
+          message: action.payload,
+          isSuccess: true,
+          isPending: false,
+        },
+      };
+    case SET_CHANGE_PHONE_NUMBER_FAIL:
+      return {
+        ...state,
+        changePhoneNumber: {
+          message: action.payload,
+          isSuccess: false,
+          isPending: false,
+        },
+      };
+    case CLEAR_PHONE_NUMBER:
+      return {
+        ...state,
+        changePhoneNumber: {
+          message: undefined,
+          isSuccess: undefined,
           isPending: false,
         },
       };

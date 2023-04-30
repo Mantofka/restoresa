@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -6,6 +6,8 @@ import {
   ModalContainer,
   TitleText,
 } from "./ChangePhoneNumberModal.styles";
+
+import JSAlert from "js-alert";
 
 import Input from "../input/Input";
 import {
@@ -16,15 +18,24 @@ import {
 } from "../../utils/styles/styles";
 import OutsideAlerter from "../outside-alerter/OutsideAlerter";
 
-import { openChangeNumberModal } from "../../redux/reducers/ui/ui.actions";
-import { selectCurrentUser } from "../../redux/reducers/user/user.selectors";
+import {
+  openChangeNumberModal,
+  setAlertModalOpened,
+} from "../../redux/reducers/ui/ui.actions";
+import {
+  selectCurrentUser,
+  selectChangePhoneNumber,
+} from "../../redux/reducers/user/user.selectors";
 
 import {
   selectScreen,
   selectIsChangePhoneNumberModalOpen,
 } from "../../redux/reducers/ui/ui.selectors";
 import { useSelector, useDispatch } from "react-redux";
-import { changeUserPhoneNumber } from "../../utils/firebase/user";
+import {
+  setChangePhoneNumber,
+  clearPhoneNumber,
+} from "../../redux/reducers/user/user.actions";
 
 function ChangePhoneNumberModal() {
   const {
@@ -40,11 +51,43 @@ function ChangePhoneNumberModal() {
   const screen = useSelector(selectScreen);
   const isOpened = useSelector(selectIsChangePhoneNumberModalOpen);
   const user = useSelector(selectCurrentUser);
+  const { message, isSuccess, isPending } = useSelector(
+    selectChangePhoneNumber
+  );
 
   const handleChangeNumber = (e) => {
     const { newPhoneNumber } = getValues();
-    changeUserPhoneNumber(newPhoneNumber);
+    dispatch(setChangePhoneNumber(newPhoneNumber));
   };
+
+  useEffect(() => {
+    if (isOpened) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpened]);
+
+  useEffect(() => {
+    if (!isPending && isSuccess) {
+      dispatch(setAlertModalOpened(true));
+      JSAlert.alert(message).then(() => {
+        dispatch(clearPhoneNumber());
+        setValue("newPhoneNumber", "");
+        dispatch(setAlertModalOpened(false));
+      });
+    } else if (!isPending && isSuccess === false) {
+      dispatch(setAlertModalOpened(true));
+      JSAlert.alert(message).then(() => {
+        dispatch(clearPhoneNumber());
+        setValue("newPhoneNumber", "");
+        setTimeout(() => {
+          dispatch(setAlertModalOpened(false));
+        }, 100);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess, isPending]);
 
   return (
     <>
@@ -64,7 +107,7 @@ function ChangePhoneNumberModal() {
                   <Input
                     type='text'
                     label='Current Phone number'
-                    name='currentPassword'
+                    name='currentPhoneNumber'
                     disabled
                     value={user?.phoneNumber || "No number specified."}
                   />

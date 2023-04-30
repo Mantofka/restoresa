@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -16,18 +16,22 @@ import {
 } from "../../utils/styles/styles";
 import OutsideAlerter from "../outside-alerter/OutsideAlerter";
 
-import { openResetPasswordModal } from "../../redux/reducers/ui/ui.actions";
 import {
-  selectCurrentUser,
-  selectChangePassword,
-} from "../../redux/reducers/user/user.selectors";
+  openResetPasswordModal,
+  setAlertModalOpened,
+} from "../../redux/reducers/ui/ui.actions";
+import { selectChangePassword } from "../../redux/reducers/user/user.selectors";
 
 import {
   selectScreen,
   selectIsResetPasswordModalOpen,
 } from "../../redux/reducers/ui/ui.selectors";
 import { useSelector, useDispatch } from "react-redux";
-import { setChangePassword } from "../../redux/reducers/user/user.actions";
+import {
+  setChangePassword,
+  clearPassword,
+} from "../../redux/reducers/user/user.actions";
+import JSAlert from "js-alert";
 
 function ChangePasswordModal() {
   const {
@@ -42,20 +46,62 @@ function ChangePasswordModal() {
 
   const screen = useSelector(selectScreen);
   const isOpened = useSelector(selectIsResetPasswordModalOpen);
-  const passwordText = useSelector(selectChangePassword);
+  const { message, isSuccess, isPending } = useSelector(selectChangePassword);
 
   const handleChangePassword = (e) => {
     const { currentPassword, newPassword } = getValues();
     dispatch(setChangePassword({ currentPassword, newPassword }));
   };
 
+  useEffect(() => {
+    if (!isPending && isSuccess) {
+      dispatch(setAlertModalOpened(true));
+      JSAlert.alert(message).then(() => {
+        dispatch(clearPassword());
+        setValue("currentPassword", "");
+        setValue("newPassword", "");
+        setValue("repeatNewPassword", "");
+        dispatch(setAlertModalOpened(false));
+      });
+    } else if (!isPending && isSuccess === false) {
+      dispatch(setAlertModalOpened(true));
+      JSAlert.alert(message).then(() => {
+        dispatch(clearPassword());
+        setValue("newPassword", "");
+        setValue("repeatNewPassword", "");
+        setTimeout(() => {
+          dispatch(setAlertModalOpened(false));
+        }, 100);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess, isPending]);
+
+  useEffect(() => {
+    if (isOpened) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpened]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearPassword());
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onModalClose = () => {
+    dispatch(openResetPasswordModal(false));
+    dispatch(clearPassword());
+  };
+
   return (
     <>
       {isOpened ? (
         <ShadowContainer>
-          <OutsideAlerter
-            callback={() => dispatch(openResetPasswordModal(false))}
-          >
+          <OutsideAlerter callback={() => onModalClose()}>
             <ModalContainer>
               <TitleText>Change Password</TitleText>
               <Form
@@ -65,7 +111,7 @@ function ChangePasswordModal() {
               >
                 <TextContainer placeGap='10px' style={{ marginBottom: "25px" }}>
                   <Input
-                    wrong={!passwordText.isSuccess}
+                    wrong={isSuccess === false}
                     type='password'
                     label='Current Password'
                     name='currentPassword'
@@ -105,8 +151,8 @@ function ChangePasswordModal() {
                   />
                   <ErrorText>{errors.repeatNewPassword?.message}</ErrorText>
                 </TextContainer>
-                <PrimaryButton disabled={passwordText.isPending} type='submit'>
-                  {passwordText.message || "Change Password"}
+                <PrimaryButton disabled={isPending} type='submit'>
+                  {message || "Change Password"}
                 </PrimaryButton>
               </Form>
             </ModalContainer>

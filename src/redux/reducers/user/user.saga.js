@@ -5,6 +5,7 @@ import {
   registerToFirebase,
   loginWithGoogleProvider,
   changeUserPassword,
+  changeUserPhoneNumber,
 } from "../../../utils/firebase/user";
 
 import {
@@ -12,6 +13,7 @@ import {
   USER_LOGIN,
   USER_LOGIN_WITH_GOOGLE,
   SET_CHANGE_PASSWORD,
+  SET_CHANGE_PHONE_NUMBER,
 } from "./user.types";
 
 import {
@@ -21,7 +23,18 @@ import {
   registerUserSuccess,
   setChangePasswordFail,
   setChangePasswordSuccess,
+  setChangePhoneNumberSuccess,
+  setChangePhoneNumberFail,
 } from "./user.actions";
+
+function* onUserChangePhoneNumber({ payload }) {
+  try {
+    yield call(changeUserPhoneNumber, payload);
+    yield put(setChangePhoneNumberSuccess("Successfully changed!"));
+  } catch ({ message }) {
+    yield put(setChangePhoneNumberFail(message));
+  }
+}
 
 function* onUserChangePasword({ payload }) {
   try {
@@ -64,6 +77,7 @@ function* UserSaga() {
   yield takeLatest(USER_REGISTER, onUserRegister);
   yield takeLatest(USER_LOGIN_WITH_GOOGLE, onUserLoginWithGoogle);
   yield takeLatest(SET_CHANGE_PASSWORD, onUserChangePasword);
+  yield takeLatest(SET_CHANGE_PHONE_NUMBER, onUserChangePhoneNumber);
 }
 
 export default UserSaga;
