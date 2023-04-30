@@ -31,7 +31,6 @@ import { selectCurrentUser } from "../../redux/reducers/user/user.selectors";
 import { selectReservation } from "../../redux/reducers/reservation/reservation.selectors";
 
 const Stripe = ({ price, clientSecret }) => {
-
   return (
     <>
       {clientSecret && (
@@ -39,7 +38,6 @@ const Stripe = ({ price, clientSecret }) => {
           <SectionTitle>Payment information</SectionTitle>
           <ElementContainer>
             <CheckoutForm price={[price]} />
-            {/* <TotalAmount price={price} handlePurchase={handleSubmit} /> */}
           </ElementContainer>
         </>
       )}
@@ -63,7 +61,7 @@ const CheckoutForm = ({ price }) => {
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: "http://localhost:3001/payment-status",
+          return_url: `${window.location.origin}/payment-status`,
         },
       });
       if (error) {

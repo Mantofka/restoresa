@@ -32,8 +32,8 @@ const IndividualOrderItem = ({ item }) => {
         <Column>
           <ItemTitle>{title}</ItemTitle>
           <ItemDescription>
-            {description.length > 50
-              ? `${description.slice(0, 50)}...`
+            {description?.length > 50
+              ? `${description?.slice(0, 50)}...`
               : description}
           </ItemDescription>
         </Column>
