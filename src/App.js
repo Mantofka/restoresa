@@ -53,8 +53,8 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       console.log(user);
       if (user) {
-        const { displayName, email, uid } = user;
-        dispatch(loginUserSuccess({ displayName, uid, email }));
+        const { displayName, email, uid, phoneNumber } = user;
+        dispatch(loginUserSuccess({ displayName, uid, email, phoneNumber }));
         // navigate("/");
       }
     });

@@ -18,3 +18,8 @@ export const selectIsChangePhoneNumberModalOpen = createSelector(
   [selectUI],
   (ui) => ui.modals.isChangePhoneNumberModalOpen
 );
+
+export const selectIsAlertModalOpen = createSelector(
+  [selectUI],
+  (ui) => ui.modals.isAlertModalOpen
+);

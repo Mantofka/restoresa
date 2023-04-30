@@ -3,12 +3,14 @@ import {
   OPEN_ORDER_MODAL,
   OPEN_RESET_PASSWORD,
   OPEN_CHANGE_NUMBER,
+  SET_ALERT_MODAL_OPENED,
 } from "./ui.types";
 import { defineScreen } from "./ui.actions";
 
 const initialState = {
   screen: defineScreen(window.innerWidth),
   modals: {
+    isAlertModalOpen: false,
     isOrderModalOpen: false,
     isChangePasswordModalOpen: false,
     isChangePhoneNumberModalOpen: false,
@@ -44,6 +46,14 @@ export const UIReducer = (state = initialState, action) => {
         modals: {
           ...state.modals,
           isChangePhoneNumberModalOpen: action.payload,
+        },
+      };
+    case SET_ALERT_MODAL_OPENED:
+      return {
+        ...state,
+        modals: {
+          ...state.modals,
+          isAlertModalOpen: action.payload,
         },
       };
     default:

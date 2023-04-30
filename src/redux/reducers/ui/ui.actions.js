@@ -3,6 +3,7 @@ import {
   OPEN_ORDER_MODAL,
   OPEN_RESET_PASSWORD,
   OPEN_CHANGE_NUMBER,
+  SET_ALERT_MODAL_OPENED,
 } from "./ui.types";
 
 export const resizeScreen = (width) => {
@@ -36,6 +37,13 @@ export const openResetPasswordModal = (state) => {
 export const openChangeNumberModal = (state) => {
   return {
     type: OPEN_CHANGE_NUMBER,
+    payload: state,
+  };
+};
+
+export const setAlertModalOpened = (state) => {
+  return {
+    type: SET_ALERT_MODAL_OPENED,
     payload: state,
   };
 };

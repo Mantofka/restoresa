@@ -9,6 +9,11 @@ import {
   SET_CHANGE_PASSWORD_FAIL,
   SET_CHANGE_PASSWORD,
   SET_CHANGE_PASSWORD_SUCCESS,
+  SET_CHANGE_PHONE_NUMBER,
+  SET_CHANGE_PHONE_NUMBER_FAIL,
+  SET_CHANGE_PHONE_NUMBER_SUCCESS,
+  CLEAR_PHONE_NUMBER,
+  CLEAR_PASSWORD,
 } from "./user.types";
 
 export const loginUserWithGoogle = () => {
@@ -77,5 +82,38 @@ export const setChangePasswordSuccess = (message) => {
   return {
     type: SET_CHANGE_PASSWORD_SUCCESS,
     payload: message,
+  };
+};
+
+export const setChangePhoneNumber = (phoneNumber) => {
+  return {
+    type: SET_CHANGE_PHONE_NUMBER,
+    payload: phoneNumber,
+  };
+};
+
+export const setChangePhoneNumberFail = (message) => {
+  return {
+    type: SET_CHANGE_PHONE_NUMBER_FAIL,
+    payload: message,
+  };
+};
+
+export const setChangePhoneNumberSuccess = (message) => {
+  return {
+    type: SET_CHANGE_PHONE_NUMBER_SUCCESS,
+    payload: message,
+  };
+};
+
+export const clearPhoneNumber = () => {
+  return {
+    type: CLEAR_PHONE_NUMBER,
+  };
+};
+
+export const clearPassword = () => {
+  return {
+    type: CLEAR_PASSWORD,
   };
 };
