@@ -48,7 +48,7 @@ function PaymentPage() {
     if (Number(finalPrice) > 0 && !isFetched) {
       axios
         .post(
-          `${Config.BackendEndPoint}/get-payment-intent`,
+          `${Config.FirebaseEndPoint}/app/api/get-payment-intent`,
           { price: finalPrice },
           {
             headers: {
