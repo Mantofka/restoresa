@@ -20,7 +20,7 @@ function Section() {
       <Element>
         <Image src={Order} />
         <Text>
-          <Highlight>Order</Highlight> a food
+          <Highlight>Order</Highlight> food
         </Text>
       </Element>
       <Element>
