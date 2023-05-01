@@ -5,9 +5,18 @@ import {
   InlineWrapper as Wrapper,
 } from "../../utils/styles/styles";
 
+export const Image = styled.img`
+  width: 50%;
+`;
+
 export const Container = styled.div`
   width: 100%;
   margin-top: 80px;
+  @media screen and (max-width: 820px) {
+    ${Image} {
+      display: none;
+    }
+  }
   ${({ screen }) =>
     (screen === "sm" || screen === "xs") &&
     css`
@@ -17,6 +26,10 @@ export const Container = styled.div`
     ${InlineWrapper}{
       flex-direction: column;
       gap: 20px;
+    }
+    ${Image}{
+      width: 80%;
+      display: unset;
     }
   }
 `}

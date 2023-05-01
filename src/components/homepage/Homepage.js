@@ -5,12 +5,15 @@ import {
   Highlight,
   SmallerText,
   InlineWrapper,
+  Image,
 } from "./Homepage.styles";
 
 import { useSelector } from "react-redux";
 import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
 
-import Waiting from "../../images/waiting.png";
+import Section from "../section/Section";
+
+import Chef from "../../images/chef.png";
 import { isMobileSize } from "../../utils/ui";
 
 import { useNavigate } from "react-router-dom";
@@ -18,7 +21,6 @@ import { useNavigate } from "react-router-dom";
 import {
   LayoutContainer,
   TextContainer,
-  Bubble,
   PickupText,
   PrimaryButton,
 } from "../../utils/styles/styles";
@@ -41,36 +43,7 @@ function Homepage() {
             >
               Food tastes better when you eat it with your family and friends
             </SmallerText>
-          </TextContainer>
-
-          <Bubble screen={screen}>
-            <img src={Waiting} alt='Waiting women' style={{ height: "80%" }} />
-          </Bubble>
-          {!isMobileSize(screen, "lg") ? (
-            <TextContainer placeGap={"20px"}>
-              <TextContainer placeGap={"5px"}>
-                <SmallerText fontWeight={"600"}>
-                  <Highlight>Pick </Highlight>a restaurant
-                </SmallerText>
-                <SmallerText fontWeight={"600"}>
-                  <Highlight>Make </Highlight>a reservation
-                </SmallerText>
-                <SmallerText fontWeight={"600"}>
-                  <Highlight>Order </Highlight>a food
-                </SmallerText>
-                <SmallerText fontWeight={"600"}>
-                  <Highlight>Make </Highlight>an appointment
-                </SmallerText>
-              </TextContainer>
-            </TextContainer>
-          ) : null}
-          {isMobileSize(screen, "md") ? (
-            <PrimaryButton onClick={() => navigate("restaurants")}>
-              Browse Restaurants
-            </PrimaryButton>
-          ) : null}
-        </InlineWrapper>
-        {!isMobileSize(screen, "md") ? (
+            {!isMobileSize(screen, "md") ? (
           <PrimaryButton
             onClick={() => navigate("restaurants")}
             style={{ width: "210px" }}
@@ -78,6 +51,17 @@ function Homepage() {
             Browse Restaurants
           </PrimaryButton>
         ) : null}
+          </TextContainer>
+          <Image src={Chef} />
+
+          {isMobileSize(screen, "md") ? (
+            <PrimaryButton onClick={() => navigate("restaurants")}>
+              Browse Restaurants
+            </PrimaryButton>
+          ) : null}
+        </InlineWrapper>
+      
+            <Section />
       </Container>
     </LayoutContainer>
   );
