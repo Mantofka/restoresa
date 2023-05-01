@@ -11,6 +11,8 @@ import {
 } from "firebase/auth";
 import axios from "axios";
 
+import Config from "../../config";
+
 const googleProvider = new GoogleAuthProvider();
 
 export const loginWithGoogleProvider = async () => {
@@ -64,13 +66,10 @@ export const registerToFirebase = async (userCredentials) => {
 export const changeUserPhoneNumber = async (phoneNumber) => {
   const user = auth.currentUser;
   try {
-    axios.post(
-      "https://us-central1-restoresa-65368.cloudfunctions.net/changePhoneNumber",
-      {
-        uid: user.uid,
-        phoneNumber,
-      }
-    );
+    axios.post(`${Config.FirebaseEndPoint}/changePhoneNumber`, {
+      uid: user.uid,
+      phoneNumber,
+    });
   } catch (error) {
     throw new Error(error.message);
   }
@@ -90,7 +89,7 @@ export const changeUserPassword = async (userCredentials) => {
     .then(() => {
       axios
         .post(
-          "https://us-central1-restoresa-65368.cloudfunctions.net/changePassword",
+          `${Config.FirebaseEndPoint}/changePassword`,
           {
             uid: user.uid,
             password: newPassword,
