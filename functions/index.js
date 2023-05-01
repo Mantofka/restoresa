@@ -1,10 +1,8 @@
+/* eslint-disable max-len */
 /* eslint-disable comma-dangle */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable indent */
 const functions = require("firebase-functions");
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
 const cors = require("cors")({ origin: true });
 
 const stripe = require("stripe")(
@@ -15,29 +13,21 @@ const stripe = require("stripe")(
 const admin = require("firebase-admin");
 admin.initializeApp();
 
-app.use(bodyParser.json());
-// app.use(cors());
-// app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get("/api/get-payment-intent", async (req, res) => {
-  try {
-    const price = req.body.price;
-    console.log(Number(req.body.price));
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: (price * 100).toFixed(0),
-      currency: "eur",
-    });
-    res.send({ client_secret: paymentIntent.client_secret });
-  } catch (error) {
-    res.send("Error occured.");
-  }
+exports.getPaymentIntent = functions.https.onRequest(async (req, res) => {
+  cors(req, res, async () => {
+    try {
+      const price = req.body.price;
+      console.log(Number(req.body.price));
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: (price * 100).toFixed(0),
+        currency: "eur",
+      });
+      res.send({ client_secret: paymentIntent.client_secret });
+    } catch (error) {
+      res.send("Error occured.");
+    }
+  });
 });
-
-app.listen(5040, () => {
-  console.log("Listening ...");
-});
-
-exports.app = functions.https.onRequest(app);
 
 exports.changePhoneNumber = functions.https.onRequest(async (req, res) => {
   cors(req, res, async () => {
