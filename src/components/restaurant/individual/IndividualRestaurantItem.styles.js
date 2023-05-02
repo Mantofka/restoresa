@@ -66,13 +66,13 @@ export const CostContainer = styled.div`
   width: 70px;
   font-size: 12px;
   height: 30px;
-
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-export const CostText = styled.h1`
+export const CostText = styled(motion.h1)`
   color: ${greyColor};
   font-weight: 500;
   font-size: 14px;

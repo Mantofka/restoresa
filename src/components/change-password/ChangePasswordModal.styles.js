@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { darkColor } from "../../utils/styles/styles";
+import { motion } from "framer-motion";
 
 export const ShadowContainer = styled.div`
   position: fixed;
@@ -13,7 +14,7 @@ export const ShadowContainer = styled.div`
   justify-content: center;
 `;
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled(motion.div)`
   background-color: #fff;
   border-radius: 10px;
   width: 350px;

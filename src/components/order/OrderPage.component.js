@@ -51,6 +51,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { openOrderModal } from "../../redux/reducers/ui/ui.actions";
 
 import { selectIsOrderModalOpen } from "../../redux/reducers/ui/ui.selectors";
+import { AnimatePresence } from "framer-motion";
 
 function OrderPage() {
   const isOpened = useSelector(selectIsOrderModalOpen);
@@ -78,11 +79,16 @@ function OrderPage() {
   };
 
   return (
-    <>
-      {isOpened ? (
+    <AnimatePresence>
+      {isOpened && (
         <Container>
           <OutsideAlerter callback={() => dispatch(openOrderModal(false))}>
-            <ModalContainer screen={screen}>
+            <ModalContainer
+              screen={screen}
+              initial={{ x: 400, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 400, opacity: 0 }}
+            >
               <Wrapper
                 style={{ justifyContent: "space-between", width: "100%" }}
               >
@@ -170,8 +176,8 @@ function OrderPage() {
             </ModalContainer>
           </OutsideAlerter>
         </Container>
-      ) : null}
-    </>
+      )}
+    </AnimatePresence>
   );
 }
 

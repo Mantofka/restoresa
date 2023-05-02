@@ -1,5 +1,8 @@
 import React from "react";
 
+import Config from "../../config";
+import { IKImage } from "imagekitio-react";
+
 import {
   Container,
   Highlight,
@@ -13,7 +16,6 @@ import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
 
 import Section from "../section/Section";
 
-import Chef from "../../images/chef.png";
 import { isMobileSize } from "../../utils/ui";
 
 import { useNavigate } from "react-router-dom";
@@ -48,15 +50,24 @@ function Homepage() {
                 type='button'
                 onClick={() => navigate("restaurants")}
                 style={{ width: "210px" }}
+                whileHover={{ scale: 1.02 }}
               >
                 Browse Restaurants
               </PrimaryButton>
             ) : null}
           </TextContainer>
-          <Image src={Chef} />
+          <IKImage
+            urlEndpoint={Config.ImageKitEndpoint}
+            path='homepage/chef.png'
+            lqip={{ active: true }}
+            loading='lazy'
+            transformation={[{ height: 550, width: 505 }]}
+            width={"50%"}
+          />
 
           {isMobileSize(screen, "md") ? (
             <PrimaryButton
+              whileHover={{ scale: 1.1 }}
               type='button'
               onClick={() => navigate("restaurants")}
             >

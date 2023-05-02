@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { motion } from "framer-motion";
 
 export const darkColor = "#23212b";
 export const highlightColor = "#fa5729";
@@ -66,7 +67,7 @@ export const OutlinedButton = styled.button`
   cursor: pointer;
 `;
 
-export const PrimaryButton = styled.button`
+export const PrimaryButton = styled(motion.button)`
   border-radius: 10px;
   user-select: none;
   border: none;

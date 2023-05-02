@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { motion, AnimatePresence } from "framer-motion";
 
 import {
   ShadowContainer,
@@ -89,7 +90,7 @@ function ChangePasswordModal() {
     return () => {
       dispatch(clearPassword());
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onModalClose = () => {
@@ -98,11 +99,15 @@ function ChangePasswordModal() {
   };
 
   return (
-    <>
+    <AnimatePresence>
       {isOpened ? (
         <ShadowContainer>
           <OutsideAlerter callback={() => onModalClose()}>
-            <ModalContainer>
+            <ModalContainer
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+            >
               <TitleText>Change Password</TitleText>
               <Form
                 inheritWidth
@@ -159,7 +164,7 @@ function ChangePasswordModal() {
           </OutsideAlerter>
         </ShadowContainer>
       ) : null}
-    </>
+    </AnimatePresence>
   );
 }
 

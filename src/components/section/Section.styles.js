@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { motion } from "framer-motion";
 
 import {
   darkColor,
@@ -6,7 +7,13 @@ import {
   yellowColor,
 } from "../../utils/styles/styles";
 
-export const Element = styled.div`
+export const Image = styled.img`
+  width: 100%;
+  justify-self: center;
+  transition: 500ms scale ease-in-out;
+`;
+
+export const Element = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -15,6 +22,11 @@ export const Element = styled.div`
   width: 250px;
   gap: 10px;
   user-select: none;
+  &:hover {
+    ${Image} {
+      scale: 1.02;
+    }
+  }
 `;
 
 export const Text = styled.h1`
@@ -60,9 +72,4 @@ export const Container = styled.div`
 
 export const Highlight = styled.span`
   color: #9400d3;
-`;
-
-export const Image = styled.img`
-  width: 100%;
-  justify-self: center;
 `;

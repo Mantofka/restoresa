@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import { motion, AnimatePresence } from "framer-motion";
 
 import {
   LayoutContainer,
@@ -127,9 +128,8 @@ function ProfilePage() {
           </ColumnContainer>
         </Wrapper>
       </Container>
-
-      <ChangePasswordModal />
-      <ChangePhoneNumberModal />
+        <ChangePasswordModal/>
+        <ChangePhoneNumberModal />
     </LayoutContainer>
   );
 }

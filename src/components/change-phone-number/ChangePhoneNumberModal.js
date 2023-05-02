@@ -36,6 +36,7 @@ import {
   setChangePhoneNumber,
   clearPhoneNumber,
 } from "../../redux/reducers/user/user.actions";
+import { AnimatePresence } from "framer-motion";
 
 function ChangePhoneNumberModal() {
   const {
@@ -44,7 +45,6 @@ function ChangePhoneNumberModal() {
     formState: { errors },
     handleSubmit,
     getValues,
-    watch,
   } = useForm();
   const dispatch = useDispatch();
 
@@ -90,13 +90,17 @@ function ChangePhoneNumberModal() {
   }, [isSuccess, isPending]);
 
   return (
-    <>
+    <AnimatePresence>
       {isOpened ? (
         <ShadowContainer>
           <OutsideAlerter
             callback={() => dispatch(openChangeNumberModal(false))}
           >
-            <ModalContainer>
+            <ModalContainer
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+            >
               <TitleText>Change Phone number</TitleText>
               <Form
                 inheritWidth
@@ -128,7 +132,7 @@ function ChangePhoneNumberModal() {
           </OutsideAlerter>
         </ShadowContainer>
       ) : null}
-    </>
+    </AnimatePresence>
   );
 }
 

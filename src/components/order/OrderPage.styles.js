@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { motion } from "framer-motion";
 
 import {
   darkColor,
@@ -15,7 +16,7 @@ export const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled(motion.div)`
   float: right;
   background-color: #fff;
   max-width: 500px;

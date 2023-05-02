@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { yellowColor, darkColor } from "../../utils/styles/styles";
+import { motion } from "framer-motion";
 
 export const Container = styled.div`
   height: 70px;
@@ -72,12 +73,12 @@ export const ProfileIcon = styled.div`
   cursor: pointer;
 `;
 
-export const OrderContainerButton = styled.button`
+export const OrderContainerButton = styled(motion.button)`
   background-color: ${yellowColor};
   color: ${darkColor};
   font-size: 16px;
   border-radius: 15px;
-  min-width: 50px;
+  width: 150px;
   border: none;
   line-height: 20px;
   padding: 6px 12px;

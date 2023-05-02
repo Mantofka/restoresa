@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -37,9 +38,16 @@ function Header() {
   const dispatch = useDispatch();
   const isOrderModalOpen = useSelector(selectIsOrderModalOpen);
   const foods = useSelector(selectSelectedFoods);
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    setAnimate(true);
+    setTimeout(() => {
+      setAnimate(false);
+    }, 300);
+  }, [foods]);
 
   const isAnchorActive = (text) => pathname.includes(text);
-
   return (
     <>
       <Container screen={screen}>
@@ -52,22 +60,30 @@ function Header() {
             <Anchor href={"/foods"}>
               <Text active={isAnchorActive("/foods")}>Foods</Text>
             </Anchor>
-            <Anchor href={"/offers"}>
-              <Text active={isAnchorActive("/offers")}>Offers</Text>
-            </Anchor>
             <Anchor href={"/restaurants"}>
               <Text active={isAnchorActive("/restaurants")}>Restaurants</Text>
             </Anchor>
           </CombinedSection>
         )}
         <CombinedSection>
-          {foods.length > 0 ? (
-            <OrderContainerButton
-              onClick={() => dispatch(openOrderModal(!isOrderModalOpen))}
-            >
-              Review Order
-            </OrderContainerButton>
-          ) : null}
+          <div style={{ width: "160px" }}>
+            {foods.length > 0 ? (
+              <OrderContainerButton
+                animate={
+                  animate
+                    ? {
+                        width: [150, 160, 150],
+                        transition: { duration: 0.4 },
+                      }
+                    : { width: 150 }
+                }
+                onClick={() => dispatch(openOrderModal(!isOrderModalOpen))}
+              >
+                Review Order
+              </OrderContainerButton>
+            ) : null}
+          </div>
+
           {isAuthenticated ? (
             <>
               <Anchor href='/me'>
@@ -84,7 +100,7 @@ function Header() {
           )}
         </CombinedSection>
       </Container>
-      <OrderPage />
+      <OrderPage key={"order15874"} />
     </>
   );
 }
