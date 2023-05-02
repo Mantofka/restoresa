@@ -6,7 +6,6 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   reauthenticateWithCredential,
-  updatePhoneNumber,
   EmailAuthProvider,
 } from "firebase/auth";
 import axios from "axios";
@@ -77,14 +76,11 @@ export const changeUserPhoneNumber = async (phoneNumber) => {
 
 export const changeUserPassword = async (userCredentials) => {
   const { currentPassword, newPassword } = userCredentials;
-  console.log(userCredentials);
   const user = auth.currentUser;
   const authCredentials = EmailAuthProvider.credential(
     user.email,
     currentPassword
   );
-  console.log(user);
-  console.log(authCredentials);
   await reauthenticateWithCredential(user, authCredentials)
     .then(() => {
       axios
@@ -100,7 +96,7 @@ export const changeUserPassword = async (userCredentials) => {
             },
           }
         )
-        .then((res) => console.log(res))
+        .then((res) => {})
         .catch((err) => {
           throw new Error("Cannot change password to the new one.");
         });

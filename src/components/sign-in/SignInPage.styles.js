@@ -11,3 +11,7 @@ export const InlineWrapper = styled(Wrapper)`
   gap: 40px;
   justify-content: center;
 `;
+
+export const Image = styled.img`
+  width: 40%;
+`;

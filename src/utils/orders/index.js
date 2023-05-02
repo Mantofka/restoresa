@@ -39,7 +39,6 @@ export const useOrder = async (userID, orderID) => {
         const answer = await Promise.all([getOrderByID(userID, orderID)]).then(
           (res) => res
         );
-        console.log(answer);
         resolve(answer);
       } catch (error) {
         reject(error.message);

@@ -67,8 +67,6 @@ function IndividualOrderMenu() {
       dispatch(setPayment(calculateTotalSum()));
   }, [fetchedOrder]);
 
-  console.log(fetchedOrder);
-
   const getStatusLabel = () => {
     switch (fetchedOrder?.payment?.status) {
       case "succeeded":

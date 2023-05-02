@@ -44,24 +44,28 @@ function Homepage() {
               Food tastes better when you eat it with your family and friends
             </SmallerText>
             {!isMobileSize(screen, "md") ? (
-          <PrimaryButton
-            onClick={() => navigate("restaurants")}
-            style={{ width: "210px" }}
-          >
-            Browse Restaurants
-          </PrimaryButton>
-        ) : null}
+              <PrimaryButton
+                type='button'
+                onClick={() => navigate("restaurants")}
+                style={{ width: "210px" }}
+              >
+                Browse Restaurants
+              </PrimaryButton>
+            ) : null}
           </TextContainer>
           <Image src={Chef} />
 
           {isMobileSize(screen, "md") ? (
-            <PrimaryButton onClick={() => navigate("restaurants")}>
+            <PrimaryButton
+              type='button'
+              onClick={() => navigate("restaurants")}
+            >
               Browse Restaurants
             </PrimaryButton>
           ) : null}
         </InlineWrapper>
-      
-            <Section />
+
+        <Section />
       </Container>
     </LayoutContainer>
   );

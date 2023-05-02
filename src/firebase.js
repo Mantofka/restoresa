@@ -50,7 +50,6 @@ export const handleBatchPush = async (foods) => {
         food.type === foods[index].type &&
         food.restaurant === foods[index].restaurant
     );
-    console.log(filteredFoods);
     let array = [];
     filteredFoods.forEach((food) => {
       const { title, description, price, imageUrl } = food;

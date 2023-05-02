@@ -14,6 +14,7 @@ export const Element = styled.div`
   justify-self: center;
   width: 250px;
   gap: 10px;
+  user-select: none;
 `;
 
 export const Text = styled.h1`

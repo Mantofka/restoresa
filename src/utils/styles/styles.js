@@ -68,6 +68,7 @@ export const OutlinedButton = styled.button`
 
 export const PrimaryButton = styled.button`
   border-radius: 10px;
+  user-select: none;
   border: none;
   width: 100%;
   height: 45px;
