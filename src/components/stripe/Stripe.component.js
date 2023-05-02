@@ -1,15 +1,9 @@
-import { v4 as uuidv4 } from "uuid";
-import { loadStripe } from "@stripe/stripe-js";
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import React, { useState, useEffect } from "react";
-import Config from "../../config";
-import { useQuery } from "@tanstack/react-query";
-import Loader from "../loader/Loader";
-import moment from "moment";
+import React from "react";
 import JSAlert from "js-alert";
 import {
   SectionTitle,
@@ -23,12 +17,6 @@ import {
   Price,
   PriceContainer,
 } from "./Stripe.styles";
-
-import { useSelector, useDispatch } from "react-redux";
-
-import { selectCurrentUser } from "../../redux/reducers/user/user.selectors";
-
-import { selectReservation } from "../../redux/reducers/reservation/reservation.selectors";
 
 const Stripe = ({ price, clientSecret }) => {
   return (
@@ -48,10 +36,6 @@ const Stripe = ({ price, clientSecret }) => {
 const CheckoutForm = ({ price }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const user = useSelector(selectCurrentUser);
-  const reservation = useSelector(selectReservation);
-  const dispatch = useDispatch();
-  console.log(reservation);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -67,7 +51,6 @@ const CheckoutForm = ({ price }) => {
       if (error) {
         JSAlert.alert(error.message);
       }
-      console.log(error);
     } catch (error) {}
   };
   return (

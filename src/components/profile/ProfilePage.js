@@ -51,8 +51,6 @@ function ProfilePage() {
     orders.then((res) => setFetchedOrders(res));
   }, [orders]);
 
-  console.log(fetchedOrders);
-
   return (
     <LayoutContainer screen={screen}>
       <Container>

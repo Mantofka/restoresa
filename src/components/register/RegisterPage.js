@@ -10,7 +10,6 @@ import {
   OutlinedButton,
   DescriptionText,
   PrimaryButton,
-  Bubble,
   ErrorText,
   Form,
 } from "../../utils/styles/styles";
@@ -26,9 +25,9 @@ import {
 
 import { selectUserAuthentication } from "../../redux/reducers/user/user.selectors";
 
-import { Container } from "./RegisterPage.styles";
+import { Container, Image } from "./RegisterPage.styles";
 
-import Waiting from "../../images/waiting.png";
+import Waiting from "../../images/full.png";
 
 import Anchor from "../nav-achor/Anchor";
 import Input from "../input/Input";
@@ -137,15 +136,7 @@ function Register() {
               Not the first time? <Anchor href='/sign-in'>Sign in</Anchor>
             </DescriptionText>
           </TextContainer>
-          {!isMobileSize(screen, "lg") ? (
-            <Bubble screen={screen}>
-              <img
-                src={Waiting}
-                alt='Waiting women'
-                style={{ height: "80%" }}
-              />
-            </Bubble>
-          ) : null}
+          {!isMobileSize(screen, "lg") ? <Image src={Waiting} /> : null}
         </InlineWrapper>
       </Container>
     </LayoutContainer>

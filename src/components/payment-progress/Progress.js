@@ -60,7 +60,6 @@ const ProgressContainer = ({ secret }) => {
         .retrievePaymentIntent(secret)
         .then(({ paymentIntent }) => {
           setIntent(paymentIntent);
-          console.log(paymentIntent);
           switch (paymentIntent.status) {
             case "processing":
               setPaymentProgress({
@@ -149,8 +148,6 @@ const Progress = () => {
   const clientSecret = new URLSearchParams(window.location.search).get(
     "payment_intent_client_secret"
   );
-
-  console.log(clientSecret);
 
   return (
     <>

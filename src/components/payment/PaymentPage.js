@@ -43,7 +43,6 @@ function PaymentPage() {
     if (Number(totalPrice) > 0) setFinalPrice(Number(totalPrice));
     else if (Number(price) > 0) setFinalPrice(Number(price));
   }, [totalPrice, price]);
-  console.log(finalPrice);
   useEffect(() => {
     if (Number(finalPrice) > 0 && !isFetched) {
       axios
@@ -70,7 +69,6 @@ function PaymentPage() {
       </LayoutContainer>
     );
 
-  console.log(reservationData);
   return (
     <LayoutContainer style={{ padding: "100px 0" }}>
       <SectionContainer>

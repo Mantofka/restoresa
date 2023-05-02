@@ -44,7 +44,6 @@ export const useRestaurant = (restaurantID) => {
     else if (restaurant.length === 0) {
       getRestaurant().then((res) => {
         dispatch(addRestaurant(res));
-        console.log(res);
         setRestaurant(res);
       });
     }
