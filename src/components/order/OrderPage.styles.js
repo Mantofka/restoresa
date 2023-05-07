@@ -14,6 +14,7 @@ export const Container = styled.div`
   top: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 `;
 
 export const ModalContainer = styled(motion.div)`

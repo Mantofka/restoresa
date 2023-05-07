@@ -11,6 +11,7 @@ import {
 import {
   selectUserError,
   selectUserAuthentication,
+  selectNextRoute,
 } from "../../redux/reducers/user/user.selectors";
 
 import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
@@ -46,6 +47,7 @@ function SignInPage() {
   const screen = useSelector(selectScreen);
   const loginErrors = useSelector(selectUserError);
   const authentication = useSelector(selectUserAuthentication);
+  const nextRoute = useSelector(selectNextRoute);
   const navigate = useNavigate();
   const handleLogin = () => {
     const formValues = getValues();
@@ -55,7 +57,8 @@ function SignInPage() {
   useEffect(() => {
     if (authentication) {
       setTimeout(() => {
-        navigate("/");
+        const url = nextRoute ? `/${nextRoute}` : "/";
+        navigate(url);
       }, 500);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

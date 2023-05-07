@@ -14,6 +14,8 @@ import {
   SET_CHANGE_PHONE_NUMBER_FAIL,
   CLEAR_PHONE_NUMBER,
   CLEAR_PASSWORD,
+  SET_NEXT_ROUTE,
+  CLEAR_NEXT_ROUTE,
 } from "./user.types";
 
 const initialState = {
@@ -32,6 +34,7 @@ const initialState = {
     isSuccess: undefined,
     isPending: false,
   },
+  nextRoute: undefined,
   errorModal: null,
 };
 
@@ -141,6 +144,16 @@ const User = (state = initialState, action) => {
           isSuccess: undefined,
           isPending: false,
         },
+      };
+    case CLEAR_NEXT_ROUTE:
+      return {
+        ...state,
+        nextRoute: undefined,
+      };
+    case SET_NEXT_ROUTE:
+      return {
+        ...state,
+        nextRoute: action.payload,
       };
     default:
       return { ...state };

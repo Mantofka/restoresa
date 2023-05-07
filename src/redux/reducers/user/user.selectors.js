@@ -26,3 +26,8 @@ export const selectChangePhoneNumber = createSelector(
   [selectUserState],
   (user) => user.changePhoneNumber
 );
+
+export const selectNextRoute = createSelector(
+  [selectUserState],
+  (user) => user.nextRoute
+);

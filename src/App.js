@@ -13,9 +13,12 @@ import { loginUserSuccess } from "./redux/reducers/user/user.actions";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserAuthentication } from "./redux/reducers/user/user.selectors";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import SpecificRestaurant from "./components/restaurant/individual/IndividualRestaurantMenu"; // rename
 import { resizeScreen } from "./redux/reducers/ui/ui.actions";
+import { setNextRoute } from "./redux/reducers/user/user.actions";
+import { selectSelectedFoods } from "./redux/reducers/reservation/reservation.selectors";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LayoutContainer } from "./utils/styles/styles";
@@ -48,6 +51,9 @@ const Progress = React.lazy(() =>
 function App() {
   const isAuthenticated = useSelector(selectUserAuthentication);
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const foods = useSelector(selectSelectedFoods);
 
   const handleScreenResize = (e) => {
     dispatch(resizeScreen(window.innerWidth));
@@ -67,11 +73,18 @@ function App() {
       if (user) {
         const { displayName, email, uid, phoneNumber } = user;
         dispatch(loginUserSuccess({ displayName, uid, email, phoneNumber }));
-        // navigate("/");
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (pathname.includes("payment") && !isAuthenticated) {
+      dispatch(setNextRoute("payment"));
+      navigate("/sign-in");
+    } else if (pathname.includes("payment") && foods.length === 0)
+      navigate("/");
+  }, [isAuthenticated, pathname]);
 
   return (
     <>

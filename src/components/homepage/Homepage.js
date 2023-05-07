@@ -18,6 +18,8 @@ import Section from "../section/Section";
 
 import { isMobileSize } from "../../utils/ui";
 
+import { updateTableBusyness } from "../../utils/firebase/tables";
+
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -69,7 +71,14 @@ function Homepage() {
             <PrimaryButton
               whileHover={{ scale: 1.1 }}
               type='button'
-              onClick={() => navigate("restaurants")}
+              // onClick={() => navigate("restaurants")}
+              onClick={() =>
+                updateTableBusyness("ngIifs0kJy7VXs7iD9HW", 6, {
+                  hour: 14,
+                  minute: 0,
+                  date: "2023-05-03",
+                })
+              }
             >
               Browse Restaurants
             </PrimaryButton>

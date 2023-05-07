@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
 const persistConfig = getPersistConfig({
   key: "root",
   storage,
-  whitelist: ["reservation"],
+  whitelist: ["reservation", "user"],
   rootReducer,
 });
 

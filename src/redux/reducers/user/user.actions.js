@@ -14,6 +14,8 @@ import {
   SET_CHANGE_PHONE_NUMBER_SUCCESS,
   CLEAR_PHONE_NUMBER,
   CLEAR_PASSWORD,
+  CLEAR_NEXT_ROUTE,
+  SET_NEXT_ROUTE,
 } from "./user.types";
 
 export const loginUserWithGoogle = () => {
@@ -115,5 +117,18 @@ export const clearPhoneNumber = () => {
 export const clearPassword = () => {
   return {
     type: CLEAR_PASSWORD,
+  };
+};
+
+export const setNextRoute = (route) => {
+  return {
+    type: SET_NEXT_ROUTE,
+    payload: route,
+  };
+};
+
+export const clearNextRoute = () => {
+  return {
+    type: CLEAR_NEXT_ROUTE,
   };
 };

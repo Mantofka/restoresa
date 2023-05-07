@@ -6,26 +6,27 @@ import {
   doc,
   where,
   orderBy,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 
 // const getTablesByRestaurant = new Promise(async (resolve, reject) => {
-try {
-  let q = query(collection(db, "restaurants"));
+// try {
+//   let q = query(collection(db, "restaurants"));
 
-  const querySnapshot = await getDocs(q);
+//   const querySnapshot = await getDocs(q);
 
-  const restaurants = [];
-  querySnapshot.forEach((doc) => {
-    restaurants.push({
-      id: doc.id,
-      ...doc.data(),
-    });
-  });
-  resolve(restaurants);
-} catch (error) {
-  reject(error.message);
-}
+//   const restaurants = [];
+//   querySnapshot.forEach((doc) => {
+//     restaurants.push({
+//       id: doc.id,
+//       ...doc.data(),
+//     });
+//   });
+//   resolve(restaurants);
+// } catch (error) {
+//   reject(error.message);
+// }
 // });
 
 export const getTablesByRestaurant = async (restaurantId, seats) => {
@@ -51,6 +52,45 @@ export const getTablesByRestaurant = async (restaurantId, seats) => {
   }
 };
 
-export const fetchRestaurants = async () => {
-  return await Promise.all([getRestauransFromFirebase]).then((res) => res[0]);
+// export const fetchRestaurants = async () => {
+//   return await Promise.all([getRestauransFromFirebase]).then((res) => res[0]);
+// };
+
+export const updateTableBusyness = async (restaurantID, seats, timeSlot) => {
+  try {
+    const { hour, minute, date } = timeSlot;
+    let q = query(
+      collection(db, "tables"),
+      where("restaurant", "==", restaurantID),
+      where("size", ">=", seats),
+      orderBy("size", "asc")
+    );
+    const docSnap = await getDocs(q);
+    let tableId;
+    let tableInformation;
+
+    docSnap.forEach((doc) => {
+      const found = doc
+        .data()
+        .busyness.findIndex(
+          (slot) =>
+            slot.date === date && slot.hour === hour && slot.minute === minute
+        );
+      if (found === -1) {
+        // doc.data().id
+        tableId = doc.id;
+        tableInformation = doc.data();
+        return doc.id;
+      }
+    });
+
+    if (!tableId) throw new Error("Cannot find free tables.");
+
+    const currentTable = doc(db, "tables", tableId);
+    updateDoc(currentTable, {
+      busyness: [...tableInformation.busyness, { date, hour, minute }],
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };

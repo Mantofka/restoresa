@@ -21,9 +21,13 @@ import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
 import {
   registerUser,
   loginUserWithGoogle,
+  clearNextRoute,
 } from "../../redux/reducers/user/user.actions";
 
-import { selectUserAuthentication } from "../../redux/reducers/user/user.selectors";
+import {
+  selectNextRoute,
+  selectUserAuthentication,
+} from "../../redux/reducers/user/user.selectors";
 
 import { Container, Image } from "./RegisterPage.styles";
 
@@ -37,6 +41,7 @@ function Register() {
   const navigate = useNavigate();
   const screen = useSelector(selectScreen);
   const authentication = useSelector(selectUserAuthentication);
+  const nextRoute = useSelector(selectNextRoute);
   const {
     setValue,
     register,
@@ -54,7 +59,11 @@ function Register() {
 
   useEffect(() => {
     if (authentication) {
-      navigate("/");
+      setTimeout(() => {
+        const url = nextRoute ? `/${nextRoute}` : "/";
+        dispatch(clearNextRoute());
+        navigate(url);
+      }, 500);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authentication]);

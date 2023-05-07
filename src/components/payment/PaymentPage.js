@@ -10,7 +10,10 @@ import Customer from "../customer-information/Customer";
 import { Elements } from "@stripe/react-stripe-js";
 
 import { useSelector } from "react-redux";
-import { selectReservationRestaurant } from "../../redux/reducers/reservation/reservation.selectors";
+import {
+  selectReservationRestaurant,
+  selectSelectedFoods,
+} from "../../redux/reducers/reservation/reservation.selectors";
 import { selectTotalPrice } from "../../redux/reducers/reservation/reservation.selectors";
 
 import { useReservation } from "../../utils/reservation";
@@ -35,10 +38,11 @@ function PaymentPage() {
   const price = useSelector(selectPrice);
   const [finalPrice, setFinalPrice] = useState(0);
   const [isFetched, setisFetched] = useState(false);
+  const foods = useSelector(selectSelectedFoods);
 
   const screen = useScreen();
   const [clientSecret, setClientSecret] = useState(undefined);
-
+  console.log(foods);
   useEffect(() => {
     if (Number(totalPrice) > 0) setFinalPrice(Number(totalPrice));
     else if (Number(price) > 0) setFinalPrice(Number(price));

@@ -81,73 +81,73 @@ export const handleBatchPush = async (foods) => {
   }
 };
 
-// export const pushTable = async () => {
-//   await addDoc(collection(db, "tables"), {
-//     restaurant: doc(db, "restaurants/ngIifs0kJy7VXs7iD9HW"),
-//     size: 6,
-//     times: [
-//       {
-//         hour: 8,
-//         minute: 0,
-//       },
-//       {
-//         hour: 9,
-//         minute: 0,
-//       },
-//       {
-//         hour: 10,
-//         minute: 0,
-//       },
-//       {
-//         hour: 12,
-//         minute: 0,
-//       },
-//       {
-//         hour: 13,
-//         minute: 0,
-//       },
-//       {
-//         hour: 14,
-//         minute: 0,
-//       },
-//       {
-//         hour: 15,
-//         minute: 0,
-//       },
-//       {
-//         hour: 17,
-//         minute: 0,
-//       },
-//       {
-//         hour: 18,
-//         minute: 0,
-//       },
-//       {
-//         hour: 20,
-//         minute: 0,
-//       },
-//     ],
-//     busyness: [
-//       {
-//         date: "2023-03-22",
-//         hour: 8,
-//         minute: 0,
-//       },
-//       {
-//         date: "2023-03-22",
-//         hour: 12,
-//         minute: 0,
-//       },
-//       {
-//         date: "2023-03-22",
-//         hour: 18,
-//         minute: 0,
-//       },
-//       {
-//         date: "2023-03-22",
-//         hour: 20,
-//         minute: 0,
-//       },
-//     ],
-//   });
-// };
+export const pushTable = async () => {
+  await addDoc(collection(db, "tables"), {
+    restaurant: doc(db, "restaurants/ngIifs0kJy7VXs7iD9HW"),
+    size: 6,
+    times: [
+      {
+        hour: 8,
+        minute: 0,
+      },
+      {
+        hour: 9,
+        minute: 0,
+      },
+      {
+        hour: 10,
+        minute: 0,
+      },
+      {
+        hour: 12,
+        minute: 0,
+      },
+      {
+        hour: 13,
+        minute: 0,
+      },
+      {
+        hour: 14,
+        minute: 0,
+      },
+      {
+        hour: 15,
+        minute: 0,
+      },
+      {
+        hour: 17,
+        minute: 0,
+      },
+      {
+        hour: 18,
+        minute: 0,
+      },
+      {
+        hour: 20,
+        minute: 0,
+      },
+    ],
+    busyness: [
+      {
+        date: "2023-03-22",
+        hour: 8,
+        minute: 0,
+      },
+      {
+        date: "2023-03-22",
+        hour: 12,
+        minute: 0,
+      },
+      {
+        date: "2023-03-22",
+        hour: 18,
+        minute: 0,
+      },
+      {
+        date: "2023-03-22",
+        hour: 20,
+        minute: 0,
+      },
+    ],
+  });
+};
