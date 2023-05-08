@@ -23,7 +23,6 @@ import {
   PrimaryButton,
   OutlinedButton,
   DescriptionText,
-  Bubble,
   ErrorText,
   Form,
 } from "../../utils/styles/styles";

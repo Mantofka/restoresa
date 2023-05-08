@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+//import { getAnalytics } from "firebase/analytics";
 import { v4 as uuidv4 } from "uuid";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -9,7 +9,6 @@ import {
   doc,
   getFirestore,
   collection,
-  setDoc,
   addDoc,
 } from "firebase/firestore";
 
@@ -26,7 +25,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-const analytics = getAnalytics(app);
+//const analytics = getAnalytics(app);
 
 export const auth = getAuth(app);
 

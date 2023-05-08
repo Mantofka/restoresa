@@ -8,7 +8,6 @@ import {
   Highlight,
   SmallerText,
   InlineWrapper,
-  Image,
 } from "./Homepage.styles";
 
 import { useSelector } from "react-redux";

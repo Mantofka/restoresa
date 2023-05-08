@@ -18,7 +18,6 @@ import { LayoutContainer } from "../../../utils/styles/styles";
 function RestaurantList() {
   const [restaurants, fetchRestaurants] = useRestaurants();
   const isLoading = useSelector(selectIsLoading);
-  const errors = useSelector(selectRestaurantsError);
   const screen = useSelector(selectScreen);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { MiddleScreen, FoodTitle } from "../../utils/styles/styles";
+import { MiddleScreen } from "../../utils/styles/styles";
 import LayoutContainer from "../layout-container/LayoutContainer";
 import { Column, Image, Title } from "./no-page.styles";
 
