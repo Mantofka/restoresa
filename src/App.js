@@ -64,8 +64,7 @@ function App() {
 
     return () => {
       window.removeEventListener("resize", handleScreenResize);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    };    
   }, []);
 
   useEffect(() => {
@@ -75,7 +74,6 @@ function App() {
         dispatch(loginUserSuccess({ displayName, uid, email, phoneNumber }));
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

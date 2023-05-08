@@ -1,9 +1,6 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { v4 as uuidv4 } from "uuid";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -16,8 +13,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: "AIzaSyAaHz8eFLp2RWpk4NddTn1-X4Ojj1WR4B4",
   authDomain: "restoresa-65368.firebaseapp.com",
@@ -28,7 +24,6 @@ const firebaseConfig = {
   measurementId: "G-YFZK1YT2YF",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 const analytics = getAnalytics(app);
@@ -43,7 +38,6 @@ export const handleBatchPush = async (foods) => {
   let batch = writeBatch(db);
   let modifiedFoods = [...foods];
   for (let index = 0; index < foods.length; index++) {
-    // console.log(modifiedFoods.length);
     const { type, restaurant } = foods[index];
     let filteredFoods = modifiedFoods.filter(
       (food) =>

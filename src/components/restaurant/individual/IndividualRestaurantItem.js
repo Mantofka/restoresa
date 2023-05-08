@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import { motion } from "framer-motion";
-
 import { selectScreen } from "../../../redux/reducers/ui/ui.selectors";
 import { useSelector, useDispatch } from "react-redux";
 import { isMobileSize } from "../../../utils/ui";
@@ -85,6 +83,3 @@ const IndividualRestaurantItem = ({ food }) => {
 
 export default IndividualRestaurantItem;
 
-//   box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.26);
-// -webkit-box-shadow: 3px 3px 9px 0px rgba(0,0,0,0.26);
-// -moz-box-shadow: 3px 3px 9px 0px rgba(0,0,0,0.26);

@@ -61,7 +61,6 @@ function SignInPage() {
         navigate(url);
       }, 500);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authentication]);
 
   return (

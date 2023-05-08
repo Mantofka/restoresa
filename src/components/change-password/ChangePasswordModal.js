@@ -75,7 +75,6 @@ function ChangePasswordModal() {
         }, 100);
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isPending]);
 
   useEffect(() => {
@@ -89,8 +88,7 @@ function ChangePasswordModal() {
   useEffect(() => {
     return () => {
       dispatch(clearPassword());
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    };    
   }, []);
 
   const onModalClose = () => {

@@ -1,7 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable comma-dangle */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable indent */
 const functions = require("firebase-functions");
 const cors = require("cors")({ origin: true });
 
@@ -71,9 +67,6 @@ exports.getTablesByPrompts = functions.https.onRequest(async (req, res) => {
 
     let tableToOffer;
     let counter = 0;
-
-    // console.log(req.query.restaurant);
-    // console.log(req.query.seats);
 
     await query
       .where("restaurant", "==", `${req.query.restaurant}`)
