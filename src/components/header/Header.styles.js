@@ -13,7 +13,9 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
   ${({ screen }) =>
     (screen === "sm" || screen === "md") &&
