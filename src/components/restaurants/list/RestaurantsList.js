@@ -2,14 +2,12 @@ import React, { useEffect } from "react";
 
 import { Container } from "./RestaurantsList.styles";
 
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import { useSelector } from "react-redux";
 import { useRestaurants } from "./RestaurantsList.utils";
 
 import {
   selectRestaurantsError,
   selectIsLoading,
-  selectRestaurantsProperty,
 } from "../../../redux/reducers/restaurants/restaurants.selectors";
 import { selectScreen } from "../../../redux/reducers/ui/ui.selectors";
 
@@ -19,9 +17,7 @@ import { LayoutContainer } from "../../../utils/styles/styles";
 
 function RestaurantList() {
   const [restaurants, fetchRestaurants] = useRestaurants();
-  // const restaurants = useSelector(selectRestaurantsInRestaurants);
   const isLoading = useSelector(selectIsLoading);
-  const errors = useSelector(selectRestaurantsError);
   const screen = useSelector(selectScreen);
 
   useEffect(() => {

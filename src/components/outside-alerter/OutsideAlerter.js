@@ -6,9 +6,6 @@ import { selectIsAlertModalOpen } from "../../redux/reducers/ui/ui.selectors";
 function useOutsideAlerter(ref, cb) {
   const isAlertModalOpen = useSelector(selectIsAlertModalOpen);
   useEffect(() => {
-    /**
-     * Alert if clicked on outside of element
-     */
     function handleClickOutside(event) {
       if (
         !isAlertModalOpen &&
@@ -18,13 +15,10 @@ function useOutsideAlerter(ref, cb) {
         cb();
       }
     }
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref, isAlertModalOpen]);
 }
 

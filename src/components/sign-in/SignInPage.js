@@ -23,7 +23,6 @@ import {
   PrimaryButton,
   OutlinedButton,
   DescriptionText,
-  Bubble,
   ErrorText,
   Form,
 } from "../../utils/styles/styles";
@@ -61,7 +60,6 @@ function SignInPage() {
         navigate(url);
       }, 500);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authentication]);
 
   return (

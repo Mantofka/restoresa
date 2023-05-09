@@ -2,32 +2,12 @@ import {
   collection,
   query,
   getDocs,
-  getDoc,
   doc,
   where,
   orderBy,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-
-// const getTablesByRestaurant = new Promise(async (resolve, reject) => {
-// try {
-//   let q = query(collection(db, "restaurants"));
-
-//   const querySnapshot = await getDocs(q);
-
-//   const restaurants = [];
-//   querySnapshot.forEach((doc) => {
-//     restaurants.push({
-//       id: doc.id,
-//       ...doc.data(),
-//     });
-//   });
-//   resolve(restaurants);
-// } catch (error) {
-//   reject(error.message);
-// }
-// });
 
 export const getTablesByRestaurant = async (restaurantId, seats) => {
   try {
@@ -52,9 +32,6 @@ export const getTablesByRestaurant = async (restaurantId, seats) => {
   }
 };
 
-// export const fetchRestaurants = async () => {
-//   return await Promise.all([getRestauransFromFirebase]).then((res) => res[0]);
-// };
 
 export const updateTableBusyness = async (restaurantID, seats, timeSlot) => {
   try {
@@ -76,8 +53,7 @@ export const updateTableBusyness = async (restaurantID, seats, timeSlot) => {
           (slot) =>
             slot.date === date && slot.hour === hour && slot.minute === minute
         );
-      if (found === -1) {
-        // doc.data().id
+      if (found === -1) {    
         tableId = doc.id;
         tableInformation = doc.data();
         return doc.id;

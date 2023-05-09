@@ -100,7 +100,6 @@ const TimePrompt = ({ setState }) => {
 
   useEffect(() => {
     dispatch(setReservationDate(value));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   useEffect(() => {
@@ -124,7 +123,7 @@ const TimePrompt = ({ setState }) => {
     }
   }, [selectedDate]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   const handleHour = (pickedTime) => {
     const { hour, minute } = pickedTime;
     if (JSON.stringify(pickedTime) !== JSON.stringify(time)) {

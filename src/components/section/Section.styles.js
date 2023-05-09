@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 
 import {
   darkColor,
-  highlightColor,
   yellowColor,
 } from "../../utils/styles/styles";
 

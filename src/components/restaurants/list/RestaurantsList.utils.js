@@ -55,12 +55,5 @@ export const useRestaurant = (restaurantID) => {
     }
   }, [restaurant]);
 
-  // const fetchRestaurants = () => {
-  //   const { nextFetch } = restaurantsState;
-  //   if (moment().valueOf() > nextFetch || nextFetch === undefined) {
-  //     dispatch(onRestaurantsFetch());
-  //   }
-  // };
-
   return [restaurant];
 };

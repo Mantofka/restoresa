@@ -8,7 +8,6 @@ import {
   Highlight,
   SmallerText,
   InlineWrapper,
-  Image,
 } from "./Homepage.styles";
 
 import { useSelector } from "react-redux";
@@ -71,7 +70,6 @@ function Homepage() {
             <PrimaryButton
               whileHover={{ scale: 1.1 }}
               type='button'
-              // onClick={() => navigate("restaurants")}
               onClick={() =>
                 updateTableBusyness("ngIifs0kJy7VXs7iD9HW", 6, {
                   hour: 14,
