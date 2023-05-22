@@ -1,5 +1,8 @@
 # Restoresa
 A university project by KTU students for the Program systems engineering module
+
+Demo: restoresa.lt
+
 # Our team
 KTU students of the academic group IFF-1/2:
 - Mantas Petrauskas
