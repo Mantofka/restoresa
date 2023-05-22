@@ -22,3 +22,6 @@ export const CLEAR_PHONE_NUMBER = "user/CLEAR_PHONE_NUMBER";
 
 export const SET_NEXT_ROUTE = "SET_NEXT_ROUTE";
 export const CLEAR_NEXT_ROUTE = "CLEAR_NEXT_ROUTE";
+
+export const CLEAR_USER = "CLEAR_USER";
+export const CLEAR_ERROR = "CLEAR_ERROR";

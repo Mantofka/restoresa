@@ -66,6 +66,7 @@ function* onUserLoginWithGoogle() {
 function* onUserRegister({ payload }) {
   try {
     const response = yield call(registerToFirebase, payload);
+    console.log(response);
     yield put(registerUserSuccess(response));
   } catch ({ message }) {
     yield put(registerUserFail(message));

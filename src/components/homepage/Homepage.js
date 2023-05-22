@@ -70,13 +70,7 @@ function Homepage() {
             <PrimaryButton
               whileHover={{ scale: 1.1 }}
               type='button'
-              onClick={() =>
-                updateTableBusyness("ngIifs0kJy7VXs7iD9HW", 6, {
-                  hour: 14,
-                  minute: 0,
-                  date: "2023-05-03",
-                })
-              }
+              onClick={() => navigate("restaurants")}
             >
               Browse Restaurants
             </PrimaryButton>

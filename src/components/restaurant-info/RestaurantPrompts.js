@@ -31,6 +31,7 @@ import {
 import {
   selectDate,
   selectHour,
+  selectSeats,
 } from "../../redux/reducers/reservation/reservation.selectors";
 
 import { useLocation } from "react-router-dom";
@@ -92,6 +93,7 @@ const TimePrompt = ({ setState }) => {
   const selectedHour = useSelector(selectHour);
   const [isFetching, setIsFetching] = useState(false);
   const screen = useSelector(selectScreen);
+  const seats = useSelector(selectSeats);
   const [timeSlots, setTimeSlots] = useState([]);
   const [value, setValue] = useState(moment().format("YYYY-MM-DD"));
   const [time, setTime] = useState(selectedHour);
@@ -111,7 +113,7 @@ const TimePrompt = ({ setState }) => {
           "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
         },
         withCredentials: false,
-        url: `https://us-central1-restoresa-65368.cloudfunctions.net/getTablesByPrompts?restaurant=${id}&seats=2&date=${selectedDate}`,
+        url: `https://us-central1-restoresa-65368.cloudfunctions.net/getTablesByPrompts?restaurant=${id}&seats=${seats}&date=${selectedDate}`,
       })
         .then((res) => {
           setTimeSlots(res?.data?.data.timeSlots);
@@ -122,7 +124,6 @@ const TimePrompt = ({ setState }) => {
         });
     }
   }, [selectedDate]);
-
 
   const handleHour = (pickedTime) => {
     const { hour, minute } = pickedTime;

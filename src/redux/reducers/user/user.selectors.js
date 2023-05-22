@@ -12,6 +12,11 @@ export const selectUserError = createSelector(
   (user) => user.errorModal
 );
 
+export const selectIsUserPending = createSelector(
+  [selectUserState],
+  (user) => user.user.pending
+);
+
 export const selectUserAuthentication = createSelector(
   [selectUserState],
   (user) => user.user.isAuthenticated

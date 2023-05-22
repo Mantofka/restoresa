@@ -11,5 +11,16 @@ export const Container = styled.div`
     css`
     width: 92vw;
   }
+  ${({ footer }) =>
+    footer &&
+    css`
+      width: unset;
+      padding-bottom: 0px;
+    `}
 `}
+  ${({ footer }) =>
+    footer &&
+    css`
+      padding-bottom: 0px;
+    `}
 `;

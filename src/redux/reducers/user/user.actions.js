@@ -16,6 +16,8 @@ import {
   CLEAR_PASSWORD,
   CLEAR_NEXT_ROUTE,
   SET_NEXT_ROUTE,
+  CLEAR_USER,
+  CLEAR_ERROR,
 } from "./user.types";
 
 export const loginUserWithGoogle = () => {
@@ -60,6 +62,7 @@ export const registerUserFail = (error) => {
 };
 
 export const registerUserSuccess = (user) => {
+  console.log(user);
   return {
     type: USER_REGISTER_SUCCESS,
     payload: user,
@@ -130,5 +133,17 @@ export const setNextRoute = (route) => {
 export const clearNextRoute = () => {
   return {
     type: CLEAR_NEXT_ROUTE,
+  };
+};
+
+export const clearUser = () => {
+  return {
+    type: CLEAR_USER,
+  };
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR,
   };
 };

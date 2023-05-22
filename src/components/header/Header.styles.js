@@ -20,7 +20,7 @@ export const Container = styled.div`
   ${({ screen }) =>
     (screen === "sm" || screen === "md") &&
     css`
-      width: 100vw;
+      width: unset;
       border-radius: 0px;
       ${CombinedSection} {
         gap: 15px;
@@ -29,7 +29,7 @@ export const Container = styled.div`
   ${({ screen }) =>
     screen === "xs" &&
     css`
-      width: 100vw;
+      width: 100%;
       border-radius: 0px;
       ${ProjectTitle} {
         font-size: 24px;

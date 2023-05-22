@@ -56,7 +56,7 @@ function ProfilePage() {
     <LayoutContainer screen={screen}>
       <Container>
         <HeaderText style={{ marginBottom: "35px" }}>
-          Hello, {user?.displayName?.split(" ")[0]}
+          Hello, {user?.fullName?.split(" ")[0]}
         </HeaderText>
         <Wrapper
           screen={screen}
@@ -68,7 +68,7 @@ function ProfilePage() {
               <Input
                 disabled
                 type='text'
-                value={user?.displayName}
+                value={user?.fullName}
                 label='Full name'
                 name='fullName'
               />
@@ -105,31 +105,39 @@ function ProfilePage() {
             <TextContainer>
               <Label>Orders history</Label>
             </TextContainer>
-            {fetchedOrders.map(({ date, hour, id, payment: { status } }) => (
-              <OrderElement onClick={() => navigate(`/order/${id}`)}>
-                <InlineWrapper justify={"flex-start"} gap={"20px"}>
-                  <TextContainer placeGap={"5px"} justify={"flex-start"}>
-                    <BlandText style={{ fontSize: "12px" }}>
-                      ORDER NUMBER <StatusLabel>{status}</StatusLabel>
-                    </BlandText>
-                    <DescriptionText>{id}</DescriptionText>
-                  </TextContainer>
-                  <TextContainer placeGap={"5px"}>
-                    <DescriptionText>
-                      {moment(date).format("Do MMM YYYY")}
-                    </DescriptionText>
-                    <BlandText>
-                      {hour.hour}:{hour.minute}0
-                    </BlandText>
-                  </TextContainer>
-                </InlineWrapper>
-              </OrderElement>
-            ))}
+            {fetchedOrders.length > 0 ? (
+              <>
+                {fetchedOrders.map(
+                  ({ date, hour, id, payment: { status } }) => (
+                    <OrderElement onClick={() => navigate(`/order/${id}`)}>
+                      <InlineWrapper justify={"flex-start"} gap={"20px"}>
+                        <TextContainer placeGap={"5px"} justify={"flex-start"}>
+                          <BlandText style={{ fontSize: "12px" }}>
+                            ORDER NUMBER <StatusLabel>{status}</StatusLabel>
+                          </BlandText>
+                          <DescriptionText>{id}</DescriptionText>
+                        </TextContainer>
+                        <TextContainer placeGap={"5px"}>
+                          <DescriptionText>
+                            {moment(date).format("Do MMM YYYY")}
+                          </DescriptionText>
+                          <BlandText>
+                            {hour.hour}:{hour.minute}0
+                          </BlandText>
+                        </TextContainer>
+                      </InlineWrapper>
+                    </OrderElement>
+                  )
+                )}
+              </>
+            ) : (
+              <BlandText>No current history.</BlandText>
+            )}
           </ColumnContainer>
         </Wrapper>
       </Container>
-        <ChangePasswordModal/>
-        <ChangePhoneNumberModal />
+      <ChangePasswordModal />
+      <ChangePhoneNumberModal />
     </LayoutContainer>
   );
 }

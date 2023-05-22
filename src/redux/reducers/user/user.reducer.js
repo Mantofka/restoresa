@@ -16,6 +16,8 @@ import {
   CLEAR_PASSWORD,
   SET_NEXT_ROUTE,
   CLEAR_NEXT_ROUTE,
+  CLEAR_USER,
+  CLEAR_ERROR,
 } from "./user.types";
 
 const initialState = {
@@ -154,6 +156,20 @@ const User = (state = initialState, action) => {
       return {
         ...state,
         nextRoute: action.payload,
+      };
+    case CLEAR_USER:
+      return {
+        ...state,
+        user: {
+          pending: false,
+          data: null,
+          isAuthenticated: false,
+        },
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        errorModal: null,
       };
     default:
       return { ...state };

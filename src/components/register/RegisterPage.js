@@ -22,11 +22,14 @@ import {
   registerUser,
   loginUserWithGoogle,
   clearNextRoute,
+  clearError,
 } from "../../redux/reducers/user/user.actions";
 
 import {
   selectNextRoute,
   selectUserAuthentication,
+  selectUserError,
+  selectIsUserPending,
 } from "../../redux/reducers/user/user.selectors";
 
 import { Container, Image } from "./RegisterPage.styles";
@@ -42,6 +45,8 @@ function Register() {
   const screen = useSelector(selectScreen);
   const authentication = useSelector(selectUserAuthentication);
   const nextRoute = useSelector(selectNextRoute);
+  const userError = useSelector(selectUserError);
+  const pending = useSelector(selectIsUserPending);
   const {
     setValue,
     register,
@@ -56,6 +61,12 @@ function Register() {
     const formValues = getValues();
     dispatch(registerUser(formValues));
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, []);
 
   useEffect(() => {
     if (authentication) {
@@ -77,6 +88,7 @@ function Register() {
               Sign up with Google
             </OutlinedButton>
             <DescriptionText style={{ margin: "0 auto" }}>or</DescriptionText>
+            <ErrorText>{userError}</ErrorText>
             <Form screen={screen} onSubmit={handleSubmit(handleRegister)}>
               <Input
                 type='text'
@@ -137,7 +149,9 @@ function Register() {
                 })}
               />
               <ErrorText>{errors.repeatPassword?.message}</ErrorText>
-              <PrimaryButton type='submit'>Register</PrimaryButton>
+              <PrimaryButton disabled={pending} type='submit'>
+                Register
+              </PrimaryButton>
             </Form>
 
             <DescriptionText>

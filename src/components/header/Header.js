@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -19,6 +19,8 @@ import { isMobileSize } from "../../utils/ui";
 import { useLocation } from "react-router-dom";
 
 import Anchor from "../nav-achor/Anchor";
+
+import { signOutUser } from "../../utils/firebase/user";
 
 import {
   Container,
@@ -66,32 +68,50 @@ function Header() {
           </CombinedSection>
         )}
         <CombinedSection>
-          <div style={{ width: "160px" }}>
-            {foods.length > 0 ? (
-              <OrderContainerButton
-                animate={
-                  animate
-                    ? {
-                        width: [150, 160, 150],
-                        transition: { duration: 0.4 },
-                      }
-                    : { width: 150 }
-                }
-                onClick={() => dispatch(openOrderModal(!isOrderModalOpen))}
-              >
-                Review Order
-              </OrderContainerButton>
-            ) : null}
-          </div>
+          {!isMobileSize(screen, "md") ? (
+            <>
+              {foods.length > 0 ? (
+                <div style={{ width: "160px" }}>
+                  <OrderContainerButton
+                    animate={
+                      animate
+                        ? {
+                            width: [150, 160, 150],
+                            transition: { duration: 0.4 },
+                          }
+                        : { width: 150 }
+                    }
+                    onClick={() => dispatch(openOrderModal(!isOrderModalOpen))}
+                  >
+                    Review Order
+                  </OrderContainerButton>
+                </div>
+              ) : null}
+            </>
+          ) : (
+            <>
+              {foods.length > 0 ? (
+                <ShoppingCartIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={() => dispatch(openOrderModal(!isOrderModalOpen))}
+                />
+              ) : null}{" "}
+            </>
+          )}
 
           {isAuthenticated ? (
             <>
               <Anchor href='/me'>
                 <ProfileIcon></ProfileIcon>
               </Anchor>
-              {!isMobileSize(screen, "lg") && (
-                <Text>{currentUser?.displayName}</Text>
-              )}
+              <Anchor href='/'>
+                <Text
+                  style={{ cursor: "pointer" }}
+                  onClick={() => signOutUser(dispatch)}
+                >
+                  Logout
+                </Text>
+              </Anchor>
             </>
           ) : (
             <Anchor href='/sign-in'>

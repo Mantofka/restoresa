@@ -7,8 +7,11 @@ import {
   signInWithPopup,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  signOut,
 } from "firebase/auth";
 import axios from "axios";
+
+import { clearUser } from "../../redux/reducers/user/user.actions";
 
 import Config from "../../config";
 
@@ -18,7 +21,7 @@ export const loginWithGoogleProvider = async () => {
   try {
     const response = await signInWithPopup(auth, googleProvider);
     const { uid, displayName, email } = response.user;
-    return { uid, displayName, email };
+    return { uid, fullName: displayName, email };
   } catch ({ message }) {
     if (message.includes("auth/popup-closed-by-user")) return null;
 
@@ -33,7 +36,7 @@ export const loginToFirebase = async (userCredentials) => {
     const {
       user: { displayName, uid },
     } = response;
-    return { email, displayName, uid };
+    return { email, fullName: displayName, uid };
   } catch ({ message }) {
     if (
       message.includes("auth/wrong-password") ||
@@ -58,7 +61,14 @@ export const registerToFirebase = async (userCredentials) => {
     } = user;
     return { fullName, email, uid };
   } catch (error) {
-    throw Error("Something went wrong. Please try again in a moment.");
+    const { message } = error;
+    if (message.includes("auth/invalid-email")) {
+      throw Error("Invalid email structure.");
+    } else if (message.includes("auth/email-already-in-use")) {
+      throw Error("Email already exists.");
+    } else {
+      throw Error("Something went wrong. Please try again in a moment.");
+    }
   }
 };
 
@@ -96,12 +106,26 @@ export const changeUserPassword = async (userCredentials) => {
             },
           }
         )
-        .then((res) => {})
+        .then((res) => {
+          console.log("labas");
+        })
         .catch((err) => {
           throw new Error("Cannot change password to the new one.");
         });
     })
     .catch((err) => {
       throw new Error("Incorrect old password");
+    });
+};
+
+export const signOutUser = (dispatch) => {
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+      dispatch(clearUser());
+      console.log("SignOut successfully!");
+    })
+    .catch((error) => {
+      // An error happened.
     });
 };

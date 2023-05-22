@@ -71,7 +71,7 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const { displayName, email, uid, phoneNumber } = user;
-        dispatch(loginUserSuccess({ displayName, uid, email, phoneNumber }));
+        dispatch(loginUserSuccess({ fullName: displayName, uid, email, phoneNumber }));
       }
     });
   }, []);

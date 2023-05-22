@@ -12,6 +12,7 @@ import {
   selectUserError,
   selectUserAuthentication,
   selectNextRoute,
+  selectIsUserPending,
 } from "../../redux/reducers/user/user.selectors";
 
 import { selectScreen } from "../../redux/reducers/ui/ui.selectors";
@@ -47,6 +48,7 @@ function SignInPage() {
   const loginErrors = useSelector(selectUserError);
   const authentication = useSelector(selectUserAuthentication);
   const nextRoute = useSelector(selectNextRoute);
+  const pending = useSelector(selectIsUserPending);
   const navigate = useNavigate();
   const handleLogin = () => {
     const formValues = getValues();
@@ -95,7 +97,9 @@ function SignInPage() {
                 })}
               />
               <ErrorText>{errors.password?.message}</ErrorText>
-              <PrimaryButton type='submit'>Login</PrimaryButton>
+              <PrimaryButton disabled={pending} type='submit'>
+                Login
+              </PrimaryButton>
             </Form>
             <DescriptionText>
               Still not our member? <Anchor href='/register'>Sign up</Anchor>

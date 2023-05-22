@@ -20,6 +20,8 @@ import {
   selectReservationRestaurant,
 } from "../../../redux/reducers/reservation/reservation.selectors";
 
+import { updateTableBusyness } from "../../../utils/firebase/tables";
+
 import { setRestaurant } from "../../../redux/reducers/reservation/reservation.actions";
 
 import {
@@ -48,6 +50,11 @@ function IndividualRestaurantMenu() {
 
   useEffect(() => {
     getFoodByRestaurantID(id).then((res) => setRestaurantFoods(res));
+    updateTableBusyness(id, seats, {
+      hour: hour.hour,
+      minute: hour.minute,
+      date: date,
+    });
 
     window.scrollTo(0, 0);
   }, []);

@@ -24,11 +24,7 @@ function Customer() {
   const user = useSelector(selectCurrentUser);
   return (
     <div
-      style={
-        !isMobileSize(screen, "md")
-          ? { flex: 0.4 }
-          : { width: "100%" }
-      }
+      style={!isMobileSize(screen, "md") ? { flex: 0.4 } : { width: "100%" }}
     >
       <SectionTitle style={{ marginBottom: "10px" }}>
         Customer Information
@@ -40,7 +36,7 @@ function Customer() {
             <InformationContainer>
               <Column>
                 <Title>Full Name</Title>
-                <DarkenText>{user.displayName}</DarkenText>
+                <DarkenText>{user?.fullName}</DarkenText>
               </Column>
               <Column>
                 <Title>Email</Title>

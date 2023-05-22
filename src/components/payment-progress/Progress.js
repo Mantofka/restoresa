@@ -66,7 +66,6 @@ const ProgressContainer = ({ secret }) => {
                 state: "Processing",
                 message: "Wohoo! Payment received.",
               });
-
               break;
             case "succeeded":
               setPaymentProgress({
@@ -117,7 +116,7 @@ const ProgressContainer = ({ secret }) => {
   return (
     <>
       <SectionTitle>Progress Information</SectionTitle>
-      <ElementContainer screen={screen} style={{minHeight: '120px'}}>
+      <ElementContainer screen={screen} style={{ minHeight: "120px" }}>
         <Column>
           <Title>Status</Title>
           <DarkenText>{paymentProgress.state}</DarkenText>
