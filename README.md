@@ -9,6 +9,15 @@ KTU students of the academic group IFF-1/2:
 # Our project 
 Restaurant reservation web application which also features food ordering at the same time.
 # Architecture
+The objective is to develop a sophisticated website that offers customers the convenience of reserving a table at a dining establishment and selecting from a diverse range of menu items. This ambitious endeavor utilizes popular technologies such as "React," "Firebase," "Docker," "Stripe," and "NodeJS."
+
+The utilization of React facilitates the creation of an elegant and intuitive user interface, ensuring a seamless and engaging booking experience. The comprehensive backend infrastructure, powered by Firebase, handles critical aspects such as secure data storage, robust user authentication, and real-time updates, providing a secure and scalable system.
+
+The integration of Docker simplifies the deployment and management of the application, enabling portability across different environments. The incorporation of Stripe, a trusted payment processing platform, ensures secure online transactions, allowing customers to make reservations and additional orders with confidence.
+
+NodeJS handles the server-side logic, facilitating seamless communication between the frontend and backend components.
+
+In summary, this website combines the power of React, Firebase, Docker, Stripe, and NodeJS to deliver a user-friendly platform. Customers can easily reserve tables, explore the menu, and make secure online payments, while the backend systems ensure efficient management and scalability.
 # Testing
 # Installing and Running the Project
 
