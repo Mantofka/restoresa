@@ -1,7 +1,8 @@
 # Restoresa
 A university project by KTU students for the Program systems engineering module
 
-Demo: restoresa.lt
+Demo: [restoresa.lt](https://www.restoresa.lt)
+
 
 # Our team
 KTU students of the academic group IFF-1/2:
