@@ -8,7 +8,7 @@ KTU students of the academic group IFF-1/2:
 - Dovydas Katinas
 # Our project 
 Restaurant reservation web application which also features food ordering at the same time.
-# Architecture
+# Technical task
 The objective is to develop a sophisticated website that offers customers the convenience of reserving a table at a dining establishment and selecting from a diverse range of menu items. This ambitious endeavor utilizes popular technologies such as "React," "Firebase," "Docker," "Stripe," and "NodeJS."
 
 The utilization of React facilitates the creation of an elegant and intuitive user interface, ensuring a seamless and engaging booking experience. The comprehensive backend infrastructure, powered by Firebase, handles critical aspects such as secure data storage, robust user authentication, and real-time updates, providing a secure and scalable system.
@@ -18,6 +18,18 @@ The integration of Docker simplifies the deployment and management of the applic
 NodeJS handles the server-side logic, facilitating seamless communication between the frontend and backend components.
 
 In summary, this website combines the power of React, Firebase, Docker, Stripe, and NodeJS to deliver a user-friendly platform. Customers can easily reserve tables, explore the menu, and make secure online payments, while the backend systems ensure efficient management and scalability.
+# Architecture
+Our project consist of Server side as well as client side defined functions in order to make requests as secure as possible in each way.
+
+Node.JS is being stored inside a Docker image container for easier hosting across different platforms. Primarly, our project uses Node.JS in order to initiate payment intents. From that point it calls Stripe API endpoint with its own predefined function to create an intent and send back into Node.JS server. Lastly, Node.JS server returns client's requested payment intent for payment completion.
+
+Stripe API is being used on Client-side too for confirming payments as well as checking the current intent' progress.
+
+Firebase is easy to implemenent. It creates an opportunity of implementing authentication feature in a matter of minutes. Changing password, number or getting free tables for the selected hour and date is done with the help of Firebase Functions. Those functions are Node.JS based environment, which stays active only on endpoint calls - that why it sometimes called serverless.
+
+![Screenshot 2023-05-18 at 23 10 47](https://github.com/Mantofka/restoresa/assets/60542930/7aed1a34-f9a4-4699-b8aa-5c4105559ac1)
+
+
 # Testing
 # Installing and Running the Project
 
