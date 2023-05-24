@@ -35,6 +35,11 @@ Firebase is easy to implemenent. It creates an opportunity of implementing authe
 
 
 # Testing
+#### The method of our choice for testing out the system was manual testing. We prepared an excel spreadsheet, that was filled withtests that were to be executed. And then our team members tested out the functionality and filled out the results. 
+![image](https://github.com/Mantofka/restoresa/assets/127296926/2e82ba7c-3860-4fd0-bd9e-c3749c310cfb)
+![image](https://github.com/Mantofka/restoresa/assets/127296926/4329e4e2-d456-47ec-acec-7052ecca3340)
+![image](https://github.com/Mantofka/restoresa/assets/127296926/638dad55-69db-44b6-86b1-736dd12227eb)
+
 # Installing and Running the Project
 
 For development, you will only need Node.js and a node global package, Yarn, installed in your environement.
